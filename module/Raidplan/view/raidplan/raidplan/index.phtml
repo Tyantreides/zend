@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html>
 <head>
     <title>Raidplan</title>
 
-    <!--
+
     http://bootstrap-calendar.azurewebsites.net/
 
     
@@ -25,9 +25,10 @@
         .btn-twitter:hover {
             background-position:  -20px -18px !important;
         }
-    </style>-->
+    </style>
 </head>
 <body>
+-->
 <div class="container">
     <div class="hero-unit">
         <h1>Bootstrap Calendar Demo</h1>
@@ -113,7 +114,12 @@
             <a href="#" data-dismiss="modal" class="btn">Close</a>
         </div>
     </div>
+    <script type="text/javascript">
+            var eventsjson = '<?php echo $this->eventsjson; ?>';
+            //var eventsjson = 'test';
 
+
+    </script>
     <script type="text/javascript" src="/js/calendarjs/underscore/underscore-min.js"></script>
     <script type="text/javascript" src="/js/calendarjs/jstimezonedetect/jstz.min.js"></script>
     <script type="text/javascript" src="/js/calendarjs/language/de-DE.js"></script>
@@ -129,5 +135,7 @@
         })();
     </script>-->
 </div>
+<!--
 </body>
 </html>
+-->

@@ -31,7 +31,7 @@ return array(
             'listeventsjson' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/raidplan/listjventsjson',
+                    'route'    => '/raidplan/listeventsjson',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'raidplan',
@@ -62,8 +62,18 @@ return array(
         )
     ),
     'view_manager' => array(
+        'template_map' => array(
+            //'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            //'layout/listeventsjson'           => __DIR__ . '/../view/layout/withoutlayout.phtml',
+            'raidplan/raidplan/listeventsjson' => __DIR__ . '/../view/raidplan/raidplan/rawjson.phtml',
+        ),
         'template_path_stack' => array(
             'album' => __DIR__ . '/../view',
+        ),
+    ),
+    'module_layouts' => array(
+        'Raidplan' => array(
+            'listeventsjson' => 'layout/listeventsjson',
         ),
     ),
 );

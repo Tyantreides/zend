@@ -1,9 +1,10 @@
 (function($) {
 
-	"use strict";
+	//"use strict";
 
 	var options = {
-		events_source: 'http://www.zend.dev/raidplan/listjventsjson',
+		//events_source: 'http://www.zend.dev/raidplan/listjventsjson',
+        events_source: '/raidplan/raidplan/listeventsjson',
 		view: 'month',
 		tmpl_path: 'tmpls/',
 		tmpl_cache: false,
