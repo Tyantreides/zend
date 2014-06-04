@@ -9,7 +9,7 @@ $(document).ready(function() {
       allowCalEventOverlap : true,
       overlapEventsSeparate: true,
       firstDayOfWeek : 1,
-      businessHours :{start: 8, end: 18, limitDisplay: true },
+      businessHours :{start: 15, end: 22, limitDisplay: true },
       daysToShow : 7,
       height : function($calendar) {
          return $(window).height() - $("h1").outerHeight() - 1;
