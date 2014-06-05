@@ -1,11 +1,28 @@
-<p>editpage</p>
+<?php
+//echo "<br>ausgabe:";
+//print_r('<pre');
+//print_r($_REQUEST);
+//print_r('</pre');
 
+$title = 'Edit album';
+$this->headTitle($title);
+?>
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
-echo "<br>ausgabe:";
-print_r('<pre');
-print_r($_REQUEST);
-print_r('</pre');
+$form = $this->form;
+$form->setAttribute('action', $this->url(
+    'album',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
 
-
-?>
+echo $this->form()->openTag($form);
+echo $this->formHidden($form->get('id'));
+echo $this->formRow($form->get('title'));
+echo $this->formRow($form->get('artist'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();

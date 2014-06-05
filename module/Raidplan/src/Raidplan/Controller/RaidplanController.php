@@ -17,9 +17,48 @@ class RaidplanController extends AbstractActionController
     }
 
     public function editAction() {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        //$id = (int) $this->params()->fromRoute('id', 0);
+        //return new ViewModel();
 
-        return new ViewModel();
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('raidplan', array(
+                'action' => 'add'
+            ));
+        }
+
+        // Get the Raidplan with the specified id.  An exception is thrown
+        // if it cannot be found, in which case go to the index page.
+        try {
+            $raidplan = $this->getRaidplanTable()->getRaidplan($id);
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('raidplan', array(
+                'action' => 'index'
+            ));
+        }
+
+        $form  = new RaidplanForm();
+        $form->bind($raidplan);
+        $form->get('submit')->setAttribute('value', 'Edit');
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setInputFilter($raidplan->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $this->getRaidplanTable()->saveRaidplan($raidplan);
+
+                // Redirect to list of raidplans
+                return $this->redirect()->toRoute('album');
+            }
+        }
+
+        return array(
+            'id' => $id,
+            'form' => $form,
+        );
     }
 
     public function addAction()
