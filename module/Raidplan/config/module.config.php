@@ -5,7 +5,7 @@ return array(
             'events' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/raidplan',
+                    'route'    => '/events',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'raidplan',
@@ -17,10 +17,11 @@ return array(
                     'default' => array(
                         'type'    => 'Segment',
                         'options' => array(
-                            'route'    => '/[:controller[/:action]]',
+                            'route'    => '/[:controller[/:action][/:id]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
                             ),
                             'defaults' => array(
                             ),
@@ -64,7 +65,8 @@ return array(
     'view_manager' => array(
         'template_map' => array(
             //'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            //'layout/listeventsjson'           => __DIR__ . '/../view/layout/withoutlayout.phtml',
+            'layout/listeventsjson'           => __DIR__ . '/../view/layout/withoutlayout.phtml',
+            'layout/events'           => __DIR__ . '/../view/layout/layout.phtml',
             'raidplan/raidplan/listeventsjson' => __DIR__ . '/../view/raidplan/raidplan/rawjson.phtml',
         ),
         'template_path_stack' => array(
@@ -74,6 +76,7 @@ return array(
     'module_layouts' => array(
         'Raidplan' => array(
             'listeventsjson' => 'layout/listeventsjson',
+            'events' => 'layout/events',
         ),
     ),
 );
