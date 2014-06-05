@@ -5,6 +5,7 @@
  *
  * @see https://github.com/zendframework/ZFTool
  */
+date_default_timezone_set('GMT');
 return array(
     'modules' => array(
         'Application',

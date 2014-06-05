@@ -1,6 +1,8 @@
 <?php
 error_reporting(E_ALL);
-ini_set('include_path',ini_get('include_path').':../libary/:'); 
+ini_set('include_path',ini_get('include_path').':../libary/:');
+//error display
+ini_set('display_errors', true);
 /**
  * This makes our life easier when dealing with paths. Everything is relative
  * to the application root now.

@@ -1,6 +1,13 @@
 <?php
 namespace Raidplan;
 
+use Raidplan\Model\Events;
+use Raidplan\Model\EventsTable;
+//require_once('module/Raidplan/src/Raidplan/Model/EventsTable.php');
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
+
 class Module
 {
     public function getConfig()
@@ -23,16 +30,17 @@ class Module
     {
         return array(
             'factories' => array(
-                'Raidplan\Model\RaidplanTable' =>  function($sm) {
-                        $tableGateway = $sm->get('RaidplanTableGateway');
-                        $table = new RaidplanTable($tableGateway);
+                'Raidplan\Model\EventsTable' =>  function($sm) {
+                        $tableGateway = $sm->get('EventsTableGateway');
+                        //$table = new EventsTable($tableGateway);
+                        $table = new EventsTable($tableGateway);
                         return $table;
                     },
-                'RaidplanTableGateway' => function ($sm) {
+                'EventsTableGateway' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         $resultSetPrototype = new ResultSet();
-                        $resultSetPrototype->setArrayObjectPrototype(new Raidplan());
-                        return new TableGateway('raidplan', $dbAdapter, null, $resultSetPrototype);
+                        $resultSetPrototype->setArrayObjectPrototype(new Events());
+                        return new TableGateway('ep_events', $dbAdapter, null, $resultSetPrototype);
                     },
             ),
         );
