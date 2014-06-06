@@ -32,7 +32,6 @@ class Module
             'factories' => array(
                 'Raidplan\Model\EventsTable' =>  function($sm) {
                         $tableGateway = $sm->get('EventsTableGateway');
-                        //$table = new EventsTable($tableGateway);
                         $table = new EventsTable($tableGateway);
                         return $table;
                     },
