@@ -2,10 +2,10 @@
 return array(
     'router' => array(
         'routes' => array(
-            'events' => array(
+            'root' => array(
                 'type'    => 'Literal',
                 'options' => array(
-                    'route'    => '/events',
+                    'route'    => '/',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'raidplan',
@@ -26,6 +26,71 @@ return array(
                             'defaults' => array(
                             ),
                         ),
+                    ),
+                ),
+            ),
+            'events' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/events',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'raidplan',
+                        'action'        => 'calendar',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action][/:id]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'editevent' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/editevent',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'edit',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:id]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id'     => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            'addevent' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/addevent',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'add',
                     ),
                 ),
             ),
@@ -76,6 +141,7 @@ return array(
     'module_layouts' => array(
         'Raidplan' => array(
             'listeventsjson' => 'layout/listeventsjson',
+            'root' => 'layout/events',
             'events' => 'layout/events',
         ),
     ),
