@@ -2,10 +2,11 @@
 
 namespace Raidplan\Controller;
 
+use Raidplan\Form\EventForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Raidplan\Model\Events;
-use Raidplan\Form\RaidplanForm;
+use Raidplan\Form\EventsForm;
 
 class RaidplanController extends AbstractActionController
 {
@@ -38,28 +39,28 @@ class RaidplanController extends AbstractActionController
         // Get the Raidplan with the specified id.  An exception is thrown
         // if it cannot be found, in which case go to the index page.
         try {
-            $raidplan = $this->getRaidplanTable()->getRaidplan($id);
+            $events = $this->getEventsTable()->getEvents($id);
         }
         catch (\Exception $ex) {
-            return $this->redirect()->toRoute('raidplan', array(
+            return $this->redirect()->toRoute('events', array(
                 'action' => 'index'
             ));
         }
 
-        $form  = new RaidplanForm();
-        $form->bind($raidplan);
+        $form  = new EventForm();
+        $form->bind($events);
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter($raidplan->getInputFilter());
+//            $form->setInputFilter($events->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->getRaidplanTable()->saveRaidplan($raidplan);
+                $this->getEventsTable()->saveRaidplan($events);
 
                 // Redirect to list of raidplans
-                return $this->redirect()->toRoute('album');
+                return $this->redirect()->toRoute('events');
             }
         }
 
@@ -71,21 +72,21 @@ class RaidplanController extends AbstractActionController
 
     public function addAction()
     {
-        $form = new RaidplanForm();
+        $form = new EventForm();
         $form->get('submit')->setValue('Add');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $Raidplan = new Raidplan();
-            $form->setInputFilter($Raidplan->getInputFilter());
+            $events = new Events();
+//            $form->setInputFilter($Raidplan->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $Raidplan->exchangeArray($form->getData());
-                $this->getRaidplanTable()->saveRaidplan($Raidplan);
+                $events->exchangeArray($form->getData());
+                $this->getEventsTable()->saveEvent($events);
 
                 // Redirect to list of Raidplans
-                return $this->redirect()->toRoute('Raidplan');
+                return $this->redirect()->toRoute('events');
             }
         }
         return array('form' => $form);

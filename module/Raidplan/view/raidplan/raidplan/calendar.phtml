@@ -113,14 +113,28 @@ $this->headTitle($title);
 
 <table class="table">
     <tr>
-        <th>Titel</th>
+        <th>id</th>
+        <th>titel</th>
         <th>Beschreibung</th>
+        <th>datetime</th>
+        <th>status</th>
+        <th>activityid</th>
+        <th>invited</th>
+        <th>accepted</th>
+        <th>declined</th>
         <th>&nbsp;</th>
     </tr>
     <?php foreach ($events as $event) : ?>
         <tr>
+            <td><?php echo $this->escapeHtml($event->id);?></td>
             <td><?php echo $this->escapeHtml($event->titel);?></td>
             <td><?php echo $this->escapeHtml($event->beschreibung);?></td>
+            <td><?php echo $this->escapeHtml($event->datetime);?></td>
+            <td><?php echo $this->escapeHtml($event->status);?></td>
+            <td><?php echo $this->escapeHtml($event->activityid);?></td>
+            <td><?php echo $this->escapeHtml($event->invited);?></td>
+            <td><?php echo $this->escapeHtml($event->accepted);?></td>
+            <td><?php echo $this->escapeHtml($event->declined);?></td>
             <td>
                 <a href="<?php
                 echo $this->url('editevent',
