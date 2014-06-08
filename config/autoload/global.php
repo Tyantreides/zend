@@ -13,7 +13,7 @@
 
 
 
-if ($_SERVER['SERVER_ADDR'] == '127.0.0.1') {
+if (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
     return array(
         'db' => array(
             'driver'         => 'Pdo',
