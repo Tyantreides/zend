@@ -3,15 +3,20 @@
 namespace Raidplan\Controller;
 
 use Raidplan\Form\EventForm;
+use Raidplan\Form\PlayerForm;
+use Raidplan\Form\JobForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Raidplan\Model\Events;
-use Raidplan\Form\EventsForm;
+use Raidplan\Model\Players;
+use Raidplan\Model\Jobs;
 
 class RaidplanController extends AbstractActionController
 {
 
     protected $eventsTable;
+    protected $playersTable;
+    protected $jobsTable;
 
     public function indexAction()
     {
@@ -28,8 +33,6 @@ class RaidplanController extends AbstractActionController
     }
 
     public function editAction() {
-        //$id = (int) $this->params()->fromRoute('id', 0);
-        //return new ViewModel();
 
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
@@ -40,15 +43,24 @@ class RaidplanController extends AbstractActionController
         // if it cannot be found, in which case go to the index page.
         try {
             $events = $this->getEventsTable()->getEvents($id);
+            $playersTable = $this->getPlayersTable();
+            $jobsTable = $this->getJobsTable();
         }
         catch (\Exception $ex) {
             return $this->redirect()->toRoute('events', array(
                 'action' => 'index'
             ));
         }
-
         $form  = new EventForm();
         $form->bind($events);
+        $playerChoose = new PlayerForm($this->getPlayersTable(), 'select');
+        $allPlayers = $playersTable->fetchAll();
+
+        foreach ($allPlayers as $player ) {
+            $jobForm = new JobForm($player->id, $playersTable, $jobsTable);
+        }
+
+
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
@@ -57,7 +69,7 @@ class RaidplanController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->getEventsTable()->saveRaidplan($events);
+                $this->getEventsTable()->saveEvents($events);
 
                 // Redirect to list of raidplans
                 return $this->redirect()->toRoute('events');
@@ -67,6 +79,8 @@ class RaidplanController extends AbstractActionController
         return array(
             'id' => $id,
             'form' => $form,
+            'playerChoose' => $playerChoose,
+            'jobform' => $jobForm,
         );
     }
 
@@ -99,6 +113,24 @@ class RaidplanController extends AbstractActionController
             $this->eventsTable = $sm->get('Raidplan\Model\EventsTable');
         }
         return $this->eventsTable;
+    }
+
+    public function getPlayersTable()
+    {
+        if (!$this->playersTable) {
+            $sm = $this->getServiceLocator();
+            $this->playersTable = $sm->get('Raidplan\Model\PlayersTable');
+        }
+        return $this->playersTable;
+    }
+
+    public function getJobsTable()
+    {
+        if (!$this->jobsTable) {
+            $sm = $this->getServiceLocator();
+            $this->jobsTable = $sm->get('Raidplan\Model\JobsTable');
+        }
+        return $this->jobsTable;
     }
 
     public function listEventsJsonAction(){

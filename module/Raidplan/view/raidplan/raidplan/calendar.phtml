@@ -138,9 +138,9 @@ $this->headTitle($title);
             <td>
                 <a href="<?php
                 echo $this->url('editevent',
-                    array( 'id' => $event->id));?>">Edit</a>
-                <a href="<?php echo $this->url('root',
-                    array('controller' => 'Raidplan', 'action'=>'delete', 'id' => $event->id));?>">Delete</a>
+                    array('id' => $event->id));?>">Edit</a>
+                <a href="<?php echo $this->url('deleteevent',
+                    array('id' => $event->id));?>">Delete</a>
             </td>
         </tr>
     <?php endforeach; ?>

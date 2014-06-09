@@ -57,27 +57,13 @@ return array(
                 ),
             ),
             'editevent' => array(
-                'type'    => 'Literal',
+                'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/editevent',
+                    'route'    => '/editevent[/:id]',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'Raidplan',
                         'action'        => 'edit',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:id]',
-                            'constraints' => array(
-                                'id'     => '[0-9]+',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
                     ),
                 ),
             ),
@@ -89,6 +75,17 @@ return array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'Raidplan',
                         'action'        => 'add',
+                    ),
+                ),
+            ),
+            'deleteevent' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/deleteevent[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'delete',
                     ),
                 ),
             ),

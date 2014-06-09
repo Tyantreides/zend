@@ -10,6 +10,7 @@ $this->headTitle($title);
     <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
+$playerChoose = $this->playerChoose;
 $form = $this->form;
 $form->setAttribute('action', $this->url(
     'editevent',
@@ -17,11 +18,34 @@ $form->setAttribute('action', $this->url(
         'id'     => $this->id,
     )
 ));
+
+$form->setAttribute('role', 'form');
+$form->setAttribute('style', 'width: 300px;');
 $form->prepare();
 
 echo $this->form()->openTag($form);
 echo $this->formHidden($form->get('id'));
 echo $this->formRow($form->get('titel'));
 echo $this->formRow($form->get('beschreibung'));
+echo $this->formRow($form->get('datetime'));
+echo $this->formRow($form->get('status'));
+echo $this->formRow($form->get('activityid'));
+echo $this->formRow($form->get('invited'));
+echo $this->formRow($form->get('accepted'));
+echo $this->formRow($form->get('declined'));
+echo $this->formRow($playerChoose->get('players'));
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
+
+
+echo '<br><br>';
+
+print_r('<pre>');
+print_r($this->jobform);
+print_r('</pre>');
+
+
+
+
+
+?>

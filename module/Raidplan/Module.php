@@ -4,6 +4,10 @@ namespace Raidplan;
 use Raidplan\Model\Events;
 use Raidplan\Model\EventsTable;
 //require_once('module/Raidplan/src/Raidplan/Model/EventsTable.php');
+use Raidplan\Model\Jobs;
+use Raidplan\Model\JobsTable;
+use Raidplan\Model\Players;
+use Raidplan\Model\PlayersTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -40,6 +44,28 @@ class Module
                         $resultSetPrototype = new ResultSet();
                         $resultSetPrototype->setArrayObjectPrototype(new Events());
                         return new TableGateway('ep_events', $dbAdapter, null, $resultSetPrototype);
+                    },
+                'Raidplan\Model\PlayersTable' =>  function($sm) {
+                        $tableGateway = $sm->get('PlayersTableGateway');
+                        $table = new PlayersTable($tableGateway);
+                        return $table;
+                    },
+                'PlayersTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new Players());
+                        return new TableGateway('ep_players', $dbAdapter, null, $resultSetPrototype);
+                    },
+                'Raidplan\Model\JobsTable' =>  function($sm) {
+                        $tableGateway = $sm->get('JobsTableGateway');
+                        $table = new JobsTable($tableGateway);
+                        return $table;
+                    },
+                'JobsTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new Jobs());
+                        return new TableGateway('ep_jobs', $dbAdapter, null, $resultSetPrototype);
                     },
             ),
         );
