@@ -17,10 +17,14 @@ jobid	int(11)
 ilvl	int(11)
 
 DROP TABLE IF EXISTS ep_players_jobs;
-CREATE TABLE ep_players_jobs (
-  id int(11) PK AI,
-  playerid int(11) ,
-  jobid varchar(6) COLLATE latin1_german1_ci NOT NULL,
-  ilvl	int(11) ,
-  PRIMARY KEY (id)
-);
+CREATE TABLE `db1705936`.`ep_players_jobs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `playerid` INT NULL,
+  `jobid` INT NULL,
+  `ilvl` INT NULL,
+  PRIMARY KEY (`id`));
+
+
+INSERT INTO `db1705936`.`ep_players_jobs` (`playerid`, `jobid`, `ilvl`) VALUES ('1', '1', '93');
+INSERT INTO `db1705936`.`ep_players_jobs` (`playerid`, `jobid`, `ilvl`) VALUES ('1', '9', '94');
+INSERT INTO `db1705936`.`ep_players_jobs` (`playerid`, `jobid`, `ilvl`) VALUES ('1', '6', '76');
