@@ -8,7 +8,6 @@ $title = 'Edit Event';
 $this->headTitle($title);
 ?>
     <h1><?php echo $this->escapeHtml($title); ?></h1>
-
 <?php
 $playerChoose = $this->playerChoose;
 $form = $this->form;
@@ -33,18 +32,26 @@ echo $this->formRow($form->get('activityid'));
 echo $this->formRow($form->get('invited'));
 echo $this->formRow($form->get('accepted'));
 echo $this->formRow($form->get('declined'));
-echo $this->formRow($playerChoose->get('players'));
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
 
 
 echo '<br><br>';
 
-print_r('<pre>');
-print_r($this->jobform);
-print_r('</pre>');
 
-
+//echo $this->playerForm->printData('AddPlayerForm', $this->playerdata);
+echo $this->playerForm->printData('PlayerList', $this->playerdata);
+//echo '<table>';
+//    foreach ($this->playerdata as $playerentry) {
+//        echo '<tr>';
+//        foreach ($playerentry as $playerfield) {
+//            echo '<td>';
+//                echo $playerfield;
+//            echo '</td>';
+//        }
+//        echo '</tr>';
+//    }
+//echo '</table>';
 
 
 

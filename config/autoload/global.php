@@ -17,7 +17,7 @@ if (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
     return array(
         'db' => array(
             'driver'         => 'Pdo',
-            'dsn'            => 'mysql:dbname=DB1705936;host=localhost',
+            'dsn'            => 'mysql:dbname=db1705936;host=localhost',
             //'driver_options' => array(
             //    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
             //),

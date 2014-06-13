@@ -44,7 +44,6 @@ class RaidplanController extends AbstractActionController
         try {
             $events = $this->getEventsTable()->getEvents($id);
             $playersTable = $this->getPlayersTable();
-            $jobsTable = $this->getJobsTable();
         }
         catch (\Exception $ex) {
             return $this->redirect()->toRoute('events', array(
@@ -60,10 +59,7 @@ class RaidplanController extends AbstractActionController
 
         $form  = new EventForm();
         $form->bind($events);
-        $playerChoose = new PlayerForm($this->getPlayersTable(), 'select');
-        $allPlayers = $playersTable->fetchAll();
-
-
+        $playerForm = new PlayerForm();
 /**
         foreach ($allPlayers as $player ) {
             $jobForm = new JobForm($player->id, $playersTable, $jobsTable);
@@ -88,8 +84,7 @@ class RaidplanController extends AbstractActionController
         return array(
             'id' => $id,
             'form' => $form,
-            'playerChoose' => $playerChoose,
-            //'jobform' => $jobForm,
+            'playerForm' => $playerForm,
             'playerdata' => $playerRowDataArray,
         );
     }

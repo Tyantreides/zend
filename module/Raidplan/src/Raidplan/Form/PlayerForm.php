@@ -95,6 +95,70 @@ class PlayerForm extends Form
         ));
     }
 
+    public function getPlayerJobs($playerid, $playerData) {
+
+        foreach ($playerData as $playerEntry) {
+            if ($playerid == $playerEntry['playerid']) {
+                $jobs[] = array('jobname' => $playerEntry['jobname'],
+                                'jobshortname' => $playerEntry['jobshortname'],
+                                'ilvl' => $playerEntry['ilvl'],
+                );
+            }
+        }
+    }
+
+    public function getPlayerList($playerData) {
+        $playerData = $this->groupPlayerData($playerData);
+        $output = '<div>';
+        $output .= '<table>';
+        foreach ($playerData as $playerentry) {
+            $output .= '<tr class="ui-widget-content">';
+            foreach ($playerentry as $job) {
+                $output .= '<td>';
+                foreach ($job as $value) {
+                    $output .= '<div style="display:inline;">'.$value.'</div>';
+                }
+                $output .= '</td>';
+            }
+            $output .= '</tr>';
+        }
+        $output .= '</table>';
+        $output .= '</div>';
+        return $output;
+    }
+
+    public function getAddPlayerForm($playerData) {
+        $output = '<div>';
+        $output .= '<table>';
+        foreach ($playerData as $playerentry) {
+            $output .= '<tr class="ui-widget-content">';
+            foreach ($playerentry as $playerfield) {
+                $output .= '<td>';
+                $output .= $playerfield;
+                $output .= '</td>';
+            }
+            $output .= '</tr>';
+        }
+        $output .= '</table>';
+        $output .= '</div>';
+        return $output;
+    }
+
+    public function printData($method, $playerData) {
+        $methodname = 'get'.$method;
+        if (method_exists($this, $methodname)) {
+            return $this->$methodname($playerData);
+        }
+    }
+
+    private function groupPlayerData($playerData) {
+        foreach ($playerData as $player) {
+            $groupedPlayerData[$player['playerid']][] = $player;
+        }
+        return $groupedPlayerData;
+    }
+
+
 
     /**
     private function select(PlayersTable $table){

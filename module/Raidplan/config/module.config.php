@@ -124,7 +124,7 @@ return array(
     ),
     'view_manager' => array(
         'template_map' => array(
-            //'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'layout/listeventsjson'           => __DIR__ . '/../view/layout/withoutlayout.phtml',
             'layout/events'           => __DIR__ . '/../view/layout/layout.phtml',
             'raidplan/raidplan/listeventsjson' => __DIR__ . '/../view/raidplan/raidplan/rawjson.phtml',
