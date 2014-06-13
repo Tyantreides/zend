@@ -51,15 +51,24 @@ class RaidplanController extends AbstractActionController
                 'action' => 'index'
             ));
         }
+        $playersData = $this->getPlayersTable()->fetchPlayerData();
+
+        foreach ($playersData as $playerDataRow) {
+            $playerRowDataArray[] =  $playerDataRow;
+        }
+
+
         $form  = new EventForm();
         $form->bind($events);
         $playerChoose = new PlayerForm($this->getPlayersTable(), 'select');
         $allPlayers = $playersTable->fetchAll();
 
+
+/**
         foreach ($allPlayers as $player ) {
             $jobForm = new JobForm($player->id, $playersTable, $jobsTable);
         }
-
+*/
 
         $form->get('submit')->setAttribute('value', 'Edit');
 
@@ -80,7 +89,8 @@ class RaidplanController extends AbstractActionController
             'id' => $id,
             'form' => $form,
             'playerChoose' => $playerChoose,
-            'jobform' => $jobForm,
+            //'jobform' => $jobForm,
+            'playerdata' => $playerRowDataArray,
         );
     }
 

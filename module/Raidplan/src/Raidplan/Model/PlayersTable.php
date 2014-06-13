@@ -3,20 +3,31 @@
 namespace Raidplan\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use ZendTest\Code\Scanner\TestAsset\MapperExample\DbAdapter;
 
 class PlayersTable
 {
-    protected $tableGateway;
+    protected $dbAdapter;
 
-    public function __construct(TableGateway $tableGateway)
+    public function __construct($defaultAdapter)
     {
-        $this->tableGateway = $tableGateway;
+        $this->dbAdapter = $defaultAdapter;
     }
 
     public function fetchAll()
     {
-        $resultSet = $this->tableGateway->select();
-        return $resultSet;
+
+    }
+
+    public function fetchPlayerData() {
+       $statement = $this->dbAdapter->query('SELECT *
+                                    FROM ep_players as p
+                                    JOIN ep_players_jobs as pxj ON p.id = pxj.playerid
+                                    JOIN ep_jobs as j ON pxj.jobid = j.id
+                                    JOIN ep_roles as r on j.role = r.id;');
+
+        $result = $statement->execute();
+        return $result;
     }
 
     public function getPlayers($id)
@@ -32,27 +43,7 @@ class PlayersTable
 
     public function savePlayers(Players $events)
     {
-        $data = array(
-            'titel' => $events->titel,
-            'beschreibung'  => $events->beschreibung,
-            'datetime'  => $events->datetime,
-            'status'  => $events->status,
-            'activityid'  => $events->activityid,
-            'invited'  => $events->invited,
-            'accepted'  => $events->accepted,
-            'declined'  => $events->declined,
-        );
 
-        $id = (int) $events->id;
-        if ($id == 0) {
-            $this->tableGateway->insert($data);
-        } else {
-            if ($this->getPlayers($id)) {
-                $this->tableGateway->update($data, array('id' => $id));
-            } else {
-                throw new \Exception('Players id does not exist');
-            }
-        }
     }
 
     public function deletePlayers($id)
@@ -61,13 +52,5 @@ class PlayersTable
     }
 
 
-    public function getPlayersDataForSelectElement()
-    {
-        $data = $this->fetchAll();
-        $selectData = array();
-        foreach ($data as $selectOption) {
-            $selectData[$selectOption->id] = $selectOption->charname;
-        }
-        return $selectData;
-    }
+    
 }

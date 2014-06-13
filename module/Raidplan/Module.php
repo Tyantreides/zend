@@ -34,6 +34,23 @@ class Module
     {
         return array(
             'factories' => array(
+                //playerstable
+                'Raidplan\Model\PlayersTable' =>  function($sm) {
+                        $playersDefaultDbAdapter = $sm->get('defaultAdapter');
+                        //$playersTableGateway = $sm->get('PlayersTableGateway');
+                        $playersTable = new PlayersTable($playersDefaultDbAdapter);
+                        return $playersTable;
+                    },
+                'PlayersTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new Players());
+                        return new TableGateway('ep_players', $dbAdapter, null, $resultSetPrototype);
+                    },
+                'defaultAdapter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return $dbAdapter;
+                    },
                 'Raidplan\Model\EventsTable' =>  function($sm) {
                         $tableGateway = $sm->get('EventsTableGateway');
                         $table = new EventsTable($tableGateway);
@@ -45,17 +62,7 @@ class Module
                         $resultSetPrototype->setArrayObjectPrototype(new Events());
                         return new TableGateway('ep_events', $dbAdapter, null, $resultSetPrototype);
                     },
-                'Raidplan\Model\PlayersTable' =>  function($sm) {
-                        $tableGateway = $sm->get('PlayersTableGateway');
-                        $table = new PlayersTable($tableGateway);
-                        return $table;
-                    },
-                'PlayersTableGateway' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        $resultSetPrototype = new ResultSet();
-                        $resultSetPrototype->setArrayObjectPrototype(new Players());
-                        return new TableGateway('ep_players', $dbAdapter, null, $resultSetPrototype);
-                    },
+
                 'Raidplan\Model\JobsTable' =>  function($sm) {
                         $tableGateway = $sm->get('JobsTableGateway');
                         $table = new JobsTable($tableGateway);

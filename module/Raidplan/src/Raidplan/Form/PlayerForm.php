@@ -95,6 +95,8 @@ class PlayerForm extends Form
         ));
     }
 
+
+    /**
     private function select(PlayersTable $table){
         $this->add(array(
             'name'    => 'players',
@@ -105,6 +107,6 @@ class PlayerForm extends Form
                 'empty_option'  => '--- bitte waehlen ---'
             )
         ));
-    }
+    }*/
 
 }
