@@ -113,6 +113,9 @@ class PlayerForm extends Form
         $output .= '<table>';
         foreach ($playerData as $playerentry) {
             $output .= '<tr class="ui-widget-content">';
+                $output .= '<td colspan="'.count($playerentry).'">'.$playerentry[0]['player_charname'].'</td>';
+            $output .= '</tr>';
+            $output .= '<tr class="ui-widget-content">';
             foreach ($playerentry as $job) {
                 $output .= '<td>';
                 foreach ($job as $value) {
