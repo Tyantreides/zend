@@ -43,8 +43,8 @@ class EventForm extends Form
                     'label' => 'Datum',
                 ),
                 'attributes' => array(
-                    'id' => 'datetime',
-                    'class' => 'form-control',
+                    'id' => 'datepicker',
+                    'class' => 'hasDatepicker',
                 ),
             ));
             $this->add(array(

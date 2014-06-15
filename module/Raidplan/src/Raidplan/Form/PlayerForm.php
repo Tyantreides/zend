@@ -118,9 +118,11 @@ class PlayerForm extends Form
             $output .= '<tr class="ui-widget-content">';
             foreach ($playerentry as $job) {
                 $output .= '<td>';
-                foreach ($job as $value) {
-                    $output .= '<div style="display:inline;">'.$value.'</div>';
-                }
+                $output .= $this->getJobTumbnail($job['job_shortname']);
+                $output .= $job['job_shortname'].' ('.$job['job_ilvl'].')';
+//                foreach ($job as $value) {
+//                    $output .= '<div style="display:inline;">'.$value.'</div>';
+//                }
                 $output .= '</td>';
             }
             $output .= '</tr>';
@@ -161,6 +163,11 @@ class PlayerForm extends Form
         return $groupedPlayerData;
     }
 
+
+    private function getJobTumbnail ($jobshortname) {
+        $output = '<img src="/img/FFXIV/res/tumbnails/job_'.$jobshortname.'_24x24.png">';
+        return $output;
+    }
 
 
     /**

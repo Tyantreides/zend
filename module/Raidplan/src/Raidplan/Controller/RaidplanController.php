@@ -50,6 +50,7 @@ class RaidplanController extends AbstractActionController
                 'action' => 'index'
             ));
         }
+        $eventdata = $this->getEventsTable()->getEvents($id);
         $playersData = $this->getPlayersTable()->fetchPlayerData();
 
         foreach ($playersData as $playerDataRow) {
@@ -86,6 +87,7 @@ class RaidplanController extends AbstractActionController
             'form' => $form,
             'playerForm' => $playerForm,
             'playerdata' => $playerRowDataArray,
+            'eventData' => $eventdata,
         );
     }
 
