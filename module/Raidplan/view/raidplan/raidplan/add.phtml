@@ -2,19 +2,71 @@
 
 // module/Raidplan/view/Raidplan/Raidplan/add.phtml:
 
-$title = 'Add new Raidplan';
+$title = 'Event hinzufügen:';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <?php
-$form->setAttribute('action', $this->url('events', array('controller' => 'Raidplan','action' => 'add')));
+$form->setAttribute('action', $this->url('addevent'));
 $form->prepare();
 
-echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('id'));
-echo $this->formRow($form->get('titel'));
-echo $this->formRow($form->get('beschreibung'));
-echo $this->formSubmit($form->get('submit'));
-echo $this->form()->closeTag();
 
-//echo $this->formCollection($form);
+?>
+
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Eventdaten</a></li>
+        <li><a href="#tabs-2">Teilnehmer</a></li>
+    </ul>
+    <div id="tabs-1">
+        <p>
+            <?php
+
+
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('id'));
+            echo $this->formRow($form->get('titel'));
+            echo $this->formRow($form->get('beschreibung'));
+            //echo $this->formRow($form->get('datetime'));
+            echo '<label>Datum:</label><input name="datetime" type="text" id="datepicker" class="form-control">';
+
+           echo '<label>Uhrzeit:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                    <input name="time" type="text" class="form-control">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+                </div>';
+            //echo $this->formRow($form->get('status'));
+            //echo $this->formRow($form->get('activityid'));
+            //echo $this->formRow($form->get('invited'));
+            //echo $this->formRow($form->get('accepted'));
+            //echo $this->formRow($form->get('declined'));
+            echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+
+            ?>
+
+
+        </p>
+    </div>
+    <div id="tabs-2">
+        <div><?php echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles); ?></div>
+        <p><?php echo $this->playerForm->printData('PlayerList', $this->playersData); ?></p>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $( "#tabs" ).tabs();
+    });
+    $(function() {
+        $( "#datepicker" ).datepicker();
+        $( "#datepicker" ).datepicker( "option", "dateFormat", "dd.mm.yy" );
+        $('.clockpicker').clockpicker();
+    });
+
+</script>
+
+
+
+

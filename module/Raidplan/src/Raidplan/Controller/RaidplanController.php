@@ -95,8 +95,8 @@ class RaidplanController extends AbstractActionController
     {
         $form = new EventForm();
         $form->get('submit')->setValue('Add');
-
         $request = $this->getRequest();
+        //if form was send
         if ($request->isPost()) {
             $events = new Events();
 //            $form->setInputFilter($Raidplan->getInputFilter());
@@ -104,13 +104,30 @@ class RaidplanController extends AbstractActionController
 
             if ($form->isValid()) {
                 $events->exchangeArray($form->getData());
-                $this->getEventsTable()->saveEvent($events);
+                $this->getEventsTable()->saveEvents($events);
 
                 // Redirect to list of Raidplans
                 return $this->redirect()->toRoute('events');
             }
         }
-        return array('form' => $form);
+        //if new
+        else {
+            try {
+                $playersTable = $this->getPlayersTable();
+                $playersData = $this->getPlayersTable()->fetchPlayerData();
+                $allRoles = $this->getPlayersTable()->fetchAllRoles();
+                $playerForm = new PlayerForm();
+            }
+            catch (\Exception $ex) {
+                $playerstable = false;
+                $playersData = false;
+                $playerForm = false;
+            }
+        }
+        return array('form' => $form,
+        'playersData' => $playersData,
+        'playerForm' => $playerForm,
+        'allRoles' => $allRoles);
     }
 
     public function getEventsTable()

@@ -27,7 +27,7 @@ class EventForm extends Form
                 ));
             $this->add(array(
                 'name' => 'beschreibung',
-                'type' => 'Text',
+                'type' => 'textarea',
                 'options' => array(
                     'label' => 'Beschreibung',
                     ),
@@ -111,4 +111,11 @@ class EventForm extends Form
                 ),
             ));
         }
+
+    public function getBlankPartyAssembler($partysize) {
+
+        $output = '';
+
+    }
+
     }

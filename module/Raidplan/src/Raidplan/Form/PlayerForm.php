@@ -163,12 +163,43 @@ class PlayerForm extends Form
         return $groupedPlayerData;
     }
 
+    private function getRoleTumbnail ($roleShortName) {
+        $output = '<img src="/img/FFXIV/res/tumbnails/role_'.$roleShortName.'_24x24.png">';
+        return $output;
+    }
 
     private function getJobTumbnail ($jobshortname) {
         $output = '<img src="/img/FFXIV/res/tumbnails/job_'.$jobshortname.'_24x24.png">';
         return $output;
     }
 
+    public function getBlankPartyAssembler($partysize, $allRoles) {
+
+        foreach ($allRoles as $role) {
+            $roleIds[] = $role['id'];
+            $roleNames[] = $role['rolename'];
+            $roleShortNames[] = $role['roleshortname'];
+        }
+
+        $output = '<div class="btn-group-vertical">';
+        for ($m=0; $m<$partysize; $m++) {
+            $output .= '<div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Dropdown
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Dropdown link</a></li>';
+                                foreach ($roleShortNames as $roleId => $roleShortname) {
+                                    $output .= '<li><a href="#">'.$this->getRoleTumbnail($roleShortname).$roleShortname.'</a></li>';
+                                }
+            $output .= '    </ul>
+                        </div>
+                        ';
+        }
+        $output .= '';
+        return $output;
+    }
 
     /**
     private function select(PlayersTable $table){

@@ -45,6 +45,12 @@ class PlayersTable
         return $result;
     }
 
+    public function fetchAllRoles () {
+        $statement = $this->dbAdapter->query('SELECT * FROM ep_roles;');
+        $result = $statement->execute();
+        return $result;
+    }
+
     public function getPlayers($id)
     {
         $id  = (int) $id;
