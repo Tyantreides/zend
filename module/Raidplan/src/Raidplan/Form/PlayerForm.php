@@ -193,7 +193,7 @@ class PlayerForm extends Form
                                 foreach ($roleShortNames as $roleId => $roleShortname) {
                                     $output .= '<li style="width:210px;"><a data-for="'.$m.'" data-roleid="'.$roleId.'" href="#">'.$this->getRoleTumbnail($roleShortname).'&nbsp;'.$roleNames[$roleId].'</a></li>';
                                 }
-            $output .= '    </ul>
+            $output .= '<li>&nbsp;</li>    </ul>
                         </div>
                         ';
         }
@@ -203,8 +203,9 @@ class PlayerForm extends Form
                         $( this ).click(function() {
                             //alert( "click" );
                             var choosedroleelement = "#choosedrole_"+$(this).data("for");
+                            var pfeilspan = "&nbsp;<span class=\"caret\"></span>";
                             $(choosedroleelement).data("roleid", $(this).data("roleid"));
-                            $(choosedroleelement).html($(this).html());
+                            $(choosedroleelement).html($(this).html()+pfeilspan);
                         });
                     });
                     ';
