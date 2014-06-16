@@ -51,8 +51,19 @@ $form->prepare();
         </p>
     </div>
     <div id="tabs-2">
-        <div><?php echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles); ?></div>
-        <p><?php echo $this->playerForm->printData('PlayerList', $this->playersData); ?></p>
+        <div><?php
+            if ($this->allRoles) {
+                echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles);
+            }
+            ?></div>
+        <p><?php
+            if ($this->playersData){
+                echo $this->playerForm->printData('PlayerList', $this->playersData);
+            }
+            else {
+                echo "Datenbankproblem";
+            }
+            ?></p>
     </div>
 </div>
 <script>

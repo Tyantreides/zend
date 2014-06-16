@@ -122,6 +122,7 @@ class RaidplanController extends AbstractActionController
                 $playerstable = false;
                 $playersData = false;
                 $playerForm = false;
+                $allRoles = false;
             }
         }
         return array('form' => $form,
