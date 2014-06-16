@@ -164,7 +164,7 @@ class PlayerForm extends Form
     }
 
     private function getRoleTumbnail ($roleShortName) {
-        $output = '<img src="/img/FFXIV/res/tumbnails/role_'.strtolower($roleShortName).'_24x24.png">';
+        $output = '<img style="float:left;" src="/img/FFXIV/res/tumbnails/role_'.strtolower($roleShortName).'_24x24.png">';
         return $output;
     }
 
@@ -181,17 +181,17 @@ class PlayerForm extends Form
             $roleShortNames[] = $role['roleshortname'];
         }
 
-        $output = '<div class="btn-group-vertical" id="partyassembler">';
+        $output = '<div class="btn-group-vertical" id="partyassembler" style="width:210px">';
         for ($m=0; $m<$partysize; $m++) {
             $output .= '<div class="btn-group" id="partyspot_'.$m.'">
-                            <button id="choosedrole_'.$m.'" data-roleid="99" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <button style="text-align:left;" id="choosedrole_'.$m.'" data-roleid="99" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 Nicht festgelegt
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a data-for="'.$m.'" data-roleid="99" href="#">Nicht festgelegt</a></li>';
                                 foreach ($roleShortNames as $roleId => $roleShortname) {
-                                    $output .= '<li><a data-for="'.$m.'" data-roleid="'.$roleId.'" href="#">'.$this->getRoleTumbnail($roleShortname).$roleNames[$roleId].'</a></li>';
+                                    $output .= '<li style="width:210px;"><a data-for="'.$m.'" data-roleid="'.$roleId.'" href="#">'.$this->getRoleTumbnail($roleShortname).'&nbsp;'.$roleNames[$roleId].'</a></li>';
                                 }
             $output .= '    </ul>
                         </div>
