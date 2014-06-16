@@ -18,10 +18,12 @@ echo 'rp layout';
         ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
         ->prependStylesheet($this->basePath() . '/css/clockpicker.css')
+        ->prependStylesheet($this->basePath() . '/css/datepicker.css')
         ->prependStylesheet($this->basePath() . '/css/lib/vader/jquery-ui.min.css')?>
 
     <!-- Scripts -->
     <?php echo $this->headScript()
+        ->prependFile($this->basePath() . '/js/bootstrap-datepicker.js')
         ->prependFile($this->basePath() . '/js/clockpicker.js')
         ->prependFile($this->basePath() . '/js/fullcalendar/lib/jquery-ui-1.10.4.custom.min.js')
         ->prependFile($this->basePath() . '/js/bootstrap.min.js')
@@ -58,7 +60,8 @@ echo 'rp layout';
     <?php echo $this->content; ?>
     <hr>
     <footer>
-        <p>&copy; 2005 - <?php echo date('Y') ?> by Zend Technologies Ltd. <?php echo $this->translate('All rights reserved.') ?></p>
+        <!--<p>&copy; <?php //echo date('Y') ?> by Christian Meissner. <?php //echo $this->translate('All rights reserved.') ?></p>-->
+        <p>&copy 2014 by Tyantreides</p>
     </footer>
 </div> <!-- /container -->
 <?php echo $this->inlineScript() ?>

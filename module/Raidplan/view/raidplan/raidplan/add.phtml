@@ -28,23 +28,23 @@ $form->prepare();
             echo $this->formHidden($form->get('id'));
             echo $this->formRow($form->get('titel'));
             echo $this->formRow($form->get('beschreibung'));
-            //echo $this->formRow($form->get('datetime'));
-            echo '<label>Datum:</label><input name="datetime" type="text" id="datepicker" class="form-control">';
+            echo $this->formRow($form->get('datetime'));
+            //echo '<label>Datum:</label><input name="datetime" type="text" id="datepicker" class="form-control">';
 
-           echo '<label>Uhrzeit:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                    <input name="time" type="text" class="form-control">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-time"></span>
-                    </span>
-                </div>';
-            //echo $this->formRow($form->get('status'));
-            //echo $this->formRow($form->get('activityid'));
-            //echo $this->formRow($form->get('invited'));
-            //echo $this->formRow($form->get('accepted'));
-            //echo $this->formRow($form->get('declined'));
-            echo $this->formSubmit($form->get('submit'));
+//           echo '<label>Uhrzeit:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+//                    <input name="time" type="text" class="form-control">
+//                    <span class="input-group-addon">
+//                        <span class="glyphicon glyphicon-time"></span>
+//                    </span>
+//                </div>';
+            echo $this->formRow($form->get('status'));
+            echo $this->formRow($form->get('activityid'));
+            echo $this->formRow($form->get('invited'));
+            echo $this->formRow($form->get('accepted'));
+            echo $this->formRow($form->get('declined'));
+            //echo $this->formSubmit($form->get('submit'));
             echo $this->form()->closeTag();
-
+            echo $this->form->getEventAddForm();
             ?>
 
 
@@ -61,8 +61,9 @@ $form->prepare();
     });
     $(function() {
         $( "#datepicker" ).datepicker();
-        $( "#datepicker" ).datepicker( "option", "dateFormat", "dd.mm.yy" );
         $('.clockpicker').clockpicker();
+
+
     });
 
 </script>

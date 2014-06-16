@@ -164,12 +164,12 @@ class PlayerForm extends Form
     }
 
     private function getRoleTumbnail ($roleShortName) {
-        $output = '<img src="/img/FFXIV/res/tumbnails/role_'.$roleShortName.'_24x24.png">';
+        $output = '<img src="/img/FFXIV/res/tumbnails/role_'.strtolower($roleShortName).'_24x24.png">';
         return $output;
     }
 
     private function getJobTumbnail ($jobshortname) {
-        $output = '<img src="/img/FFXIV/res/tumbnails/job_'.$jobshortname.'_24x24.png">';
+        $output = '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($jobshortname).'_24x24.png">';
         return $output;
     }
 
@@ -181,23 +181,34 @@ class PlayerForm extends Form
             $roleShortNames[] = $role['roleshortname'];
         }
 
-        $output = '<div class="btn-group-vertical">';
+        $output = '<div class="btn-group-vertical" id="partyassembler">';
         for ($m=0; $m<$partysize; $m++) {
-            $output .= '<div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                Dropdown
+            $output .= '<div class="btn-group" id="partyspot_'.$m.'">
+                            <button id="choosedrole_'.$m.'" data-roleid="99" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Nicht festgelegt
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Dropdown link</a></li>';
+                                <li><a data-for="'.$m.'" data-roleid="99" href="#">Nicht festgelegt</a></li>';
                                 foreach ($roleShortNames as $roleId => $roleShortname) {
-                                    $output .= '<li><a href="#">'.$this->getRoleTumbnail($roleShortname).$roleShortname.'</a></li>';
+                                    $output .= '<li><a data-for="'.$m.'" data-roleid="'.$roleId.'" href="#">'.$this->getRoleTumbnail($roleShortname).$roleNames[$roleId].'</a></li>';
                                 }
             $output .= '    </ul>
                         </div>
                         ';
         }
         $output .= '';
+        $output .= '<script>';
+        $output .= '$("#partyassembler a").each(function(){
+                        $( this ).click(function() {
+                            //alert( "click" );
+                            var choosedroleelement = "#choosedrole_"+$(this).data("for");
+                            $(choosedroleelement).data("roleid", $(this).data("roleid"));
+                            $(choosedroleelement).html($(this).html());
+                        });
+                    });
+                    ';
+        $output .= '</script>';
         return $output;
     }
 

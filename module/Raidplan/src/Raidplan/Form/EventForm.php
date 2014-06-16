@@ -16,10 +16,7 @@ class EventForm extends Form
                 ));
             $this->add(array(
                 'name' => 'titel',
-                'type' => 'Text',
-                'options' => array(
-                    'label' => 'Titel',
-                    ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'titel',
                     'class' => 'form-control',
@@ -27,10 +24,7 @@ class EventForm extends Form
                 ));
             $this->add(array(
                 'name' => 'beschreibung',
-                'type' => 'textarea',
-                'options' => array(
-                    'label' => 'Beschreibung',
-                    ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'beschreibung',
                     'class' => 'form-control',
@@ -38,21 +32,15 @@ class EventForm extends Form
                 ));
             $this->add(array(
                 'name' => 'datetime',
-                'type' => 'text',
-                'options' => array(
-                    'label' => 'Datum',
-                ),
+                'type' => 'hidden',
                 'attributes' => array(
-                    'id' => 'datepicker',
+                    'id' => 'fulldatetime',
                     'class' => 'hasDatepicker',
                 ),
             ));
             $this->add(array(
                 'name' => 'status',
-                'type' => 'text',
-                'options' => array(
-                    'label' => 'Status',
-                ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'status',
                     'class' => 'form-control',
@@ -60,10 +48,7 @@ class EventForm extends Form
             ));
             $this->add(array(
                 'name' => 'activityid',
-                'type' => 'text',
-                'options' => array(
-                    'label' => 'Activityid',
-                ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'activityid',
                     'class' => 'form-control',
@@ -71,10 +56,7 @@ class EventForm extends Form
             ));
             $this->add(array(
                 'name' => 'invited',
-                'type' => 'text',
-                'options' => array(
-                    'label' => 'Invited',
-                ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'invited',
                     'class' => 'form-control',
@@ -82,10 +64,7 @@ class EventForm extends Form
             ));
             $this->add(array(
                 'name' => 'accepted',
-                'type' => 'text',
-                'options' => array(
-                    'label' => 'accepted',
-                ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'accepted',
                     'class' => 'form-control',
@@ -93,10 +72,7 @@ class EventForm extends Form
             ));
             $this->add(array(
                 'name' => 'declined',
-                'type' => 'text',
-                'options' => array(
-                    'label' => 'declined',
-                ),
+                'type' => 'hidden',
                 'attributes' => array(
                     'id' => 'declined',
                     'class' => 'form-control',
@@ -112,10 +88,39 @@ class EventForm extends Form
             ));
         }
 
-    public function getBlankPartyAssembler($partysize) {
-
+    public function getEventAddForm() {
         $output = '';
-
+        $output .= '<div class="eventaddform">';
+        $output .= '<form action="/addevent" method="POST" name="event" id="event">
+                        <input type="hidden" name="preid" value="">
+                        <label for="pretitel">Titel</label>
+                        <input type="text" name="pretitel" id="titel" class="form-control" value="">
+                        <label for="prebeschreibung">Beschreibung</label>
+                        <textarea name="prebeschreibung" id="beschreibung" class="form-control"></textarea>
+                        <label>Datum:</label>
+                        <input name="predate" type="text" id="datepicker" class="form-control hasDatepicker">
+                        <label>Uhrzeit:</label>
+                        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                            <input name="pretime" type="text" class="form-control">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-time"></span>
+                            </span>
+                        </div>
+                    </form>';
+        $output .= '</div>';
+        $output .= '<script>';
+        $output .= '$(".eventaddform input").each(function(){
+                        $( this ).change(function() {
+                            alert( "change" );
+                        });
+                    });
+                    $(".eventaddform #datepicker").datepicker()
+                        .on("changeDate", function(ev){
+                            alert( "change" );
+                            $(this).datepicker("hide");
+                        });';
+        $output .= '</script>';
+        return $output;
     }
 
     }
