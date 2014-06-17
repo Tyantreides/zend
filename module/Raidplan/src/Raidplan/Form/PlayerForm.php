@@ -180,10 +180,12 @@ class PlayerForm extends Form
             $roleNames[] = $role['rolename'];
             $roleShortNames[] = $role['roleshortname'];
         }
-
-        $output = '<div class="btn-group-vertical" id="partyassembler" style="width:210px">';
+        $output = '<table>';
+        $output .= '<tr>';
+        $output .= '<td>';
+        $output .= '<div class="btn-group-vertical" id="partyassembler" style="width:210px;">';
         for ($m=0; $m<$partysize; $m++) {
-            $output .= '<div class="btn-group" id="partyspot_'.$m.'">
+            $output .= '<div class="btn-group" id="partyspot_'.$m.'" style="margin-bottom:5px">
                             <button style="text-align:left;" id="choosedrole_'.$m.'" data-roleid="99" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 Nicht festgelegt
                                 <span class="caret"></span>
@@ -195,9 +197,20 @@ class PlayerForm extends Form
                                 }
             $output .= '<li>&nbsp;</li>    </ul>
                         </div>
+
                         ';
         }
-        $output .= '';
+        $output .= '</div>';
+        $output .= '</td>';
+        $output .= '<td>';
+        $output .= '<div style="width: 200px;">';
+        for ($m=0; $m<$partysize; $m++) {
+            $output .= '<div style="height: 34px">Spot</div>';
+        }
+        $output .= '</div>';
+        $output .= '</td>';
+        $output .= '</tr>';
+        $output .= '</table>';
         $output .= '<script>';
         $output .= '$("#partyassembler a").each(function(){
                         $( this ).click(function() {
