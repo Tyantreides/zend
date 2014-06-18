@@ -349,6 +349,7 @@ class PlayerForm extends Form
                                 $(fromelementid).removeClass("playerspot");
                                 $(fromelementid).addClass("empty");
                                 $(fromelementid).addClass("ui-droppable");
+                                $(fromelementid).data("player",false);
                             }
 
                         }
