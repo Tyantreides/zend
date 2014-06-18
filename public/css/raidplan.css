@@ -7,7 +7,7 @@ Partyassembler
 */
 #partyassembler{
 
-    width: 450px;
+    width: 550px;
 }
 
 #partyassembler .roleselection{
@@ -15,7 +15,7 @@ Partyassembler
 }
 
 #partyassembler .invited{
-
+    width: 300px;
 }
 
 #partyassembler .accepted{
@@ -35,9 +35,10 @@ Partyassembler
 #partyassembler .invited .empty{
     border-bottom: 1px solid #a3a3a3;
     border-right: 1px solid #a3a3a3;
-    width: 200px;
+    width: 300px;
     height: 38px;
     margin-bottom: 5px;
+    z-index: 10;
 }
 
 #partyassembler .invited .empty-hover{
@@ -45,19 +46,27 @@ Partyassembler
     border-right: 2px solid #ffffff;
     border-top: 2px solid #ffffff;
     border-left: 2px solid #ffffff;
-    width: 200px;
+    width: 300px;
     height: 38px;
     margin-bottom: 5px;
+    z-index: 11;
 }
 
 #partyassembler .invited .player{
-    width: 200px;
+    width: 300px;
     height: 38px;
     margin-bottom: 5px;
+    position: relative;
+}
+
+#partyassembler .invited .player .playername{
+    margin-top: 6px;
+    margin-left: 6px;
 }
 
 #partyassembler .invited .player .joblist{
     display:none;
+    background: #323232;
 }
 
 #partyassembler .accepted .empty{

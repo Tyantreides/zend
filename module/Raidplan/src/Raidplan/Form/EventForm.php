@@ -118,7 +118,10 @@ class EventForm extends Form
                         .on("changeDate", function(ev){
                             alert( "change" );
                             $(this).datepicker("hide");
-                        });';
+                        });
+                    //WLTODO Position Timepicker anpassen
+                    //WLTODO Formularüberträge implementieren
+                        ';
         $output .= '</script>';
         return $output;
     }

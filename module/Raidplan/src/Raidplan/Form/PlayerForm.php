@@ -129,7 +129,7 @@ class PlayerForm extends Form
     private function getPlayer($playerEntry){
         $output = '';
         $output .= '<div class="ui-widget-content player" id="player_'.$playerEntry[0]['playerid'].'">';
-            $output .= $playerEntry[0]['player_charname'];
+            $output .= '<p class="playername">'.$playerEntry[0]['player_charname'].'</p>';
             $output .= '<div class="ui-widget-content joblist">';
             foreach ($playerEntry as $job) {
                 $output .= $this->getJobForPlayer($job);
@@ -362,12 +362,18 @@ class PlayerForm extends Form
                         ui.draggable.data("spot",$(this).attr("id"));
                         $(this).data("player",ui.draggable.attr("id"));
                         $(this).append(ui.draggable);
+                        var idtext = $(this).attr("id");
+                        var idteile = idtext.split("_");
+                         ui.draggable.zIndex(100-idteile[1]);
                       }
                     });
                     $( "#partyassembler .empty" ).on("drop", function(event,ui){
                         //ui.draggable.addClass("disabled");
                         //ui.draggable.draggable("disable");
                     });
+
+                    //WLTODO funktion zum löschen der Player von Spots zurück in die Playerliste implementieren
+                    //WLTODO Formularübertrag implementieren
                     ';
         $output .= '</script>';
         return $output;
