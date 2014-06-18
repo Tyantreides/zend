@@ -1,0 +1,87 @@
+
+
+
+
+/**
+Partyassembler
+*/
+#partyassembler{
+
+    width: 450px;
+}
+
+#partyassembler .roleselection{
+
+}
+
+#partyassembler .invited{
+
+}
+
+#partyassembler .accepted{
+
+}
+
+#partyassembler .declined{
+
+}
+
+#partyassembler .roleselection .roleselect{
+    width: 200px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+#partyassembler .invited .empty{
+    border-bottom: 1px solid #a3a3a3;
+    border-right: 1px solid #a3a3a3;
+    width: 200px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+#partyassembler .invited .empty-hover{
+    border-bottom: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    width: 200px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+#partyassembler .invited .player{
+    width: 200px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+#partyassembler .invited .player .joblist{
+    display:none;
+}
+
+#partyassembler .accepted .empty{
+    border-bottom: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    width: 200px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+#partyassembler .declined .empty{
+    border-bottom: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    width: 200px;
+    height: 38px;
+    margin-bottom: 5px;
+}
+
+#playerlist{
+    height: 600px;
+}
+
+#playerlist .player{
+    width: 200px;
+    float: left;
+    margin-right: 10px;
+}

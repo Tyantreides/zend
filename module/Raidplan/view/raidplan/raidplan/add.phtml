@@ -16,10 +16,10 @@ $form->prepare();
 
 <div id="tabs"  height="600px">
     <ul>
-        <li><a href="#tabs-1">Eventdaten</a></li>
-        <li><a href="#tabs-2">Teilnehmer</a></li>
+        <li><a href="#eventdaten">Eventdaten</a></li>
+        <li><a href="#teilnehmer">Teilnehmer</a></li>
     </ul>
-    <div id="tabs-1">
+    <div id="eventdaten">
         <p>
             <?php
 
@@ -50,10 +50,11 @@ $form->prepare();
 
         </p>
     </div>
-    <div id="tabs-2"  >
+    <div id="teilnehmer"  >
         <div height="600px" width="100%"><?php
             if ($this->allRoles) {
-                echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles);
+                //echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles);
+                echo $this->playerForm->getPartyAssemblerAdd($this->allRoles);
             }
             ?></div>
         <p><?php
