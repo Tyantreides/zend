@@ -41,6 +41,14 @@ Partyassembler
     z-index: 10;
 }
 
+#partyassembler .buttons .empty{
+    border: 1px solid #444444;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 5px;
+    z-index: 10;
+}
+
 #partyassembler .invited .empty-hover{
     border-bottom: 2px solid #ffffff;
     border-right: 2px solid #ffffff;

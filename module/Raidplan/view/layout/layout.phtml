@@ -24,6 +24,7 @@ echo 'rp layout';
 
     <!-- Scripts -->
     <?php echo $this->headScript()
+        ->prependFile($this->basePath() . '/js/raidplan.js')
         ->prependFile($this->basePath() . '/js/bootstrap-datepicker.js')
         ->prependFile($this->basePath() . '/js/clockpicker.js')
         ->prependFile($this->basePath() . '/js/fullcalendar/lib/jquery-ui-1.10.4.custom.min.js')
