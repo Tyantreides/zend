@@ -22,6 +22,8 @@ $( document ).ready(function() {
                 }
                 else{
                     var fromelementid = "#"+ui.draggable.data("spot");
+                    var fromid = fromelementid.split("_");
+                    deletePlayerSpotButtons(fromid[1]);
                     $(fromelementid).removeClass("playerspot");
                     $(fromelementid).addClass("empty");
                     $(fromelementid).addClass("ui-droppable");
@@ -41,10 +43,20 @@ $( document ).ready(function() {
             var idtext = $(this).attr("id");
             var idteile = idtext.split("_");
             ui.draggable.zIndex(100-idteile[1]);
+            addPlayerSpotDeleteButton(idteile[1]);
         }
     });
-    function getPlayerSpotDeleteButton(spotid) {
+    function addPlayerSpotDeleteButton(spotid) {
+        var buttonid = "#buttons_"+spotid;
+        $(buttonid).removeClass("empty");
+        $(buttonid).addClass("button");
+        $(buttonid).html('<button class="delete" id="delbutton_'+spotid+'"></button>');
+    }
 
+    function deletePlayerSpotButtons(spotid) {
+        var buttonid = "#buttons_"+spotid;
+        $(buttonid).addClass("empty");
+        $(buttonid).html('');
     }
     $( "#partyassembler .empty" ).on("drop", function(event,ui){
         //ui.draggable.addClass("disabled");
