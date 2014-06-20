@@ -345,7 +345,7 @@ class PlayerForm extends Form
     private function getRoleSelect($row) {
         $output = '';
         $output .= '<div class="btn-group" id="partyspot_'.$row.'" >
-                            <button style="text-align:left; width:200px;" id="choosedrole_'.$row.'" data-roleid="99" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <button style="text-align:left; width:200px;" id="choosedrole_'.$row.'" data-roleid="999" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 Nicht festgelegt
                                 <span class="caret"></span>
                             </button>

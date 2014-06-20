@@ -1,12 +1,14 @@
 $( document ).ready(function() {
     //AddEvent Form Functions
-    $("#partyassembler a").each(function(){
+    $("#partyassembler .roleselection a").each(function(){
         $( this ).click(function() {
             //alert( "click" );
             var choosedroleelement = "#choosedrole_"+$(this).data("for");
-            var pfeilspan = "&nbsp;<span class=\"caret\"></span>";
-            $(choosedroleelement).data("roleid", $(this).data("roleid"));
-            $(choosedroleelement).html($(this).html()+pfeilspan);
+            //var pfeilspan = "&nbsp;<span class=\"caret\"></span>";
+            setRoleElement($(choosedroleelement),$(this));
+            //$(choosedroleelement).data("roleid", $(this).data("roleid"));
+            //$(choosedroleelement).html($(this).html()+pfeilspan);
+            putDataToForm();
         });
     });
     $( "#partyassembler .invited .empty" ).droppable({
@@ -44,9 +46,19 @@ $( document ).ready(function() {
             var idteile = idtext.split("_");
             ui.draggable.zIndex(100-idteile[1]);
             addPlayerSpotDeleteButton(idteile[1]);
-            grabPlayerlistData();
+            putDataToForm();
         }
     });
+
+    function setRoleElement(element, roleelement){
+        var pfeilspan = "&nbsp;<span class=\"caret\"></span>";
+        element.data("roleid", getRole(roleelement));
+        element.html(roleelement.html()+pfeilspan);
+    }
+
+    function getRole(element) {
+        return element.data("roleid");
+    }
 
     function fillSpot(){
 
@@ -136,15 +148,46 @@ $( document ).ready(function() {
     });
 
     function putDataToForm(){
+        var hiddenformelements = new Object();
+        var formData = assembleData();
+        $("#eventdaten form#event input").each(function(){
+            hiddenformelements[$(this).attr("id")] = processDataForForm(formData[$(this).attr("id")]);
+        });
+        console.log(hiddenformelements);
+    }
 
+    function processDataForForm(data) {
+        if (typeof data == 'object') {
+            return objectToJson(data);
+        }
+        else if (typeof data == 'array') {
+
+        }
+        else {
+            return data;
+        }
+    }
+
+    function objectToJson(object) {
+        return JSON.stringify(object);
     }
 
     function assembleData(){
-
+        var partyData = new Object();
+        partyData['invited'] = new Object();
+        partyData['invited']['roles'] = grabRolelistData();
+        partyData['invited']['players'] = grabPlayerlistData();
+        return partyData;
     }
 
     function grabRolelistData(){
-
+        var roleData = new Object();
+        $(".roleselection .roleselect .btn-group button").each(function(){
+            var numericid = splitid($(this).attr("id"));
+            roleData[numericid] = new Object();
+            roleData[numericid]["role"] = getRole($(this));
+        });
+        return roleData;
     }
 
     function grabPlayerlistData(){
