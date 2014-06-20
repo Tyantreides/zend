@@ -44,6 +44,7 @@ $( document ).ready(function() {
             var idteile = idtext.split("_");
             ui.draggable.zIndex(100-idteile[1]);
             addPlayerSpotDeleteButton(idteile[1]);
+            grabPlayerlistData();
         }
     });
     function addPlayerSpotDeleteButton(spotid) {
@@ -51,6 +52,12 @@ $( document ).ready(function() {
         $(buttonid).removeClass("empty");
         $(buttonid).addClass("button");
         $(buttonid).html('<button class="delete" id="delbutton_'+spotid+'"></button>');
+        //var deletebuttonelement =
+        $(buttonid+" #delbutton_"+spotid).click(function(){
+            //$(this).remove();
+            deletePlayerFromSpot(spotid);
+            deletePlayerSpotButtons(spotid);
+        });
     }
 
     function deletePlayerSpotButtons(spotid) {
@@ -58,12 +65,63 @@ $( document ).ready(function() {
         $(buttonid).addClass("empty");
         $(buttonid).html('');
     }
+
+    function deletePlayerFromSpot(spotid) {
+        var slotelementid = ".invited #invited_"+spotid;
+        var playerelementid = ".invited #invited_"+spotid+" .player";
+        resetPlayer($(playerelementid));
+        $(slotelementid).removeClass("playerspot");
+        $(slotelementid).addClass("empty");
+        $(slotelementid).addClass("ui-droppable");
+        $(slotelementid).html('');
+    }
+
+    function resetPlayer(playerelement) {
+        $("#playerlist").append(playerelement);
+    }
     $( "#partyassembler .empty" ).on("drop", function(event,ui){
         //ui.draggable.addClass("disabled");
         //ui.draggable.draggable("disable");
     });
 
-//WLTODO funktion zum löschen der Player von Spots zurück in die Playerliste implementieren
+    function putDataToForm(){
+
+    }
+
+    function assembleData(){
+
+    }
+
+    function grabRolelistData(){
+
+    }
+
+    function grabPlayerlistData(){
+        var playerData = new Object();
+        $(".invited div.empty").each(function(){
+            //console.log($(this));
+            var idsplit = $(this).attr("id").split("_");
+            var numericid = idsplit[1];
+            playerData[numericid] = new Object();
+            playerData[numericid]["player"] = 999;
+            playerData[numericid]["role"] = 999;
+        });
+        $(".invited div.playerspot").each(function(){
+            //console.log($(this));
+            var idsplit = $(this).attr("id").split("_");
+            var numericid = idsplit[1];
+            playerData[numericid] = new Object();
+            playerData[numericid]["player"] = splitid($(this).find(".player").attr("id"));
+            playerData[numericid]["role"] = $(this).find(".player").data("playerrole");
+        });
+        return playerData;
+    }
+
+    function splitid(idstring){
+        var idsplit = idstring.split("_");
+        return idsplit[1];
+    }
+
 //WLTODO Formularübertrag implementieren
 });
 
