@@ -47,6 +47,53 @@ $( document ).ready(function() {
             grabPlayerlistData();
         }
     });
+
+    function fillSpot(){
+
+    }
+
+    function emptySpot(){
+
+    }
+
+    function switchPlayerSpots() {
+
+    }
+
+    function switchPlayer() {
+
+    }
+
+    function hasPlayer(spotelement){
+        if (spotelement.data("player")) {
+            return true;
+        }
+        return false;
+    }
+
+    function hasSpot(playerelement){
+        if (playerelement.data("spot")) {
+            return true;
+        }
+        return false;
+    }
+
+    function setPlayer(spotelement, value) {
+        spotelement.data("player", value);
+    }
+
+    function getPlayer(spotelement) {
+        return spotelement.data("player");
+    }
+
+    function setSpot(playerelement, value) {
+        playerelement.data("spot", value);
+    }
+
+    function getSpot(playerelement) {
+        return playerelement.data("player");
+    }
+
     function addPlayerSpotDeleteButton(spotid) {
         var buttonid = "#buttons_"+spotid;
         $(buttonid).removeClass("empty");
@@ -64,6 +111,10 @@ $( document ).ready(function() {
         var buttonid = "#buttons_"+spotid;
         $(buttonid).addClass("empty");
         $(buttonid).html('');
+    }
+
+    function addPlayerToSpot(playerelement, spotid){
+
     }
 
     function deletePlayerFromSpot(spotid) {
@@ -100,16 +151,18 @@ $( document ).ready(function() {
         var playerData = new Object();
         $(".invited div.empty").each(function(){
             //console.log($(this));
-            var idsplit = $(this).attr("id").split("_");
-            var numericid = idsplit[1];
+//            var idsplit = $(this).attr("id").split("_");
+//            var numericid = idsplit[1];
+            var numericid = splitid($(this).attr("id"));
             playerData[numericid] = new Object();
             playerData[numericid]["player"] = 999;
             playerData[numericid]["role"] = 999;
         });
         $(".invited div.playerspot").each(function(){
             //console.log($(this));
-            var idsplit = $(this).attr("id").split("_");
-            var numericid = idsplit[1];
+//            var idsplit = $(this).attr("id").split("_");
+//            var numericid = idsplit[1];
+            var numericid = splitid($(this).attr("id"));
             playerData[numericid] = new Object();
             playerData[numericid]["player"] = splitid($(this).find(".player").attr("id"));
             playerData[numericid]["role"] = $(this).find(".player").data("playerrole");
