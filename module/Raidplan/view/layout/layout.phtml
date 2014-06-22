@@ -24,6 +24,7 @@ echo 'rp layout';
 
     <!-- Scripts -->
     <?php echo $this->headScript()
+        ->prependFile($this->basePath() . '/js/dateformat.js')
         ->prependFile($this->basePath() . '/js/raidplan.js')
         ->prependFile($this->basePath() . '/js/bootstrap-datepicker.js')
         ->prependFile($this->basePath() . '/js/clockpicker.js')

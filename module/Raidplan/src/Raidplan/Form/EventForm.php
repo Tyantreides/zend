@@ -91,37 +91,35 @@ class EventForm extends Form
     public function getEventAddForm() {
         $output = '';
         $output .= '<div class="eventaddform">';
-        $output .= '<form action="/addevent" method="POST" name="event" id="event">
-                        <input type="hidden" name="preid" value="">
-                        <label for="pretitel">Titel</label>
-                        <input type="text" name="pretitel" id="titel" class="form-control" value="">
-                        <label for="prebeschreibung">Beschreibung</label>
-                        <textarea name="prebeschreibung" id="beschreibung" class="form-control"></textarea>
-                        <label>Datum:</label>
-                        <input name="predate" type="text" id="datepicker" class="form-control hasDatepicker">
-                        <label>Uhrzeit:</label>
-                        <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input name="pretime" type="text" class="form-control">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-time"></span>
-                            </span>
-                        </div>
+        $output .= '<form action="/addevent" method="POST" name="preevent" id="preevent">
+                    <table class="eventaddtable">
+                        <tr>
+                            <td class="left">
+                                <input type="hidden" name="pre_id" id="pre_id" value="">
+                                <label for="pretitel">Titel</label>
+                                <input type="text" name="pre_titel" id="pre_titel" class="form-control" value="">
+                                <label for="prebeschreibung">Beschreibung</label>
+                                <textarea name="pre_beschreibung" id="pre_beschreibung" class="form-control"></textarea>
+                            </td>
+                            <td class="right">
+                                <label>Datum:</label>
+                                <input name="pre_date" type="text" id="pre_date" class="form-control hasDatepicker">
+                                <label>Uhrzeit:</label>
+                                <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                                    <input name="pre_time" id="pre_time" type="text" class="form-control">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
                     </form>';
         $output .= '</div>';
         $output .= '<script>';
-        $output .= '$(".eventaddform input").each(function(){
-                        $( this ).change(function() {
-                            alert( "change" );
-                        });
-                    });
-                    $(".eventaddform #datepicker").datepicker()
-                        .on("changeDate", function(ev){
-                            alert( "change" );
-                            $(this).datepicker("hide");
-                        });
-                    //WLTODO Position Timepicker anpassen
-                    //WLTODO Formularüberträge implementieren
-                        ';
+        $output .= '';
         $output .= '</script>';
         return $output;
     }

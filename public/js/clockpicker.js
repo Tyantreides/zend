@@ -291,7 +291,7 @@
 	ClockPicker.DEFAULTS = {
 		'default': '',       // default time, 'now' or '13:14' e.g.
 		fromnow: 0,          // set default time to * milliseconds from now (using with default = 'now')
-		placement: 'bottom', // clock popover placement
+		placement: 'top', // clock popover placement
 		align: 'left',       // popover arrow align
 		donetext: '完成',    // done button text
 		autoclose: false,    // auto close when minute is selected

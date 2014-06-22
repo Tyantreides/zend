@@ -1,6 +1,25 @@
 
+.eventaddform{
+    width: 100%;
+    height: 600px;
+}
 
+.eventaddform .eventaddtable{
+    width: 100%;
+}
 
+.eventaddform .eventaddtable td{
+    padding: 20px;
+    vertical-align: top;
+}
+
+.eventaddform .eventaddtable td.left{
+    width: 70%;
+}
+
+.eventaddform .eventaddtable td.right{
+    width: 30%;
+}
 
 /**
 Partyassembler

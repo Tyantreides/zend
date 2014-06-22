@@ -11,6 +11,26 @@ $( document ).ready(function() {
             putDataToForm();
         });
     });
+
+
+    $(".eventaddform input").each(function(){
+        $( this ).change(function() {
+            //alert( "change" );
+            putDataToForm();
+        });
+    });
+    $(".eventaddform #pre_date").datepicker()
+        .on("changeDate", function(ev){
+            putDataToForm();
+            $(this).datepicker("hide");
+        });
+    //WLTODO Position Timepicker anpassen
+    //WLTODO Formularüberträge implementieren
+
+    $("#preevent #pre_beschreibung").change(function(){
+        putDataToForm();
+    });
+
     $( "#partyassembler .invited .empty" ).droppable({
         accept: ".player.ui-draggable",
         hoverClass: "empty-hover",
@@ -156,6 +176,51 @@ $( document ).ready(function() {
         console.log(hiddenformelements);
     }
 
+    function assembleData(){
+        var partyData = new Object();
+        partyData['invited'] = new Object();
+        partyData['invited']['roles'] = grabRolelistData();
+        partyData['invited']['players'] = grabPlayerlistData();
+        var preFormData = grabEventFormData();
+//        preFormData.forEach(function(entry) {
+//            console.log(entry);
+//        });
+        for (var i in preFormData) {
+            partyData[i] = preFormData[i];
+        }
+        partyData = processDateTime(partyData);
+        console.log(partyData);
+        return partyData;
+    }
+
+    function processDateTime(partyData){
+
+        if (typeof(partyData['date']) !== 'undefined' && partyData['date'] != '') {
+            if (typeof(partyData['time']) !== 'undefined' && partyData['time'] != '') {
+                partyData['fulldatetime'] = partyData['date']+' '+partyData['time'];
+            }
+            else {
+                var now = new Date();
+                now.format("hh:MM");
+                partyData['fulldatetime'] = partyData['date']+' '+now;
+            }
+        }
+        else {
+            if (typeof(partyData['time']) !== 'undefined' && partyData['time'] != '') {
+                var now = new Date();
+                now.format("dd.mm.yyyy");
+                partyData['fulldatetime'] = now+' '+partyData['time'];
+            }
+            else {
+                var now = new Date();
+                now.format("dd.mm.yyyy hh:MM");
+                partyData['fulldatetime'] = now;
+            }
+        }
+        return partyData;
+
+    }
+
     function processDataForForm(data) {
         if (typeof data == 'object') {
             return objectToJson(data);
@@ -172,12 +237,18 @@ $( document ).ready(function() {
         return JSON.stringify(object);
     }
 
-    function assembleData(){
-        var partyData = new Object();
-        partyData['invited'] = new Object();
-        partyData['invited']['roles'] = grabRolelistData();
-        partyData['invited']['players'] = grabPlayerlistData();
-        return partyData;
+
+
+    function grabEventFormData(){
+        var preFormData = new Object();
+        $(".eventaddform #preevent input").each(function(){
+                preFormData[splitid($(this).attr("id"))] = $(this).val();
+        });
+        $(".eventaddform #preevent textarea").each(function(){
+            preFormData[splitid($(this).attr("id"))] = $(this).val();
+        });
+
+        return preFormData;
     }
 
     function grabRolelistData(){
