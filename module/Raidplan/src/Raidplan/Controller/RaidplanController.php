@@ -91,6 +91,30 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+    public function ajaxAction(){
+        $form = new EventForm();
+        $form->get('submit')->setValue('Add');
+        $request = $this->getRequest();
+        //if form was send
+        if ($request->isPost()) {
+
+//            $events = new Events();
+//            $form->setData($request->getPost());
+//            if ($form->isValid()) {
+//                $events->exchangeArray($form->getData());
+//                $this->getEventsTable()->saveEvents($events);
+//            }
+            $output = $request->getPost();
+        }
+        else {
+            $output = false;
+        }
+        $viewModel = new ViewModel(array('output' => $output));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+        //return array('output' => $output);
+    }
+
     public function addAction()
     {
         $form = new EventForm();
@@ -113,9 +137,11 @@ class RaidplanController extends AbstractActionController
         //if new
         else {
             try {
+
                 $playersTable = $this->getPlayersTable();
                 $playersData = $this->getPlayersTable()->fetchPlayerData();
                 $allRoles = $this->getPlayersTable()->fetchAllRoles();
+                $allActivities = $this->getEventsTable()->fetchActivities();
                 $playerForm = new PlayerForm();
             }
             catch (\Exception $ex) {
@@ -128,7 +154,8 @@ class RaidplanController extends AbstractActionController
         return array('form' => $form,
         'playersData' => $playersData,
         'playerForm' => $playerForm,
-        'allRoles' => $allRoles);
+        'allRoles' => $allRoles,
+        'allActivities' => $allActivities);
     }
 
     public function getEventsTable()

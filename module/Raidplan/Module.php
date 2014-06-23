@@ -53,7 +53,8 @@ class Module
                     },
                 'Raidplan\Model\EventsTable' =>  function($sm) {
                         $tableGateway = $sm->get('EventsTableGateway');
-                        $table = new EventsTable($tableGateway);
+                        $eventsDefaultDbAdapter = $sm->get('defaultAdapter');
+                        $table = new EventsTable($tableGateway, $eventsDefaultDbAdapter);
                         return $table;
                     },
                 'EventsTableGateway' => function ($sm) {

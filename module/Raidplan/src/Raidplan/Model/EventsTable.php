@@ -7,10 +7,12 @@ use Zend\Db\TableGateway\TableGateway;
 class EventsTable
 {
     protected $tableGateway;
+    protected $defaultDbAdapter;
 
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(TableGateway $tableGateway, $defaultDbAdapter)
     {
         $this->tableGateway = $tableGateway;
+        $this->defaultDbAdapter = $defaultDbAdapter;
     }
 
     public function fetchAll()
@@ -58,5 +60,11 @@ class EventsTable
     public function deleteEvents($id)
     {
         $this->tableGateway->delete(array('id' => (int) $id));
+    }
+
+    public function fetchActivities(){
+        $statement = $this->defaultDbAdapter->query('SELECT * FROM ep_activities;');
+        $result = $statement->execute();
+        return $result;
     }
 }

@@ -96,6 +96,7 @@ class EventForm extends Form
                         <tr>
                             <td class="left">
                                 <input type="hidden" name="pre_id" id="pre_id" value="">
+                                <input type="hidden" name="pre_status" id="pre_status" value="1">
                                 <label for="pretitel">Titel</label>
                                 <input type="text" name="pre_titel" id="pre_titel" class="form-control" value="">
                                 <label for="prebeschreibung">Beschreibung</label>
@@ -124,4 +125,15 @@ class EventForm extends Form
         return $output;
     }
 
+    public function getActivityDropdown($allActivities) {
+        $output = '';
+        $output .= '<label>Event Vorauswahl:</label>';
+        $output .= '<select class="form-control" id="pre_activityid">';
+        $output .= '<option value="999">Leeres Template (8 Teilnehmer)</option>';
+        foreach ($allActivities as $key => $activity) {
+            $output .= '<option value="'.$activity["id"].'">'.$activity["titel"].' ('.$activity["membercount"].' Teilnehmer)</option>';
+        }
+        $output .= '</select>';
+        return $output;
+    }
     }

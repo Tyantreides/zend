@@ -24,7 +24,8 @@ echo 'rp layout';
 
     <!-- Scripts -->
     <?php echo $this->headScript()
-        ->prependFile($this->basePath() . '/js/dateformat.js')
+        //->prependFile($this->basePath() . '/js/dateformat.js')
+        ->prependFile($this->basePath() . '/js/ajaxfunctions.js')
         ->prependFile($this->basePath() . '/js/raidplan.js')
         ->prependFile($this->basePath() . '/js/bootstrap-datepicker.js')
         ->prependFile($this->basePath() . '/js/clockpicker.js')
@@ -40,7 +41,7 @@ echo 'rp layout';
     ; ?>
 
 </head>
-<body>
+<body class="layoutbody">
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">

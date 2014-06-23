@@ -78,6 +78,17 @@ return array(
                     ),
                 ),
             ),
+            'saveevent' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/saveevent',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'ajax',
+                    ),
+                ),
+            ),
             'deleteevent' => array(
                 'type'    => 'Segment',
                 'options' => array(
@@ -126,6 +137,7 @@ return array(
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'layout/listeventsjson'           => __DIR__ . '/../view/layout/withoutlayout.phtml',
+            'layout/saveevent'           => __DIR__ . '/../view/layout/withoutlayout.phtml',
             'layout/events'           => __DIR__ . '/../view/layout/layout.phtml',
             'raidplan/raidplan/listeventsjson' => __DIR__ . '/../view/raidplan/raidplan/rawjson.phtml',
         ),
@@ -138,6 +150,8 @@ return array(
             'listeventsjson' => 'layout/listeventsjson',
             'root' => 'layout/events',
             'events' => 'layout/events',
+            'saveevent' => 'layout/layout/saveevent',
         ),
     ),
 );
+

@@ -19,6 +19,11 @@ $( document ).ready(function() {
             putDataToForm();
         });
     });
+
+    $("#eventdaten #pre_activityid").change(function(){
+        putDataToForm();
+    });
+
     $(".eventaddform #pre_date").datepicker()
         .on("changeDate", function(ev){
             putDataToForm();
@@ -29,6 +34,18 @@ $( document ).ready(function() {
 
     $("#preevent #pre_beschreibung").change(function(){
         putDataToForm();
+    });
+
+    $("#eventspeichern").click(function(){
+        console.log("clicked");
+        $.ajax({
+            type: "POST",
+            url: "/saveevent",
+            data: putDataToForm()
+        })
+            .done(function( msg ) {
+                alert( "Data Saved: " + msg );
+            });
     });
 
     $( "#partyassembler .invited .empty" ).droppable({
@@ -173,7 +190,9 @@ $( document ).ready(function() {
         $("#eventdaten form#event input").each(function(){
             hiddenformelements[$(this).attr("id")] = processDataForForm(formData[$(this).attr("id")]);
         });
+
         console.log(hiddenformelements);
+        return hiddenformelements;
     }
 
     function assembleData(){
@@ -201,25 +220,44 @@ $( document ).ready(function() {
             }
             else {
                 var now = new Date();
-                now.format("hh:MM");
-                partyData['fulldatetime'] = partyData['date']+' '+now;
+                //now.format("HH:MM");
+                partyData['fulldatetime'] = partyData['date']+' '+formatTime(now);
             }
         }
         else {
             if (typeof(partyData['time']) !== 'undefined' && partyData['time'] != '') {
                 var now = new Date();
-                now.format("dd.mm.yyyy");
-                partyData['fulldatetime'] = now+' '+partyData['time'];
+                //now.format("yyyy-mm-dd");
+                partyData['fulldatetime'] = formatDate(now)+' '+partyData['time'];
             }
             else {
                 var now = new Date();
-                now.format("dd.mm.yyyy hh:MM");
-                partyData['fulldatetime'] = now;
+                //now.format("yyyy-mm-dd HH:MM");
+                partyData['fulldatetime'] = formatDate(now)+' '+formatTime(now);
             }
         }
         return partyData;
 
     }
+
+    function formatDate(d) {
+        var dd = d.getDate()
+        if ( dd < 10 ) dd = '0' + dd
+        var mm = d.getMonth()+1
+        if ( mm < 10 ) mm = '0' + mm
+        var yyyy = d.getFullYear()
+        //if ( yy < 10 ) yy = '0' + yy
+        return yyyy+'-'+mm+'-'+dd
+    }
+
+    function formatTime(t){
+        var hh = t.getHours();
+        if ( hh < 10 ) hh = '0' + hh;
+        var mm = t.getMinutes();
+        if ( mm < 10 ) mm = '0' + mm;
+        return hh+':'+mm;
+    }
+
 
     function processDataForForm(data) {
         if (typeof data == 'object') {
@@ -245,6 +283,9 @@ $( document ).ready(function() {
                 preFormData[splitid($(this).attr("id"))] = $(this).val();
         });
         $(".eventaddform #preevent textarea").each(function(){
+            preFormData[splitid($(this).attr("id"))] = $(this).val();
+        });
+        $("#eventdaten #pre_activityid").each(function(){
             preFormData[splitid($(this).attr("id"))] = $(this).val();
         });
 

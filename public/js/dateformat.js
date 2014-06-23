@@ -86,7 +86,8 @@ var dateFormat = function () {
             };
 
         return mask.replace(token, function ($0) {
-            return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+            var formateddate = $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+            return formateddate;
         });
     };
 }();
@@ -104,7 +105,10 @@ dateFormat.masks = {
     isoDate:        "yyyy-mm-dd",
     isoTime:        "HH:MM:ss",
     isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-    isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+    isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
+    customDate:     "dd.mm.yyyy",
+    customTime:     "HH:MM",
+    customDateTime: "dd.mm.yyyy HH:MM"
 };
 
 // Internationalization strings
