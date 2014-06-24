@@ -41,8 +41,6 @@ class EventsTable
             'status'  => $events->status,
             'activityid'  => $events->activityid,
             'invited'  => $events->invited,
-            'accepted'  => $events->accepted,
-            'declined'  => $events->declined,
         );
 
         $id = (int) $events->id;

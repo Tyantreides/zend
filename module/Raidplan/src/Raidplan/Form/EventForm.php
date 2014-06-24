@@ -34,7 +34,7 @@ class EventForm extends Form
                 'name' => 'datetime',
                 'type' => 'hidden',
                 'attributes' => array(
-                    'id' => 'fulldatetime',
+                    'id' => 'datetime',
                     'class' => 'hasDatepicker',
                 ),
             ));
@@ -135,5 +135,9 @@ class EventForm extends Form
         }
         $output .= '</select>';
         return $output;
+    }
+
+    public function getEventAddSuccessMsg(){
+        return '<div class="raidplan-msg-box"><div class="raidplan-msg-success" id="raidplan-msg">Event erfolgreich gespeichert. <br>Du wirst weitergeleitet....</div></div>';
     }
     }

@@ -44,7 +44,16 @@ $( document ).ready(function() {
             data: putDataToForm()
         })
             .done(function( msg ) {
-                alert( "Data Saved: " + msg );
+                $("body").append('<div id="raidplan-overlay"></div>');
+                $("body").append(msg);
+                $("#raidplan-overlay").fadeIn();
+                $(".raidplan-msg-box").fadeIn();
+                $(".raidplan-msg-box").css("top",screen.height/2-$("#raidplan-msg").outerHeight()/2);
+                $(".raidplan-msg-box").css("left",screen.width/2-$("#raidplan-msg").outerWidth()/2);
+                function redirect () {
+                    window.location.href = "/events";
+                }
+                window.setTimeout(redirect, 5000);
             });
     });
 
@@ -188,6 +197,8 @@ $( document ).ready(function() {
         var hiddenformelements = new Object();
         var formData = assembleData();
         $("#eventdaten form#event input").each(function(){
+            console.log($(this).attr("id"));
+            console.log(formData[$(this).attr("id")]);
             hiddenformelements[$(this).attr("id")] = processDataForForm(formData[$(this).attr("id")]);
         });
 
@@ -208,7 +219,7 @@ $( document ).ready(function() {
             partyData[i] = preFormData[i];
         }
         partyData = processDateTime(partyData);
-        console.log(partyData);
+        console.log('assembledata->partydata'+partyData);
         return partyData;
     }
 
@@ -216,24 +227,24 @@ $( document ).ready(function() {
 
         if (typeof(partyData['date']) !== 'undefined' && partyData['date'] != '') {
             if (typeof(partyData['time']) !== 'undefined' && partyData['time'] != '') {
-                partyData['fulldatetime'] = partyData['date']+' '+partyData['time'];
+                partyData['datetime'] = partyData['date']+' '+partyData['time'];
             }
             else {
                 var now = new Date();
                 //now.format("HH:MM");
-                partyData['fulldatetime'] = partyData['date']+' '+formatTime(now);
+                partyData['datetime'] = partyData['date']+' '+formatTime(now);
             }
         }
         else {
             if (typeof(partyData['time']) !== 'undefined' && partyData['time'] != '') {
                 var now = new Date();
                 //now.format("yyyy-mm-dd");
-                partyData['fulldatetime'] = formatDate(now)+' '+partyData['time'];
+                partyData['datetime'] = formatDate(now)+' '+partyData['time'];
             }
             else {
                 var now = new Date();
                 //now.format("yyyy-mm-dd HH:MM");
-                partyData['fulldatetime'] = formatDate(now)+' '+formatTime(now);
+                partyData['datetime'] = formatDate(now)+' '+formatTime(now);
             }
         }
         return partyData;

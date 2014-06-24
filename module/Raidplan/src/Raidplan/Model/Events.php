@@ -11,8 +11,6 @@ class Events
     public $status;
     public $activityid;
     public $invited;
-    public $accepted;
-    public $declined;
 
     public function exchangeArray($data)
     {
@@ -23,9 +21,6 @@ class Events
         $this->status  = (isset($data['status']))  ? $data['status']  : null;
         $this->activityid  = (isset($data['activityid']))  ? $data['activityid']  : null;
         $this->invited  = (isset($data['invited']))  ? $data['invited']  : null;
-        $this->accepted  = (isset($data['accepted']))  ? $data['accepted']  : null;
-        $this->declined  = (isset($data['declined']))  ? $data['declined']  : null;
-
     }
 
     public function getArrayCopy()

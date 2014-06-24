@@ -98,13 +98,14 @@ class RaidplanController extends AbstractActionController
         //if form was send
         if ($request->isPost()) {
 
-//            $events = new Events();
-//            $form->setData($request->getPost());
-//            if ($form->isValid()) {
-//                $events->exchangeArray($form->getData());
-//                $this->getEventsTable()->saveEvents($events);
-//            }
-            $output = $request->getPost();
+            $events = new Events();
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $events->exchangeArray($form->getData());
+                $this->getEventsTable()->saveEvents($events);
+            }
+            //$output = $request->getPost();
+            $output = array('msg' => $form->getEventAddSuccessMsg());
         }
         else {
             $output = false;

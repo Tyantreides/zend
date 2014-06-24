@@ -43,10 +43,12 @@ $form->prepare();
             echo $this->formRow($form->get('declined'));
             //echo $this->formSubmit($form->get('submit'));
             echo $this->form()->closeTag();
-            echo '<button id="eventspeichern">Speichern</button>';
+
             echo $this->form->getActivityDropdown($this->allActivities);
             //WLTODO LADEN von Playersetup Templates 4 oder 8 Player Setup mit roles automatisch erzeugen
             echo $this->form->getEventAddForm();
+
+            echo '<button id="eventspeichern">Speichern</button>';
             ?>
 
 
