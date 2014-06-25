@@ -21,13 +21,41 @@ class EventsTable
         return $resultSet;
     }
 
-    public function fetchEventsOfDateRangeAsJson($datefrom, $dateto){
+    public function fetchEventsOfDateRange($datefrom, $dateto){
         $datefrom = htmlentities($datefrom);
         $dateto = htmlentities($dateto);
-        $statement = $this->defaultDbAdapter->query("SELECT * FROM ep_events WHERE datetime > '".$datefrom."' AND datetime < '".$dateto."';");
+        $statement = $this->defaultDbAdapter->query("SELECT * FROM ep_events WHERE datetime >= '".$datefrom."' AND datetime <= '".$dateto."';");
         $result = $statement->execute();
         return $result;
     }
+
+    public function getJsonEvents ($eventsResult) {
+        $eventArray = Array(
+            'lang' => 'de',
+            'theme' => true,
+            'header' => Array(
+                'left' => 'prev,next today',
+                'center' => 'title',
+                'right' => 'month,agendaWeek,agendaDay',
+            ),
+            'defaultDate' => date("Y-m-d"),
+            'editable' => true,
+            'events' => Array(),
+        );
+        foreach ($eventsResult as $event) {
+            $eventArray['events'][] = Array(
+                'id' => $event['id'],
+                'title' => $event['titel'],
+                'start' => str_replace(" ", "T", $event['datetime']),
+                'url' => '/events'
+            );
+        }
+
+        $eventArray = json_encode($eventArray);
+        return $eventArray;
+    }
+
+
 
     public function getEvents($id)
     {

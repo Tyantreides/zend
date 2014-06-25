@@ -91,6 +91,27 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+
+    public function ajaxGetEventsAction() {
+        $request = $this->getRequest();
+        if($request->isPost()){
+            $send = $request->getPost();
+            $eventsResult = $this->getEventsTable()->fetchEventsOfDateRange($send['datefrom'], $send['dateto']);
+            $events = $this->getEventsTable()->getJsonEvents($eventsResult);
+        }
+        else{
+            $send = false;
+        }
+
+        $output = 'ajaxgetEvents';
+        $viewModel = new ViewModel(array('output' => $output,
+        'send' => $send,
+        'result' => $events,
+        ));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
     public function ajaxAction(){
         $form = new EventForm();
         $form->get('submit')->setValue('Add');

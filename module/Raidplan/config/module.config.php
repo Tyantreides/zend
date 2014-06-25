@@ -89,6 +89,17 @@ return array(
                     ),
                 ),
             ),
+            'ajaxgetevents' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/ajaxgetevents',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'ajaxGetEvents',
+                    ),
+                ),
+            ),
             'deleteevent' => array(
                 'type'    => 'Segment',
                 'options' => array(
