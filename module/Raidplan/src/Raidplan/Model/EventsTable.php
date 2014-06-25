@@ -21,6 +21,14 @@ class EventsTable
         return $resultSet;
     }
 
+    public function fetchEventsOfDateRangeAsJson($datefrom, $dateto){
+        $datefrom = htmlentities($datefrom);
+        $dateto = htmlentities($dateto);
+        $statement = $this->defaultDbAdapter->query("SELECT * FROM ep_events WHERE datetime > '".$datefrom."' AND datetime < '".$dateto."';");
+        $result = $statement->execute();
+        return $result;
+    }
+
     public function getEvents($id)
     {
         $id  = (int) $id;
