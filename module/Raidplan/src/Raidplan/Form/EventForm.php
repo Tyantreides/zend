@@ -140,4 +140,9 @@ class EventForm extends Form
     public function getEventAddSuccessMsg(){
         return '<div class="raidplan-msg-box"><div class="raidplan-msg-success" id="raidplan-msg">Event erfolgreich gespeichert. <br>Du wirst weitergeleitet....</div></div>';
     }
+
+
+    public function getViewEventForm($eventData){
+
+    }
     }

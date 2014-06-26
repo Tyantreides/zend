@@ -32,6 +32,19 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+    public function viewEventAction(){
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('events');
+        }
+        $eventdata = $this->getEventsTable()->getEvents($id);
+        $output = 'viewevent';
+        return array(
+            'output' => $output,
+            'eventdata' => $eventdata,
+        );
+    }
+
     public function editAction() {
 
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -112,7 +125,7 @@ class RaidplanController extends AbstractActionController
         return $viewModel;
     }
 
-    public function ajaxAction(){
+    public function ajaxSaveEventAction(){
         $form = new EventForm();
         $form->get('submit')->setValue('Add');
         $request = $this->getRequest();

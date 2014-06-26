@@ -67,6 +67,17 @@ return array(
                     ),
                 ),
             ),
+            'viewevent' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/viewevent[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'viewEvent',
+                    ),
+                ),
+            ),
             'addevent' => array(
                 'type'    => 'Literal',
                 'options' => array(
@@ -85,7 +96,7 @@ return array(
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'Raidplan',
-                        'action'        => 'ajax',
+                        'action'        => 'ajaxsaveevent',
                     ),
                 ),
             ),

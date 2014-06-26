@@ -47,7 +47,7 @@ class EventsTable
                 'id' => $event['id'],
                 'title' => $event['titel'],
                 'start' => str_replace(" ", "T", $event['datetime']),
-                'url' => '/events'
+                'url' => '/viewevent/'.$event['id']
             );
         }
 
