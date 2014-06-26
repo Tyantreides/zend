@@ -8,6 +8,7 @@ use Raidplan\Model\Jobs;
 use Raidplan\Model\JobsTable;
 use Raidplan\Model\Players;
 use Raidplan\Model\PlayersTable;
+use Raidplan\Model\UsersTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -40,6 +41,12 @@ class Module
                         //$playersTableGateway = $sm->get('PlayersTableGateway');
                         $playersTable = new PlayersTable($playersDefaultDbAdapter);
                         return $playersTable;
+                    },
+                'Raidplan\Model\UsersTable' =>  function($sm) {
+                        $usersDefaultDbAdapter = $sm->get('defaultAdapter');
+                        //$playersTableGateway = $sm->get('PlayersTableGateway');
+                        $usersTable = new UsersTable($usersDefaultDbAdapter);
+                        return $usersTable;
                     },
                 'PlayersTableGateway' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

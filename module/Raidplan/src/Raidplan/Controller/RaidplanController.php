@@ -17,10 +17,28 @@ class RaidplanController extends AbstractActionController
     protected $eventsTable;
     protected $playersTable;
     protected $jobsTable;
+    protected $usersTable;
 
     public function indexAction()
     {
 
+    }
+
+    public function loginAction(){
+        $request = $this->getRequest();
+        //if ($request->isPost()) {
+        $user = 'Tyantreides';
+            $output = $this->getUsersTable()->getUserByLogin($user);
+            //user authentifizieren und einloggen
+            //$output = 'einlogvorgang';
+//        }
+//        else{
+//            //loginformular zeigen
+//            $output = 'loginformular';
+//        }
+        return array(
+            'output' => $output,
+        );
     }
 
     public function calendarAction() {
@@ -218,6 +236,15 @@ class RaidplanController extends AbstractActionController
             $this->jobsTable = $sm->get('Raidplan\Model\JobsTable');
         }
         return $this->jobsTable;
+    }
+
+    public function getUsersTable()
+    {
+        if (!$this->usersTable) {
+            $sm = $this->getServiceLocator();
+            $this->usersTable = $sm->get('Raidplan\Model\UsersTable');
+        }
+        return $this->usersTable;
     }
 
     public function listEventsJsonAction(){

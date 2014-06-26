@@ -56,6 +56,17 @@ return array(
                     ),
                 ),
             ),
+            'login' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/login',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'login',
+                    ),
+                ),
+            ),
             'editevent' => array(
                 'type'    => 'Segment',
                 'options' => array(
