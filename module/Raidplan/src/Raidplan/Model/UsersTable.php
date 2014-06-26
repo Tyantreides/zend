@@ -51,13 +51,58 @@ class UsersTable
             $resultSet->initialize($result);
             if ($resultSet->count() > 0) {
                 foreach($resultSet as $row) {
+                    $userdata['id_member'] = $row->id_member;
                     $userdata['member_name'] = $row->member_name;
                     $userdata['passwd'] = $row->passwd;
                     $userdata['password_salt'] = $row->password_salt;
                 }
-
+                $hash = sha1(strtolower($login) . $pass);
+                if ($hash == $userdata['passwd']) {
+                    $this->setUserCookie($userdata['id_member'], sha1($userdata['passwd'].$userdata['password_salt']));
+                    return true;
+                }
             }
             return false;
+        }
+        return false;
+    }
+
+    public function getUserSession(){
+
+    }
+
+    public function setUserCookie($userid, $passwdhash){
+        $userdata = array('uid' => $userid,
+            'hash' => $passwdhash,
+        );
+        $cookiename = 'wlevents';
+        setcookie($cookiename, serialize($userdata), time()+3600);
+    }
+
+    public function getUserCookie(){
+        $cookiename = 'wlevents';
+        if (isset($_COOKIE[$cookiename])) {
+
+            return unserialize($_COOKIE['wlevents']);
+        }
+        return false;
+    }
+
+    public function getSmfUserCookieData(){
+        //geht so nicht weil die domain noch anders ist
+        $cookiename = 'wlevents';
+        if (isset($_COOKIE[$cookiename])) {
+            list ($userid, $password) = @unserialize($_COOKIE[$cookiename]);
+            return array('userid' => $userid,
+                'password' => $password,
+            );
+        }
+        return false;
+    }
+
+    public function isLoggedIn() {
+        if($cookiedata = $this->getUserCookie()) {
+            return $cookiedata;
         }
         return false;
     }

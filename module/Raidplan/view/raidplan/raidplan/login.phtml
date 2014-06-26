@@ -1,5 +1,10 @@
 <?php
-
-print_r('<pre>');
-print_r($this->output->member_name);
-print_r('</pre>');
+if ($this->output) {
+    echo $this->userform->getWelcomeBlock();
+}
+else{
+    echo $this->userform->getLoginForm();
+}
+//print_r('<pre>');
+//print_r($this->output);
+//print_r('</pre>');

@@ -5,6 +5,7 @@ namespace Raidplan\Controller;
 use Raidplan\Form\EventForm;
 use Raidplan\Form\PlayerForm;
 use Raidplan\Form\JobForm;
+use Raidplan\Form\UserForm;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Raidplan\Model\Events;
@@ -25,19 +26,23 @@ class RaidplanController extends AbstractActionController
     }
 
     public function loginAction(){
+
+
         $request = $this->getRequest();
-        //if ($request->isPost()) {
-        $user = 'Tyantreides';
-            $output = $this->getUsersTable()->getUserByLogin($user);
-            //user authentifizieren und einloggen
-            //$output = 'einlogvorgang';
-//        }
-//        else{
-//            //loginformular zeigen
-//            $output = 'loginformular';
-//        }
+
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $output = $this->getUsersTable()->getAuthUser($post['user'], $post['passwd']);
+            $userForm = new UserForm();
+        }
+        else{
+            $isloggedin = $this->getUsersTable()->isLoggedIn();
+            $userForm = new UserForm();
+            $output = false;
+        }
         return array(
             'output' => $output,
+            'userform' => $userForm,
         );
     }
 
