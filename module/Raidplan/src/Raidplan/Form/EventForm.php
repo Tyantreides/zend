@@ -141,8 +141,41 @@ class EventForm extends Form
         return '<div class="raidplan-msg-box"><div class="raidplan-msg-success" id="raidplan-msg">Event erfolgreich gespeichert. <br>Du wirst weitergeleitet....</div></div>';
     }
 
-
     public function getViewEventForm($eventData){
-
+        $output = '';
+        $output .= '<div class="eventviewform">
+                        <table class="eventviewtable">
+                            <tr>
+                              <td>
+                              <table class="lefttable">
+                                <tr>
+                                  <td>links</td>
+                                </tr>
+                                <tr>
+                                  <td>links</td>
+                                </tr>
+                                <tr>
+                                  <td>links</td>
+                                </tr>
+                                <tr>
+                                  <td>links</td>
+                                </tr>
+                              </table>
+                              </td>
+                              <td>
+                              <table class="righttable">
+                                <tr>
+                                  <td class="active">...</td>
+                                  <td class="success">...</td>
+                                  <td class="warning">...</td>
+                                  <td class="danger">...</td>
+                                  <td class="info">...</td>
+                                </tr>
+                              </table>
+                              </td>
+                            </tr>
+                        </table>
+                    </div>';
+        return $output;
     }
     }

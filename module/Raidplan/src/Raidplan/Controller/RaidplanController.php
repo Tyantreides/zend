@@ -60,11 +60,13 @@ class RaidplanController extends AbstractActionController
         if (!$id) {
             return $this->redirect()->toRoute('events');
         }
+        $eventForm  = new EventForm();
         $eventdata = $this->getEventsTable()->getEvents($id);
         $output = 'viewevent';
         return array(
             'output' => $output,
             'eventdata' => $eventdata,
+            'eventForm' => $eventForm,
         );
     }
 

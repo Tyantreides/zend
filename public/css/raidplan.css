@@ -172,3 +172,19 @@ Partyassembler
     float: left;
     margin-right: 10px;
 }
+
+.eventviewform{
+    background-color: #121212;
+}
+
+.eventviewform .eventviewtable{
+    width: 100%;
+}
+
+.eventviewform .eventviewtable .lefttable{
+    width: 50%;
+}
+
+.eventviewform .eventviewtable .righttable{
+    width: 50%;
+}
