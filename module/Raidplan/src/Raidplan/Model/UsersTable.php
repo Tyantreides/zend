@@ -102,7 +102,25 @@ class UsersTable
 
     public function isLoggedIn() {
         if($cookiedata = $this->getUserCookie()) {
-            return $cookiedata;
+            $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$cookiedata['uid'].'";');
+            $result = $statement->execute();
+            if ($result instanceof ResultInterface && $result->isQueryResult()) {
+                $resultSet = new ResultSet;
+                $resultSet->initialize($result);
+                if ($resultSet->count() > 0) {
+                    foreach($resultSet as $row) {
+                        $userdata['id_member'] = $row->id_member;
+                        $userdata['member_name'] = $row->member_name;
+                        $userdata['passwd'] = $row->passwd;
+                        $userdata['password_salt'] = $row->password_salt;
+                    }
+                    $hash = sha1($userdata['passwd'] . $userdata['password_salt']);
+                    if ($hash == $cookiedata['hash']) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
         return false;
     }

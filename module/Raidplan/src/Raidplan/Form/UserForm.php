@@ -25,4 +25,9 @@ class UserForm extends Form
         $output = '<p>Du bist erfolgreich eingeloggt.</p>';
         return $output;
     }
+
+    public function getLoggedInBlock() {
+        $output = '<p>Du bist eingeloggt.</p>';
+        return $output;
+    }
 }

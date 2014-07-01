@@ -26,24 +26,22 @@ class RaidplanController extends AbstractActionController
     }
 
     public function loginAction(){
-
-
         $request = $this->getRequest();
 
         if ($request->isPost()) {
             $post = $request->getPost();
-            $output = $this->getUsersTable()->getAuthUser($post['user'], $post['passwd']);
-            $userForm = new UserForm();
+            $this->getUsersTable()->getAuthUser($post['user'], $post['passwd']);
         }
-        else{
-            $isloggedin = $this->getUsersTable()->isLoggedIn();
-            $userForm = new UserForm();
-            $output = false;
-        }
+        $loggedIn = $this->getUsersTable()->isLoggedIn();
+        $userForm = new UserForm();
         return array(
-            'output' => $output,
+            'loggedin' => $loggedIn,
             'userform' => $userForm,
         );
+    }
+
+    public function logoutAction() {
+
     }
 
     public function calendarAction() {

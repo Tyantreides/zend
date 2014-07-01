@@ -1,6 +1,8 @@
 <?php
-if ($this->output) {
-    echo $this->userform->getWelcomeBlock();
+
+print_r($this->loggedin);
+if ($this->loggedin) {
+    echo $this->userform->getLoggedInBlock();
 }
 else{
     echo $this->userform->getLoginForm();
