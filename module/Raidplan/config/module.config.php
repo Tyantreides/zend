@@ -122,6 +122,17 @@ return array(
                     ),
                 ),
             ),
+            'ajaxlogin' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/ajaxlogin',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'ajaxLogin',
+                    ),
+                ),
+            ),
             'deleteevent' => array(
                 'type'    => 'Segment',
                 'options' => array(

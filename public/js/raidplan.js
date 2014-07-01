@@ -1,4 +1,17 @@
 $( document ).ready(function() {
+
+    $.ajax({
+        type: "POST",
+        url: "/ajaxlogin",
+        data: putDataToForm()
+    }).done(function( msg ) {
+        $('#mainnavbar #nav').append(msg);
+    });
+
+
+
+
+
     //AddEvent Form Functions
     $("#partyassembler .roleselection a").each(function(){
         $( this ).click(function() {

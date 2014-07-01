@@ -40,6 +40,21 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+    public function ajaxLoginAction(){
+        $userForm = new UserForm();
+        if ($this->getUsersTable()->isLoggedIn()) {
+            $output = $userForm->getLoggedInBlock();
+        }
+        else {
+            $output = $userForm->getLoginForm();
+        }
+        $viewModel = new ViewModel(array('output' => $output,
+            'output' => $output,
+        ));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
     public function logoutAction() {
 
     }

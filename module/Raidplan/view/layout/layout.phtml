@@ -42,7 +42,7 @@ echo 'rp layout';
 
 </head>
 <body class="layoutbody">
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="mainnavbar">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -52,7 +52,7 @@ echo 'rp layout';
             </button>
             <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Lions Den') ?></a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="nav">
             <ul class="nav navbar-nav">
                 <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
                 <li><a href="<?php echo $this->url('events') ?>"><?php echo $this->translate('Events') ?></a></li>

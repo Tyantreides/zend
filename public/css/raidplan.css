@@ -1,3 +1,19 @@
+.loginbox{
+    width: 300px;
+}
+
+.loginbox .form .logintext{
+    width: 200px;
+}
+
+.loginbox .form .loginpass{
+    width: 200px;
+}
+
+.loginbox .form .loginbtn{
+    width: 200px;
+}
+
 .raidplan-msg-success{
     background-color: #1E5F1E;
     padding: 40px;
