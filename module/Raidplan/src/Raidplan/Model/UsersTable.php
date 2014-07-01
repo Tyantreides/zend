@@ -67,8 +67,14 @@ class UsersTable
         return false;
     }
 
-    public function getUserSession(){
 
+    public function logoutUser(){
+        $this->deleteUserCookie();
+    }
+
+    public function deleteUserCookie() {
+        $cookiename = 'wlevents';
+        setcookie($cookiename,"",time()-1);
     }
 
     public function setUserCookie($userid, $passwdhash){

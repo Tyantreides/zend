@@ -41,8 +41,21 @@ class RaidplanController extends AbstractActionController
     }
 
     public function ajaxLoginAction(){
+        $isAuth = false;
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            if($this->getUsersTable()->getAuthUser($post['user'], $post['passwd'])) {
+                $isAuth = true;
+            }
+        }
+        else{
+            if($this->getUsersTable()->isLoggedIn()){
+                $isAuth = true;
+            }
+        }
         $userForm = new UserForm();
-        if ($this->getUsersTable()->isLoggedIn()) {
+        if ($isAuth) {
             $output = $userForm->getLoggedInBlock();
         }
         else {
@@ -56,7 +69,8 @@ class RaidplanController extends AbstractActionController
     }
 
     public function logoutAction() {
-
+        $this->getUsersTable()->logoutUser();
+        return $this->redirect()->toRoute('home');
     }
 
     public function calendarAction() {

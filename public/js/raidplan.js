@@ -1,12 +1,37 @@
 $( document ).ready(function() {
 
     $.ajax({
-        type: "POST",
-        url: "/ajaxlogin",
-        data: putDataToForm()
+        url: "/ajaxlogin"
     }).done(function( msg ) {
-        $('#mainnavbar #nav').append(msg);
+        if ($("#loginformbar").length > 0) {
+            $("#loginformbar").detach();
+            $('#mainnavbar #nav').append(msg);
+        }
+        else{
+            $('#mainnavbar #nav').append(msg);
+        }
+        $('#loginbtn').click(function(){
+            var dataarray = new Object();
+            dataarray['user'] = $("#loginuser").val();
+            dataarray['passwd'] = $("#loginpasswd").val();
+            $.ajax({
+                type: "POST",
+                url: "/ajaxlogin",
+                data: dataarray
+            }).done(function( msg ) {
+                if ($("#loginformbar").length > 0) {
+                    $("#loginformbar").detach();
+                    $('#mainnavbar #nav').append(msg);
+                }
+                else{
+                    $('#mainnavbar #nav').append(msg);
+                }
+
+            });
+        });
     });
+
+
 
 
 

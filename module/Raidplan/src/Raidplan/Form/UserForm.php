@@ -15,15 +15,15 @@ class UserForm extends Form
     public function getLoginForm() {
         $output = '';
         //$output  = '<div class="loginbox">';
-        $output .= '<form action="/login" method="POST" class="navbar-form navbar-right" role="search">
+        $output .= '<div action="/login" method="POST" class="navbar-form navbar-right" role="search" id="loginformbar">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="user" placeholder="Username">
+                            <input type="text" class="form-control" name="user" placeholder="Username" id="loginuser">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" name="passwd" placeholder="Password">
+                            <input type="password" class="form-control" name="passwd" placeholder="Passwort" id="loginpasswd">
                         </div>
-                        <button type="submit" class="btn btn-default">Sign In</button>
-                    </form>';
+                        <button type="submit" class="btn btn-default" id="loginbtn">Login</button>
+                    </div>';
 //            $output .= '<form action="/login" method="POST" class="form">';
 //                $output .= '<label>Login:</label>';
 //                $output .= '<input type="text" name="user" class="form-control logintext">';
@@ -41,9 +41,10 @@ class UserForm extends Form
     }
 
     public function getLoggedInBlock() {
-        $output = '<form action="/login" method="POST" class="navbar-form navbar-right" role="search">
-                        <label><a href="/logout">Du bist eingeloggt.</a></label>
-                    </form>';
+        $output = '<ul class="nav navbar-nav" style="float: right;">
+                        <li><a href="/logout">Ausloggen</a></li>
+                    </ul>
+                   ';
         return $output;
     }
 }
