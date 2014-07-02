@@ -1,3 +1,23 @@
+#logoheaderwrap{
+    text-align: center;
+    position: fixed;
+    height: 110px;
+    top: 0;
+    z-index: 200;
+    width: 100%;
+}
+
+#logoheader{
+    height: 110px;
+    width: 1170px;
+    /*position: fixed;
+    top: 0;*/
+    background-color: #000000;
+    background-image: url("../img/FFXIV/res/logo/wl_logo.png");
+    background-repeat: no-repeat;
+    margin: 0px auto;
+}
+
 .loginbox{
     width: 300px;
 }
@@ -51,7 +71,7 @@
 
 .eventaddform{
     width: 100%;
-    height: 600px;
+    height: 400px;
 }
 
 .eventaddform .eventaddtable{
