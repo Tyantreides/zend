@@ -43,7 +43,7 @@ class Module
                         return $playersTable;
                     },
                 'Raidplan\Model\UsersTable' =>  function($sm) {
-                        $usersDefaultDbAdapter = $sm->get('defaultAdapter');
+                        $usersDefaultDbAdapter = $sm->get('smfAdapter');
                         //$playersTableGateway = $sm->get('PlayersTableGateway');
                         $usersTable = new UsersTable($usersDefaultDbAdapter);
                         return $usersTable;
@@ -56,6 +56,10 @@ class Module
                     },
                 'defaultAdapter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return $dbAdapter;
+                    },
+                'smfAdapter' => function ($sm) {
+                        $dbAdapter = $sm->get('smfdb');
                         return $dbAdapter;
                     },
                 'Raidplan\Model\EventsTable' =>  function($sm) {

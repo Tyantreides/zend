@@ -18,14 +18,19 @@ if (isset($_SERVER['SERVER_ADDR']) && $_SERVER['SERVER_ADDR'] == '127.0.0.1') {
         'db' => array(
             'driver'         => 'Pdo',
             'dsn'            => 'mysql:dbname=db1705936;host=localhost',
-            //'driver_options' => array(
-            //    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
-            //),
+            'adapters' => array(
+                'smfdb' => array(
+                    'driver'         => 'Pdo',
+                    'dsn'            => 'mysql:dbname=db1705936;host=localhost',
+                ),
+            ),
         ),
         'service_manager' => array(
             'factories' => array(
-                'Zend\Db\Adapter\Adapter'
-                => 'Zend\Db\Adapter\AdapterServiceFactory',
+                'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+            ),
+            'abstract_factories' => array(
+                'Zend\Db\Adapter\AdapterAbstractServiceFactory',
             ),
         ),
     );
@@ -35,14 +40,20 @@ else {
         'db' => array(
             'driver'         => 'Pdo',
             'dsn'            => 'mysql:dbname=DB1705936;host=rdbms.strato.de',
-            //'driver_options' => array(
-            //    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
-            //),
+            'adapters' => array(
+                'smfdb' => array(
+                    'driver'         => 'Pdo',
+                    'dsn'            => 'mysql:dbname=DB1714366;host=rdbms.strato.de',
+                ),
+            ),
         ),
+
         'service_manager' => array(
             'factories' => array(
-                'Zend\Db\Adapter\Adapter'
-                => 'Zend\Db\Adapter\AdapterServiceFactory',
+                'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+            ),
+            'abstract_factories' => array(
+                'Zend\Db\Adapter\AdapterAbstractServiceFactory',
             ),
         ),
     );
