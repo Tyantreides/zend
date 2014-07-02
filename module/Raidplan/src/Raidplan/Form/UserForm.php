@@ -47,4 +47,9 @@ class UserForm extends Form
                    ';
         return $output;
     }
+
+    public function getLoginReminder() {
+        $output = '<p>Bitte melde Dich zuerst oben rechts an.</p>';
+        return $output;
+    }
 }

@@ -40,44 +40,9 @@
 $title = 'My Events';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    <a href="<?php echo $this->url('addevent');?>">Add new Event</a>
-</p>
-
-<table class="table">
-    <tr>
-        <th>id</th>
-        <th>titel</th>
-        <th>Beschreibung</th>
-        <th>datetime</th>
-        <th>status</th>
-        <th>activityid</th>
-        <th>invited</th>
-        <th>&nbsp;</th>
-    </tr>
-    <?php foreach ($events as $event) : ?>
-        <tr>
-            <td><?php echo $this->escapeHtml($event->id);?></td>
-            <td><?php echo $this->escapeHtml($event->titel);?></td>
-            <td><?php echo $this->escapeHtml($event->beschreibung);?></td>
-            <td><?php echo $this->escapeHtml($event->datetime);?></td>
-            <td><?php echo $this->escapeHtml($event->status);?></td>
-            <td><?php echo $this->escapeHtml($event->activityid);?></td>
-            <td><?php echo $this->escapeHtml($event->invited);?></td>
-            <td>
-                <a href="<?php
-                echo $this->url('editevent',
-                    array('id' => $event->id));?>">Edit</a>
-                <a href="<?php echo $this->url('deleteevent',
-                    array('id' => $event->id));?>">Delete</a>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-</table>
-
-
-
+<br>
+<br>
+<button id="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text"><a href="<?php echo $this->url('addevent');?>">Event hinzufügen</a></span></button>
 <div id='calendar'></div>
 <div id='debug'></div>
 <?php //WLTODO Kalender onclick, ondrop, onedit callbacks implementieren ?>
