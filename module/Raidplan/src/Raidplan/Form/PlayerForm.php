@@ -126,6 +126,21 @@ class PlayerForm extends Form
         return $output;
     }
 
+    public function getTeilnehmerList($playerdata, $eventdata){
+        foreach($playerdata as $player) {
+
+            $allplayers[$player['playerid']][] = $player;
+        }
+        $allEventData = json_decode($eventdata->invited);
+        $addedplayers = $allEventData->players;
+        foreach($addedplayers as $addedplayer) {
+            if (array_key_exists($addedplayer->player,$allplayers)) {
+                $playerlist[] = $allplayers[$addedplayer->player];
+            }
+        }
+        return $playerlist;
+    }
+
     private function getPlayer($playerEntry){
         $output = '';
         $output .= '<div class="ui-widget-content player" id="player_'.$playerEntry[0]['playerid'].'">';

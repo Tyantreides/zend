@@ -6,6 +6,18 @@ print_r($this->eventdata);
 print_r('</pre>');
 
 
-echo $this->eventForm->getViewEventForm($this->eventdata);
+
+print_r('<pre>');
+print_r($this->playerform->getTeilnehmerList($this->playerdata, $this->eventdata));
+print_r('</pre>');
+
+
 ?>
 
+
+<div class="panel panel-default">
+    <div class="panel-heading">Eventdetails</div>
+    <div class="panel-body">
+        <?php echo $this->eventform->getViewEventForm($this->eventdata, $this->playerdata); ?>
+    </div>
+</div>

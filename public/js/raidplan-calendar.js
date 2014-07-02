@@ -8,7 +8,6 @@ $(document).ready(function() {
         data: { datefrom: getBeginOfMonth(), dateto: getEndOfMonth() }
     })
         .done(function( msg ) {
-            alert(msg);
             var obj = jQuery.parseJSON(msg);
             //alert( obj.name === "John" );
             $('#calendar').fullCalendar(obj);

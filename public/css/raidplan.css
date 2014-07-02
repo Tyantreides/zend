@@ -1,3 +1,7 @@
+.container{
+    width:1200px;
+}
+
 #logoheaderwrap{
     text-align: center;
     position: fixed;
@@ -5,6 +9,11 @@
     top: 0;
     z-index: 200;
     width: 100%;
+    background: url("../img/FFXIV/res/background/bg_lions_den_web_1872x970.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover;    /* Mozilla*/
+    -o-background-size: cover;      /* Opera*/
+    background-size: cover;         /* Generic*/
 }
 
 #logoheader{
@@ -12,7 +21,7 @@
     width: 1170px;
     /*position: fixed;
     top: 0;*/
-    background-color: #000000;
+
     background-image: url("../img/FFXIV/res/logo/wl_logo.png");
     background-repeat: no-repeat;
     margin: 0px auto;
@@ -62,10 +71,11 @@
 }
 
 .layoutbody{
-    background-image: url("../img/FFXIV/res/background/bg_lions_den_web_1872x970.png");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: auto;
+    background: url("../img/FFXIV/res/background/bg_lions_den_web_1872x970h.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover; /* For WebKit*/
+    -moz-background-size: cover;    /* Mozilla*/
+    -o-background-size: cover;      /* Opera*/
+    background-size: cover;         /* Generic*/
 }
 
 
@@ -210,17 +220,26 @@ Partyassembler
 }
 
 .eventviewform{
-    background-color: #121212;
+
 }
 
 .eventviewform .eventviewtable{
     width: 100%;
 }
 
-.eventviewform .eventviewtable .lefttable{
+.eventviewform .eventviewtable .left{
     width: 50%;
 }
 
-.eventviewform .eventviewtable .righttable{
+.eventviewform .eventviewtable .right{
     width: 50%;
+}
+
+.eventviewform .eventviewtable .lefttable{
+    width: 90%;
+    margin-right: 20px;
+}
+
+.eventviewform .eventviewtable .righttable{
+    width: 90%;
 }

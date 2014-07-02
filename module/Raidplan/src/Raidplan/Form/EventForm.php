@@ -146,30 +146,52 @@ class EventForm extends Form
         $output .= '<div class="eventviewform">
                         <table class="eventviewtable">
                             <tr>
-                              <td>
+                              <td class="left">
                               <table class="lefttable">
                                 <tr>
-                                  <td>links</td>
+                                  <td>
+                                    <label for="view_titel">Titel</label>
+                                    <input type="text" name="pre_titel" id="view_titel" class="form-control" value="" disabled>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td>links</td>
+                                  <td>
+                                    <label for="view_beschreibung">Beschreibung</label>
+                                    <textarea name="view_beschreibung" id="view_beschreibung" class="form-control" disabled></textarea>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td>links</td>
+                                  <td>
+                                    <label>Datum:</label>
+                                    <input name="view_date" type="text" id="view_date" class="form-control" disabled>
+                                  </td>
                                 </tr>
                                 <tr>
-                                  <td>links</td>
+                                  <td>
+                                  <label>Uhrzeit:</label>
+                                      <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                                        <input name="view_time" id="view_time" type="text" class="form-control" disabled>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-time"></span>
+                                        </span>
+                                      </div>
+                                  </td>
                                 </tr>
                               </table>
                               </td>
-                              <td>
+                              <td class="right">
                               <table class="righttable">
                                 <tr>
-                                  <td class="active">...</td>
-                                  <td class="success">...</td>
-                                  <td class="warning">...</td>
-                                  <td class="danger">...</td>
-                                  <td class="info">...</td>
+                                  <td class="active">teinehmer</td>
+                                  <td class="success">status</td>
+                                </tr>
+                                <tr>
+                                  <td class="active">teinehmer</td>
+                                  <td class="success">status</td>
+                                </tr>
+                                <tr>
+                                  <td class="active">teinehmer</td>
+                                  <td class="success">status</td>
                                 </tr>
                               </table>
                               </td>
@@ -178,4 +200,9 @@ class EventForm extends Form
                     </div>';
         return $output;
     }
+
+    public function getPlayerDiv($player) {
+
+    }
+
     }

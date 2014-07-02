@@ -87,11 +87,20 @@ class RaidplanController extends AbstractActionController
         }
         $eventForm  = new EventForm();
         $eventdata = $this->getEventsTable()->getEvents($id);
+        $playersData = $this->getPlayersTable()->fetchPlayerData();
+        $allRoles = $this->getPlayersTable()->fetchAllRoles();
+        $allActivities = $this->getEventsTable()->fetchActivities();
+        $playerForm = new PlayerForm();
         $output = 'viewevent';
         return array(
             'output' => $output,
             'eventdata' => $eventdata,
-            'eventForm' => $eventForm,
+            'eventform' => $eventForm,
+            'playerform' => $playerForm,
+            'playerdata' => $playersData,
+            'roledata' => $allRoles,
+            'activitydata' => $allActivities,
+
         );
     }
 
