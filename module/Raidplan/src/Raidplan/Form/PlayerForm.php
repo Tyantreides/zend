@@ -126,16 +126,27 @@ class PlayerForm extends Form
         return $output;
     }
 
-    public function getTeilnehmerList($playerdata, $eventdata){
+    public function processPlayerdata($playerdata){
         foreach($playerdata as $player) {
-
             $allplayers[$player['playerid']][] = $player;
         }
+        return $allplayers;
+    }
+
+    public function getTeilnehmerList($playerdata, $eventdata){
         $allEventData = json_decode($eventdata->invited);
         $addedplayers = $allEventData->players;
         foreach($addedplayers as $addedplayer) {
-            if (array_key_exists($addedplayer->player,$allplayers)) {
-                $playerlist[] = $allplayers[$addedplayer->player];
+            if (array_key_exists($addedplayer->player,$playerdata)) {
+                $playerlist[] = $playerdata[$addedplayer->player];
+            }
+            elseif ($addedplayer->player == 999) {
+                $playerlist[] = array(
+                    '0' => array(
+                        'playerid' => 999,
+                        'player_charname' => 'Random Player'
+                    ),
+                );
             }
         }
         return $playerlist;

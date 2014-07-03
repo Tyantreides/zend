@@ -141,7 +141,7 @@ class EventForm extends Form
         return '<div class="raidplan-msg-box"><div class="raidplan-msg-success" id="raidplan-msg">Event erfolgreich gespeichert. <br>Du wirst weitergeleitet....</div></div>';
     }
 
-    public function getViewEventForm($eventData){
+    public function getViewEventForm($eventData, $playerData){
         $output = '';
         $output .= '<div class="eventviewform">
                         <table class="eventviewtable">
@@ -199,6 +199,34 @@ class EventForm extends Form
                         </table>
                     </div>';
         return $output;
+    }
+
+
+    public function getEventRoles($eventData, $allroles){
+        $allEventData = json_decode($eventData->invited);
+        foreach($allroles as $roledata) {
+            $roledataarray[$roledata['id']] = $roledata;
+        }
+        foreach($allEventData->roles as $role) {
+            if (array_key_exists($role->role, $roledataarray)) {
+                $eventroles[] = $roledataarray[$role->role];
+            }
+            elseif ($role->role == '999') {
+                $eventroles[] = array(
+                    'id' => 999,
+                    'rolename' => 'Random',
+                    'roleshortname' => 'Rand'
+                );
+            }
+            else{
+                $eventroles[] = array(
+                    'id' => 999,
+                    'rolename' => 'Random',
+                    'roleshortname' => 'Rand'
+                );
+            }
+        }
+        return $eventroles;
     }
 
     public function getPlayerDiv($player) {
