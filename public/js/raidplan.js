@@ -194,7 +194,7 @@ $( document ).ready(function() {
         var buttonid = "#buttons_"+spotid;
         $(buttonid).removeClass("empty");
         $(buttonid).addClass("button");
-        $(buttonid).html('<button class="delete" id="delbutton_'+spotid+'"></button>');
+        $(buttonid).html('<button class="delete" id="delbutton_'+spotid+'"><span class="glyphicon glyphicon-remove"><i class="red"></i></span></button>');
         //var deletebuttonelement =
         $(buttonid+" #delbutton_"+spotid).click(function(){
             //$(this).remove();
