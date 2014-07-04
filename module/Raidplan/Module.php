@@ -8,6 +8,8 @@ use Raidplan\Model\Jobs;
 use Raidplan\Model\JobsTable;
 use Raidplan\Model\Players;
 use Raidplan\Model\PlayersTable;
+use Raidplan\Model\Roles;
+use Raidplan\Model\RolesTable;
 use Raidplan\Model\UsersTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
@@ -85,6 +87,17 @@ class Module
                         $resultSetPrototype = new ResultSet();
                         $resultSetPrototype->setArrayObjectPrototype(new Jobs());
                         return new TableGateway('ep_jobs', $dbAdapter, null, $resultSetPrototype);
+                    },
+                'Raidplan\Model\RolesTable' =>  function($sm) {
+                        $tableGateway = $sm->get('RolesTableGateway');
+                        $table = new RolesTable($tableGateway);
+                        return $table;
+                    },
+                'RolesTableGateway' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        $resultSetPrototype = new ResultSet();
+                        $resultSetPrototype->setArrayObjectPrototype(new Roles());
+                        return new TableGateway('ep_roles', $dbAdapter, null, $resultSetPrototype);
                     },
             ),
         );

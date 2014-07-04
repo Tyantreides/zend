@@ -1,6 +1,7 @@
 <?php
 namespace Raidplan\Form;
 
+use Raidplan\Model\Players;
 use Zend\Form\Form;
 
 class EventForm extends Form
@@ -141,7 +142,7 @@ class EventForm extends Form
         return '<div class="raidplan-msg-box"><div class="raidplan-msg-success" id="raidplan-msg">Event erfolgreich gespeichert. <br>Du wirst weitergeleitet....</div></div>';
     }
 
-    public function getViewEventForm($eventData, $playerData){
+    public function getViewEventForm($eventsModel){
         $output = '';
         $output .= '<div class="eventviewform">
                         <table class="eventviewtable">
@@ -180,20 +181,16 @@ class EventForm extends Form
                               </table>
                               </td>
                               <td class="right">
-                              <table class="righttable">
-                                <tr>
-                                  <td class="active">teinehmer</td>
-                                  <td class="success">status</td>
-                                </tr>
-                                <tr>
-                                  <td class="active">teinehmer</td>
-                                  <td class="success">status</td>
-                                </tr>
-                                <tr>
-                                  <td class="active">teinehmer</td>
-                                  <td class="success">status</td>
-                                </tr>
-                              </table>
+                              <table class="righttable">';
+                           foreach($eventsModel->players as $player) {
+                               if ($player instanceof Players) {
+                                   $output .= '<tr><td class="active">'.$player->charname.'</td><td class="success">status</td></tr>';
+                               }
+                               else{
+                                   $output .= '<tr><td class="active">'.$player[0]['player_charname'].'</td><td class="success">status</td></tr>';
+                               }
+                           }
+                  $output .= '</table>
                               </td>
                             </tr>
                         </table>

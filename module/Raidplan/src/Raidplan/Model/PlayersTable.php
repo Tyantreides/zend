@@ -45,6 +45,14 @@ class PlayersTable
         return $result;
     }
 
+    public function fetchProcessedPlayerData(){
+        $playerdata = $this->fetchPlayerData();
+        foreach($playerdata as $player) {
+            $allplayers[$player['playerid']][] = $player;
+        }
+        return $allplayers;
+    }
+
     public function fetchPlayerDataById($playerid) {
         $statement = $this->dbAdapter->query('SELECT
                                                 p.id as playerid,

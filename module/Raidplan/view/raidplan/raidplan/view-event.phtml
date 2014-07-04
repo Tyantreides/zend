@@ -1,24 +1,13 @@
 <?php
 
 echo $this->output;
-$playerdata = $this->playerform->processPlayerdata($this->playerdata);
-print_r('<pre>');
-print_r($this->eventdata);
-print_r('</pre>');
 
-
-
-print_r('<pre>');
-print_r($this->playerform->getTeilnehmerList($playerdata, $this->eventdata));
-print_r('</pre>');
-
-$roleData = $this->eventform->getEventRoles($this->eventdata, $this->roledata);
 ?>
 
 
 <div class="panel panel-default">
     <div class="panel-heading">Eventdetails</div>
     <div class="panel-body">
-        <?php echo $this->eventform->getViewEventForm($this->eventdata, $this->playerform->getTeilnehmerList($this->playerdata, $this->eventdata)); ?>
+        <?php echo $this->eventform->getViewEventForm($this->eventsmodel); ?>
     </div>
 </div>
