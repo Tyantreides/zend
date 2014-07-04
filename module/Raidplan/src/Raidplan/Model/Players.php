@@ -9,8 +9,16 @@ class Players
     public $name;
     public $classes;
     public $jobs;
+    public $roles;
     public $lodestoneid;
     public $misc;
+
+    private $playersTable;
+
+
+    public function __construct(){
+        $this->getPlayersTable();
+    }
 
     public function exchangeArray($data)
     {
@@ -26,6 +34,23 @@ class Players
     public function getArrayCopy()
     {
         return get_object_vars($this);
+    }
+
+    public function load($id) {
+        if(is_int((int) $id)) {
+
+            $tempPlayerData = $this->playersTable->fetchPlayerDataById($id);
+        }
+    }
+
+
+    private function getPlayersTable()
+    {
+        if (!$this->playersTable) {
+            $sm = $this->getServiceLocator();
+            $this->playersTable = $sm->get('Raidplan\Model\PlayersTable');
+        }
+        return $this->playersTable;
     }
 
 }
