@@ -376,9 +376,9 @@ class PlayerForm extends Form
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a data-for="'.$row.'" data-roleid="99" href="#">Nicht festgelegt</a></li>';
-        foreach ($this->roleShortNames as $roleId => $roleShortname) {
-            $output .= '<li style="width:210px;"><a data-for="'.$row.'" data-roleid="'.$roleId.'" href="#">'.$this->getRoleTumbnail($roleShortname).'&nbsp;'.$this->roleNames[$roleId].'</a></li>';
+                                <li><a data-for="'.$row.'" data-roleid="999" href="#">Nicht festgelegt</a></li>';
+        foreach ($this->roleShortNames as $key => $roleShortname) {
+            $output .= '<li style="width:210px;"><a data-for="'.$row.'" data-roleid="'.$this->roleIds[$key].'" href="#">'.$this->getRoleTumbnail($roleShortname).'&nbsp;'.$this->roleNames[$key].'</a></li>';
         }
         $output .= '<li>&nbsp;</li></ul></div>';
         return $output;

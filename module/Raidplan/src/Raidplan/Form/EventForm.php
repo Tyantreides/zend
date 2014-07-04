@@ -2,6 +2,7 @@
 namespace Raidplan\Form;
 
 use Raidplan\Model\Players;
+use Raidplan\Model\Roles;
 use Zend\Form\Form;
 
 class EventForm extends Form
@@ -144,60 +145,89 @@ class EventForm extends Form
 
     public function getViewEventForm($eventsModel){
         $output = '';
-        $output .= '<div class="eventviewform">
-                        <table class="eventviewtable">
-                            <tr>
-                              <td class="left">
-                              <table class="lefttable">
-                                <tr>
-                                  <td>
-                                    <label for="view_titel">Titel</label>
-                                    <input type="text" name="pre_titel" id="view_titel" class="form-control" value="" disabled>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <label for="view_beschreibung">Beschreibung</label>
-                                    <textarea name="view_beschreibung" id="view_beschreibung" class="form-control" disabled></textarea>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <label>Datum:</label>
-                                    <input name="view_date" type="text" id="view_date" class="form-control" disabled>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                  <label>Uhrzeit:</label>
-                                      <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                                        <input name="view_time" id="view_time" type="text" class="form-control" disabled>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-time"></span>
-                                        </span>
-                                      </div>
-                                  </td>
-                                </tr>
-                              </table>
-                              </td>
-                              <td class="right">
-                              <table class="righttable">';
-                           foreach($eventsModel->players as $player) {
-                               if ($player instanceof Players) {
-                                   $output .= '<tr><td class="active">'.$player->charname.'</td><td class="success">status</td></tr>';
-                               }
-                               else{
-                                   $output .= '<tr><td class="active">'.$player[0]['player_charname'].'</td><td class="success">status</td></tr>';
-                               }
-                           }
-                  $output .= '</table>
-                              </td>
-                            </tr>
-                        </table>
-                    </div>';
+        list($date, $time) = explode(" ",$eventsModel->datetime);
+        $output .= '<div class="eventviewform">';
+            $output .= '<table class="eventviewtable">';
+                $output .= '<tr>';
+                    $output .= '<td class="eventdata">';
+                        $output .= '<table class="table">';
+                            $output .= '<tr>';
+                                $output .= '<td>';
+                                    $output .= '<label for="view_titel">Titel</label>';
+                                    $output .= '<input type="text" name="pre_titel" id="view_titel" class="form-control" value="'.$eventsModel->titel.'" disabled>';
+                                $output .= '</td>';
+                            $output .= '</tr>';
+                            $output .= '<tr>';
+                                $output .= '<td>';
+                                    $output .= '<label for="view_beschreibung">Beschreibung</label>';
+                                    $output .= '<textarea name="view_beschreibung" id="view_beschreibung" class="form-control" disabled>'.$eventsModel->beschreibung.'</textarea>';
+                                $output .= '</td>';
+                            $output .= '</tr>';
+                            $output .= '<tr>';
+                                $output .= '<td>';
+                                    $output .= '<label>Datum:</label>';
+                                    $output .= '<input name="view_date" type="text" id="view_date" class="form-control" value="'.$date.'" disabled>';
+                                $output .= '</td>';
+                            $output .= '</tr>';
+                            $output .= '<tr>';
+                                $output .= '<td>';
+                                    $output .= '<label>Uhrzeit:</label>';
+                                    $output .= '<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">';
+                                        $output .= '<input name="view_time" id="view_time" type="text" class="form-control" value="'.$time.'" disabled>';
+                                        $output .= '<span class="input-group-addon">';
+                                            $output .= '<span class="glyphicon glyphicon-time"></span>';
+                                        $output .= '</span>';
+                                    $output .= '</div>';
+                                $output .= '</td>';
+                            $output .= '</tr>';
+                        $output .= '</table>';
+                    $output .= '</td>';
+                    $output .= '<td class="roledata">';
+                        $output .= '<table class="table">';
+                            $output .= $this->renderRoleList($eventsModel->roles);
+                        $output .= '</table>';
+                    $output .= '</td>';
+                    $output .= '<td class="teilnehmerdata">';
+                    $output .= '<table class="table">';
+                        $output .= $this->renderTeilnehmerList($eventsModel->players);
+                    $output .= '</table>';
+                    $output .= '</td>';
+                $output .= '</tr>';
+            $output .= '</table>';
+        $output .= '</div>';
         return $output;
     }
 
+    public function renderTeilnehmerList($playerlist) {
+        $output = '';
+        foreach($playerlist as $player) {
+            if ($player instanceof Players) {
+                $output .= '<tr><td class="active">'.$player->charname.'</td><td class="success">status</td></tr>';
+            }
+            else{
+                $output .= '<tr><td class="active">'.$player[0]['player_charname'].'</td><td class="success">status</td></tr>';
+            }
+        }
+        return $output;
+    }
+
+    public function renderRoleList($rolelist) {
+        $output = '';
+        foreach($rolelist as $role) {
+            if ($role instanceof Roles) {
+                $output .= '<tr><td class="active">'.$this->getRoleTumbnail($role->roleshortname).'</td></tr>';
+            }
+            else{
+                $output .= '<tr><td class="active">'.$role[0]['role_shortname'].'</td></tr>';
+            }
+        }
+        return $output;
+    }
+
+    private function getRoleTumbnail ($roleShortName) {
+        $output = '<img style="float:left;" src="/img/FFXIV/res/tumbnails/role_'.strtolower($roleShortName).'_24x24.png">';
+        return $output;
+    }
 
     public function getEventRoles($eventData, $allroles){
         $allEventData = json_decode($eventData->invited);

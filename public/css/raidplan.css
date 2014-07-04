@@ -234,19 +234,50 @@ Partyassembler
     width: 100%;
 }
 
-.eventviewform .eventviewtable .left{
-    width: 50%;
+.eventviewform .eventviewtable .eventdata{
+    width: 520px;
 }
 
-.eventviewform .eventviewtable .right{
-    width: 50%;
+.eventviewform .eventviewtable .eventdata .table{
+    width: 500px;
+}
+
+.eventviewform .eventviewtable .roledata{
+    width: 24px;
+}
+
+.eventviewform .eventviewtable .roledata .table{
+
+}
+
+.eventviewform .eventviewtable .roledata .table tr td{
+    height: 41px;
+}
+
+.eventviewform .eventviewtable .teilnehmerdata{
+    width: 520px;
+}
+
+.eventviewform .eventviewtable .teilnehmerdata .table{
+    width: 500px;
+}
+
+.eventviewform .eventviewtable .teilnehmerdata .table tr{
+
+}
+
+.eventviewform .eventviewtable .teilnehmerdata .table tr td{
+    height: 41px;
 }
 
 .eventviewform .eventviewtable .lefttable{
-    width: 90%;
-    margin-right: 20px;
+
 }
 
 .eventviewform .eventviewtable .righttable{
-    width: 90%;
+
+}
+
+.eventviewform .eventviewtable .righttable tr{
+    height: 24px;
 }
