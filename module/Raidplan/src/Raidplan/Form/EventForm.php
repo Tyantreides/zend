@@ -146,7 +146,7 @@ class EventForm extends Form
     public function getViewEventForm($eventsModel){
         $output = '';
         list($date, $time) = explode(" ",$eventsModel->datetime);
-        $output .= '<div class="eventviewform">';
+        $output .= '<div class="eventviewform" data-eventid="'.$eventsModel->id.'">';
             $output .= '<table class="eventviewtable">';
                 $output .= '<tr>';
                     $output .= '<td class="eventdata">';

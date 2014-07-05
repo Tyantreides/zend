@@ -133,6 +133,17 @@ return array(
                     ),
                 ),
             ),
+            'ajaxedit' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/ajaxedit',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'ajaxedit',
+                    ),
+                ),
+            ),
             'logout' => array(
                 'type'    => 'Literal',
                 'options' => array(

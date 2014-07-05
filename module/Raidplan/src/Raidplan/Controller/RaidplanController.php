@@ -133,10 +133,9 @@ class RaidplanController extends AbstractActionController
         }
         $eventdata = $this->getEventsTable()->getEvents($id);
         $playersData = $this->getPlayersTable()->fetchPlayerData();
+        $eventmodel = $this->getEventModel();
+        $eventmodel->loadEventResult($eventdata);
 
-        foreach ($playersData as $playerDataRow) {
-            $playerRowDataArray[] =  $playerDataRow;
-        }
 
 
         $form  = new EventForm();
@@ -167,8 +166,38 @@ class RaidplanController extends AbstractActionController
             'id' => $id,
             'form' => $form,
             'playerForm' => $playerForm,
-            'playerdata' => $playerRowDataArray,
             'eventData' => $eventdata,
+            'eventmodel' => $eventmodel,
+        );
+    }
+
+
+    public function ajaxeditAction() {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $send = $request->getPost();
+            $eventsResult = $this->getEventsTable()->getEvents($send['id']);
+            $events = $this->getEventsTable()->getJsonEvents($eventsResult);
+        }
+        else{
+            $id = 8;
+        }
+        try {
+            $eventdata = $this->getEventsTable()->getEvents($id);
+
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('events', array(
+                'action' => 'index'
+            ));
+        }
+        $eventmodel = $this->getEventModel();
+        $eventmodel->loadEventResult($eventdata);
+
+        return array(
+            'id' => $id,
+            'eventData' => $eventdata,
+            'eventmodel' => $eventmodel,
         );
     }
 
@@ -216,6 +245,27 @@ class RaidplanController extends AbstractActionController
         $viewModel->setTerminal(true);
         return $viewModel;
         //return array('output' => $output);
+    }
+
+    public function ajaxUpdateEventAction() {
+        $form = new EventForm();
+        $request = $this->getRequest();
+        $output = 'updateevent';
+        if ($request->isPost()) {
+            $events = new Events();
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $events->exchangeArray($form->getData());
+                $this->getEventsTable()->saveEvents($events);
+            }
+            $output = array('msg' => $form->getEventAddSuccessMsg());
+        }
+        else {
+            $output = false;
+        }
+        $viewModel = new ViewModel(array('output' => $output));
+        $viewModel->setTerminal(true);
+        return $viewModel;
     }
 
     public function addAction()

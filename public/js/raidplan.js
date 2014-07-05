@@ -95,6 +95,24 @@ $( document ).ready(function() {
             });
     });
 
+    $("#loadedit").click(function(){
+        console.log("clicked");
+        $.ajax({
+            type: "POST",
+            url: "/ajaxedit",
+            data: loadeventforedit()
+        })
+        .done(function( msg ) {
+                console.log(msg);
+        });
+    });
+
+    function loadeventforedit(){
+        var eventid = $(".eventviewform").data('eventid');
+        var returnarray = new Object('eventid' > eventid);
+        return returnarray;
+    }
+
     $( "#partyassembler .invited .empty" ).droppable({
         accept: ".player.ui-draggable",
         hoverClass: "empty-hover",
