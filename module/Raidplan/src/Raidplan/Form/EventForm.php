@@ -15,6 +15,10 @@ class EventForm extends Form
             $this->add(array(
                 'name' => 'id',
                 'type' => 'Hidden',
+                'attributes' => array(
+                    'id' => 'id',
+                    'class' => 'form-control',
+                ),
                 ));
             $this->add(array(
                 'name' => 'titel',
@@ -110,6 +114,44 @@ class EventForm extends Form
                                 <label>Uhrzeit:</label>
                                 <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
                                     <input name="pre_time" id="pre_time" type="text" class="form-control">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                    </form>';
+        $output .= '</div>';
+        $output .= '<script>';
+        $output .= '';
+        $output .= '</script>';
+        return $output;
+    }
+
+    public function getEventEditForm($eventmodel) {
+        list($date,$time) = explode(" ",$eventmodel->datetime);
+        $output = '';
+        $output .= '<div class="eventaddform">';
+        $output .= '<form action="/addevent" method="POST" name="preevent" id="preevent">
+                    <table class="eventaddtable">
+                        <tr>
+                            <td class="left">
+                                <input type="hidden" name="pre_id" id="pre_id" value="'.$eventmodel->id.'">
+                                <input type="hidden" name="pre_status" id="pre_status" value="'.$eventmodel->status.'">
+                                <label for="pretitel">Titel</label>
+                                <input type="text" name="pre_titel" id="pre_titel" class="form-control" value="'.$eventmodel->titel.'">
+                                <label for="prebeschreibung">Beschreibung</label>
+                                <textarea name="pre_beschreibung" id="pre_beschreibung" class="form-control">'.$eventmodel->beschreibung.'</textarea>
+                            </td>
+                            <td class="right">
+                                <label>Datum:</label>
+                                <input name="pre_date" type="text" id="pre_date" class="form-control hasDatepicker" value="'.$date.'">
+                                <label>Uhrzeit:</label>
+                                <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                                    <input name="pre_time" id="pre_time" type="text" class="form-control" value="'.$time.'">
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-time"></span>
                                     </span>

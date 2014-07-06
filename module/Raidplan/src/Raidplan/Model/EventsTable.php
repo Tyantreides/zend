@@ -39,7 +39,7 @@ class EventsTable
                 'right' => 'month,agendaWeek,agendaDay',
             ),
             'defaultDate' => date("Y-m-d"),
-            'editable' => true,
+            'editable' => false,
             'events' => Array(),
         );
         foreach ($eventsResult as $event) {

@@ -5,9 +5,14 @@ echo $this->output;
 ?>
 
 
-<div class="panel panel-default">
+<div class="panel panel-default" id="eventcontainer">
     <div class="panel-heading">Eventdetails</div>
-    <div class="panel-body">
+    <?php
+        if ($this->isadmin) {
+            echo '<button id="loadedit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">Event editieren<span></span></button>';
+        }
+    ?>
+    <div class="panel-body" >
         <?php echo $this->eventform->getViewEventForm($this->eventsmodel); ?>
     </div>
 </div>

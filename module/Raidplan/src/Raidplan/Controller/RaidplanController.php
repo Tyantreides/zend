@@ -84,6 +84,7 @@ class RaidplanController extends AbstractActionController
         if (!$this->getUsersTable()->isLoggedIn()) {
             return $this->redirect()->toRoute('login');
         }
+        $isAdmin = $this->getUsersTable()->isAdmin();
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('events');
@@ -99,6 +100,7 @@ class RaidplanController extends AbstractActionController
 
         $output = 'viewevent';
         return array(
+            'isadmin' => $isAdmin,
             'output' => $output,
             //'eventdata' => $eventdata,
             'eventform' => $eventForm,
@@ -176,29 +178,50 @@ class RaidplanController extends AbstractActionController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $send = $request->getPost();
-            $eventsResult = $this->getEventsTable()->getEvents($send['id']);
-            $events = $this->getEventsTable()->getJsonEvents($eventsResult);
+            $id = $send['eventid'];
         }
         else{
-            $id = 8;
+            $id = 24;
         }
+
         try {
             $eventdata = $this->getEventsTable()->getEvents($id);
-
+            $playersTable = $this->getPlayersTable();
+            $playersData = $this->getPlayersTable()->fetchPlayerData();
+            $allRoles = $this->getPlayersTable()->fetchAllRoles();
+            $allActivities = $this->getEventsTable()->fetchActivities();
+            $playerForm = new PlayerForm();
+            $form = new EventForm();
         }
         catch (\Exception $ex) {
-            return $this->redirect()->toRoute('events', array(
-                'action' => 'index'
-            ));
+
         }
         $eventmodel = $this->getEventModel();
         $eventmodel->loadEventResult($eventdata);
-
-        return array(
+        $viewModel = new ViewModel(array(
             'id' => $id,
             'eventData' => $eventdata,
             'eventmodel' => $eventmodel,
-        );
+            '$playerstable' => $playersTable,
+            'playersdata' => $playersData,
+            'allroles' => $allRoles,
+            'allactivities' => $allActivities,
+            'playerform' => $playerForm,
+            'form' => $form,
+        ));
+        $viewModel->setTerminal(true);
+//        return array(
+//            'id' => $id,
+//            'eventData' => $eventdata,
+//            'eventmodel' => $eventmodel,
+//            '$playerstable' => $playersTable,
+//            'playersdata' => $playersData,
+//            'allroles' => $allRoles,
+//            'allactivities' => $allActivities,
+//            'playerform' => $playerForm,
+//            'form' => $form,
+//        );
+        return $viewModel;
     }
 
 

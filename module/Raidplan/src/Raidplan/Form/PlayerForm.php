@@ -1,6 +1,8 @@
 <?php
 namespace Raidplan\Form;
 
+use Raidplan\Model\Jobs;
+use Raidplan\Model\Players;
 use Raidplan\Model\PlayersTable;
 use Zend\Filter\Null;
 use Zend\Form\Form;
@@ -166,6 +168,13 @@ class PlayerForm extends Form
     }
 
     private function getJobForPlayer($job){
+        if($job instanceof Jobs) {
+            $jobarray['job_id'] = $job->id;
+            $jobarray['role_id'] = $job->role->id;
+            $jobarray['job_shortname'] = $job->jobshortname;
+            $jobarray['job_ilvl'] = $job->ilvl;
+            $job = $jobarray;
+        }
         $output = '';
         $output .= '<div class="job" data-jobid="'.$job['job_id'].'" data-roleid="'.$job['role_id'].'">';
         $output .= $this->getJobTumbnail($job['job_shortname']);
@@ -360,22 +369,88 @@ class PlayerForm extends Form
         return $output;
     }
 
-    private function getRoleSelection($partySize) {
+    public function getPartyAssemblerEdit($allRoles, $eventmodel) {
+        $partysize = 8;
+        $this->setRoles($allRoles);
         $output = '';
-        for ($m=0; $m<$partySize; $m++) {
-            $output .= '<div class="roleselect">'.$this->getRoleSelect($m).'</div>';
-        }
+        $output .= '<table class="table" id="partyassembler">
+                      <thead>
+                        <tr>
+                          <th>Setup</th>
+                          <th>Einladen</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="pull-left roleselection">
+                              '.$this->getRoleSelection($partysize, $eventmodel->roles).'
+                            </div>
+                          </td>
+                          <td>
+                            <div class="pull-left invited">
+                              '.$this->getSpotlist($partysize,'invited', $eventmodel->players).'
+                            </div>
+                          </td>
+                          <td>
+                            <div class="pull-left buttons">
+                              '.$this->getSpotlist($partysize,'buttons').'
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>';
+        $output .= '<script>';
+        $output .= '';
+        $output .= '</script>';
         return $output;
     }
 
-    private function getRoleSelect($row) {
+    private function getRoleSelection($partySize, $roles = null) {
         $output = '';
-        $output .= '<div class="btn-group" id="partyspot_'.$row.'" >
-                            <button style="text-align:left; width:200px;" id="choosedrole_'.$row.'" data-roleid="999" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        if (!$roles == null) {
+            foreach ($roles as $key => $role) {
+                $output .= '<div class="roleselect">'.$this->getRoleSelect($key, $role->id).'</div>';
+            }
+        }
+        else {
+            for ($m=0; $m<$partySize; $m++) {
+                $output .= '<div class="roleselect">'.$this->getRoleSelect($m).'</div>';
+            }
+        }
+
+        return $output;
+    }
+
+    private function getRoleSelect($row, $roleid = null) {
+        $output = '';
+
+        foreach($this->roleIds as $rolekey => $roleindexid) {
+            if ($roleindexid == $roleid) {
+                $roleid = $rolekey;
+            }
+        }
+        if (isset($roleid) && $roleid != 999) {
+            $defaultelement = '<button style="text-align:left; width:200px;" id="choosedrole_'.$row.'" data-roleid="'.$this->roleIds[$roleid].'" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    '.$this->getRoleTumbnail($this->roleShortNames[$roleid]).'&nbsp;'.$this->roleNames[$roleid].'
+                                    <span class="caret"></span>
+                               </button>';
+        }
+        elseif(isset($roleid) && $roleid == 999){
+            $defaultelement = '<button style="text-align:left; width:200px;" id="choosedrole_'.$row.'" data-roleid="999" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                 Nicht festgelegt
                                 <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
+                            </button>';
+        }
+        else{
+            $defaultelement = '<button style="text-align:left; width:200px;" id="choosedrole_'.$row.'" data-roleid="999" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Nicht festgelegt
+                                <span class="caret"></span>
+                            </button>';
+        }
+        $output .= '<div class="btn-group" id="partyspot_'.$row.'" >';
+        $output .= $defaultelement;
+        $output .= '<ul class="dropdown-menu">
                                 <li><a data-for="'.$row.'" data-roleid="999" href="#">Nicht festgelegt</a></li>';
         foreach ($this->roleShortNames as $key => $roleShortname) {
             $output .= '<li style="width:210px;"><a data-for="'.$row.'" data-roleid="'.$this->roleIds[$key].'" href="#">'.$this->getRoleTumbnail($roleShortname).'&nbsp;'.$this->roleNames[$key].'</a></li>';
@@ -384,10 +459,13 @@ class PlayerForm extends Form
         return $output;
     }
 
-    private function getSpotlist($partySize, $type) {
+    private function getSpotlist($partySize, $type, $spotsset = null) {
         $output = '';
         for ($m=0; $m<$partySize; $m++) {
-            if (1==1) {
+            if (isset($spotsset) && $spotsset[$m] instanceof Players) {
+                $output .= '<div class="empty" id="'.$type.'_'.$m.'" data-filled="player_'.$spotsset[$m]->id.'">'.$this->getEmptySpot().'</div>';
+            }
+            else {
                 $output .= '<div class="empty" id="'.$type.'_'.$m.'">'.$this->getEmptySpot().'</div>';
             }
         }
@@ -397,6 +475,19 @@ class PlayerForm extends Form
     private function getEmptySpot(){
         $output = '';
         $output .= '&nbsp;';
+        return $output;
+    }
+
+    private function getFilledSpot($player){
+        $output = '';
+        $output .= '<div class="ui-widget-content player" id="player_'.$player->id.'">';
+        $output .= '<p class="playername">'.$player->charname.'</p>';
+        $output .= '<div class="ui-widget-content joblist">';
+        foreach ($player->jobs as $job) {
+            $output .= $this->getJobForPlayer($job);
+        }
+        $output .= '</div>';
+        $output .= '</div>';
         return $output;
     }
 

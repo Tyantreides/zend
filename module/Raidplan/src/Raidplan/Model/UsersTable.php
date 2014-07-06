@@ -131,6 +131,31 @@ class UsersTable
         return false;
     }
 
+    public function isAdmin() {
+        if($cookiedata = $this->getUserCookie()) {
+            $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$cookiedata['uid'].'";');
+            $result = $statement->execute();
+            if ($result instanceof ResultInterface && $result->isQueryResult()) {
+                $resultSet = new ResultSet;
+                $resultSet->initialize($result);
+                if ($resultSet->count() > 0) {
+                    foreach($resultSet as $row) {
+                        $userdata['id_member'] = $row->id_member;
+                        $userdata['member_name'] = $row->member_name;
+                        $userdata['passwd'] = $row->passwd;
+                        $userdata['password_salt'] = $row->password_salt;
+                        $userdata['id_group'] = $row->id_group;
+                    }
+                    if ($userdata['id_group'] == 1 || $userdata['id_group'] == 11) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return false;
+    }
+
     public function getPlayers($id)
     {
         $id  = (int) $id;

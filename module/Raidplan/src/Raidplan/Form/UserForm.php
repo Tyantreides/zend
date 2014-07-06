@@ -41,7 +41,7 @@ class UserForm extends Form
     }
 
     public function getLoggedInBlock() {
-        $output = '<ul class="nav navbar-nav" style="float: right;">
+        $output = '<ul class="nav navbar-nav" style="float: right;" id="loginformbar">
                         <li><a href="/logout">Ausloggen</a></li>
                     </ul>
                    ';

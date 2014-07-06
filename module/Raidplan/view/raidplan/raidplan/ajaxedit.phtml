@@ -1,7 +1,81 @@
 <?php
-print_r('<pre>');
-print_r($this->id);
-print_r('</pre>');
-print_r('<pre>');
-print_r($this->eventmodel);
-print_r('</pre>');
+
+// module/Raidplan/view/Raidplan/Raidplan/add.phtml:
+
+$title = 'Event editieren:';
+$this->headTitle($title);
+?>
+<?php
+$form->setAttribute('action', $this->url('addevent'));
+$form->prepare();
+
+
+?>
+
+<script src='../js/raidplan.js'></script>
+<div id="tabs"  height="500px">
+    <ul>
+        <li><a href="#eventdaten">Eventdaten</a></li>
+        <li><a href="#teilnehmer">Teilnehmer</a></li>
+    </ul>
+    <div id="eventdaten">
+        <p>
+            <?php
+
+            echo $this->form()->openTag($form);
+            echo $this->formHidden($form->get('id'));
+            echo $this->formRow($form->get('titel'));
+            echo $this->formRow($form->get('beschreibung'));
+            echo $this->formRow($form->get('datetime'));
+            echo $this->formRow($form->get('status'));
+            echo $this->formRow($form->get('activityid'));
+            echo $this->formRow($form->get('invited'));
+            echo $this->formRow($form->get('accepted'));
+            echo $this->formRow($form->get('declined'));
+            //echo $this->formSubmit($form->get('submit'));
+            echo $this->form()->closeTag();
+
+            echo $this->form->getActivityDropdown($this->allactivities);
+            //WLTODO LADEN von Playersetup Templates 4 oder 8 Player Setup mit roles automatisch erzeugen
+            echo $this->form->getEventEditForm($this->eventmodel);
+
+            //echo '<button id="eventspeichern">Speichern</button>';
+            echo '<button id="eventspeichern" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">Speichern</span></button>';
+            ?>
+
+
+        </p>
+    </div>
+    <div id="teilnehmer"  >
+        <div height="500px" width="100%"><?php
+            if ($this->allroles) {
+                //echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles);
+                echo $this->playerform->getPartyAssemblerEdit($this->allroles, $this->eventmodel);
+            }
+            ?></div>
+        <p><?php
+            if ($this->playersdata){
+                echo $this->playerform->printData('PlayerList', $this->playersdata);
+            }
+            else {
+                echo "Datenbankproblem";
+            }
+            ?></p>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $( "#tabs" ).tabs();
+    });
+    $(function() {
+        $( "#datepicker" ).datepicker();
+        $('.clockpicker').clockpicker();
+
+
+    });
+    $('.playerspot .player').draggable({
+        appendTo: "body",
+        helper: "clone"
+    });
+
+</script>

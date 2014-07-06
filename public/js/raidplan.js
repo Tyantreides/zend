@@ -95,7 +95,7 @@ $( document ).ready(function() {
             });
     });
 
-    $("#loadedit").click(function(){
+    $('#loadedit').click(function(){
         console.log("clicked");
         $.ajax({
             type: "POST",
@@ -103,15 +103,39 @@ $( document ).ready(function() {
             data: loadeventforedit()
         })
         .done(function( msg ) {
-                console.log(msg);
+                $('#eventcontainer').html("");
+                $('#eventcontainer').html(msg);
+                //alert(msg);
         });
     });
 
     function loadeventforedit(){
         var eventid = $(".eventviewform").data('eventid');
-        var returnarray = new Object('eventid' > eventid);
+        var returnarray = new Object();
+        returnarray['eventid'] = eventid;
         return returnarray;
     }
+
+
+
+    $( "#partyassembler .invited .empty").each(function(){
+        if (isFilled($(this))) {
+            var playerid = $(this).data('filled');
+            var playerelement = '#playerlist #'+playerid;
+            var playerforspot = $(playerelement);
+
+            $(this).removeClass("ui-droppable");
+            $(this).removeClass("empty");
+            $(this).addClass("playerspot");
+            $(this).html("");
+            $(this).data('filled',null);
+
+            $(this).append(playerforspot);
+            playerforspot.data("spot",$(this).attr("id"));
+            playerforspot.addClass("ui-draggable");
+            addPlayerSpotDeleteButton(splitid($(this).attr("id")));
+        }
+    });
 
     $( "#partyassembler .invited .empty" ).droppable({
         accept: ".player.ui-draggable",
@@ -180,6 +204,13 @@ $( document ).ready(function() {
 
     function hasPlayer(spotelement){
         if (spotelement.data("player")) {
+            return true;
+        }
+        return false;
+    }
+
+    function isFilled(spotelement){
+        if (spotelement.data("filled")) {
             return true;
         }
         return false;
