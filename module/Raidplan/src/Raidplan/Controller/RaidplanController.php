@@ -28,6 +28,11 @@ class RaidplanController extends AbstractActionController
 
     }
 
+    /**
+     * Nur kurze Mitteilung das man sich einloggen soll
+     * @return array
+     */
+    //WLTODO Schönere Meldung einbauen
     public function loginAction(){
         $userForm = new UserForm();
         $output = $userForm->getLoginReminder();
@@ -36,6 +41,11 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+    /**
+     * Eigentlicher Loginvorgang via Ajax Abfrage
+     * Gibt Loginformular oder logged in meldung zurück
+     * @return ViewModel
+     */
     public function ajaxLoginAction(){
         $isAuth = false;
         $request = $this->getRequest();
@@ -64,11 +74,19 @@ class RaidplanController extends AbstractActionController
         return $viewModel;
     }
 
+    /**
+     * Loggt User aus und redirected auf Startseite
+     * @return \Zend\Http\Response
+     */
     public function logoutAction() {
         $this->getUsersTable()->logoutUser();
         return $this->redirect()->toRoute('home');
     }
 
+    /**
+     * Läd nur das Template für den Calender Die Daten werden über ajax geladen
+     * @return \Zend\Http\Response|ViewModel
+     */
     public function calendarAction() {
         if (!$this->getUsersTable()->isLoggedIn()) {
             return $this->redirect()->toRoute('login');
@@ -80,6 +98,10 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+    /**
+     * Zeigt den Event zur übergebenen Eventid an
+     * @return array|\Zend\Http\Response
+     */
     public function viewEventAction(){
         if (!$this->getUsersTable()->isLoggedIn()) {
             return $this->redirect()->toRoute('login');
@@ -94,14 +116,8 @@ class RaidplanController extends AbstractActionController
         $eventdata = $this->getEventsTable()->getEvents($id);
         $eventsModel = $this->getEventModel();
         $eventsModel->loadEventResult($eventdata);
-//        $playersData = $this->getPlayersTable()->fetchPlayerData();
-//        $allRoles = $this->getPlayersTable()->fetchAllRoles();
-//        $allActivities = $this->getEventsTable()->fetchActivities();
-
-        $output = 'viewevent';
         return array(
             'isadmin' => $isAdmin,
-            'output' => $output,
             //'eventdata' => $eventdata,
             'eventform' => $eventForm,
             'playerform' => $playerForm,
@@ -113,6 +129,10 @@ class RaidplanController extends AbstractActionController
         );
     }
 
+    /**
+     * depricated Edit wird über ajax geladen
+     * @return array|\Zend\Http\Response
+     */
     public function editAction() {
         if (!$this->getUsersTable()->isLoggedIn()) {
             return $this->redirect()->toRoute('login');
@@ -121,9 +141,6 @@ class RaidplanController extends AbstractActionController
         if (!$id) {
             return $this->redirect()->toRoute('addevent');
         }
-
-        // Get the Raidplan with the specified id.  An exception is thrown
-        // if it cannot be found, in which case go to the index page.
         try {
             $events = $this->getEventsTable()->getEvents($id);
             $playersTable = $this->getPlayersTable();
@@ -137,18 +154,9 @@ class RaidplanController extends AbstractActionController
         $playersData = $this->getPlayersTable()->fetchPlayerData();
         $eventmodel = $this->getEventModel();
         $eventmodel->loadEventResult($eventdata);
-
-
-
         $form  = new EventForm();
         $form->bind($events);
         $playerForm = new PlayerForm();
-/**
-        foreach ($allPlayers as $player ) {
-            $jobForm = new JobForm($player->id, $playersTable, $jobsTable);
-        }
-*/
-
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
@@ -174,7 +182,20 @@ class RaidplanController extends AbstractActionController
     }
 
 
+    /**
+     * Läd übertragene eventid ins eventadd formular und gibt es zurück.
+     * es wird dann anstatt des viewformulars angezeigt
+     * funktioniert nur wenn man admin ist
+     * @return ViewModel
+     */
+    //WLTODO falsche Eventid abfangen
     public function ajaxeditAction() {
+        if (!$this->getUsersTable()->isLoggedIn()) {
+            return $this->redirect()->toRoute('login');
+        }
+        if(!$this->getUsersTable()->isAdmin()){
+            return $this->redirect()->toRoute('home');
+        }
         $request = $this->getRequest();
         if ($request->isPost()) {
             $send = $request->getPost();
@@ -210,21 +231,14 @@ class RaidplanController extends AbstractActionController
             'form' => $form,
         ));
         $viewModel->setTerminal(true);
-//        return array(
-//            'id' => $id,
-//            'eventData' => $eventdata,
-//            'eventmodel' => $eventmodel,
-//            '$playerstable' => $playersTable,
-//            'playersdata' => $playersData,
-//            'allroles' => $allRoles,
-//            'allactivities' => $allActivities,
-//            'playerform' => $playerForm,
-//            'form' => $form,
-//        );
         return $viewModel;
     }
 
 
+    /**
+     * depricated
+     * @return ViewModel
+     */
     public function ajaxGetEventsAction() {
         $request = $this->getRequest();
         if($request->isPost()){
@@ -245,6 +259,10 @@ class RaidplanController extends AbstractActionController
         return $viewModel;
     }
 
+    /**
+     * Speichert event ab
+     * @return ViewModel
+     */
     public function ajaxSaveEventAction(){
         $form = new EventForm();
         $form->get('submit')->setValue('Add');
@@ -267,9 +285,12 @@ class RaidplanController extends AbstractActionController
         $viewModel = new ViewModel(array('output' => $output));
         $viewModel->setTerminal(true);
         return $viewModel;
-        //return array('output' => $output);
     }
 
+    /**
+     * depricated
+     * @return ViewModel
+     */
     public function ajaxUpdateEventAction() {
         $form = new EventForm();
         $request = $this->getRequest();
@@ -291,6 +312,10 @@ class RaidplanController extends AbstractActionController
         return $viewModel;
     }
 
+    /**
+     * zeigt formular für das hinzufügen von events an
+     * @return array|\Zend\Http\Response
+     */
     public function addAction()
     {
         if (!$this->getUsersTable()->isLoggedIn()) {
@@ -299,32 +324,23 @@ class RaidplanController extends AbstractActionController
         $form = new EventForm();
         $form->get('submit')->setValue('Add');
         $request = $this->getRequest();
-        //if form was send
         if ($request->isPost()) {
             $events = new Events();
-//            $form->setInputFilter($Raidplan->getInputFilter());
             $form->setData($request->getPost());
-
             if ($form->isValid()) {
                 $events->exchangeArray($form->getData());
                 $this->getEventsTable()->saveEvents($events);
-
-                // Redirect to list of Raidplans
                 return $this->redirect()->toRoute('events');
             }
         }
-        //if new
         else {
             try {
-
-                $playersTable = $this->getPlayersTable();
                 $playersData = $this->getPlayersTable()->fetchPlayerData();
                 $allRoles = $this->getPlayersTable()->fetchAllRoles();
                 $allActivities = $this->getEventsTable()->fetchActivities();
                 $playerForm = new PlayerForm();
             }
             catch (\Exception $ex) {
-                $playerstable = false;
                 $playersData = false;
                 $playerForm = false;
                 $allRoles = false;
@@ -337,6 +353,11 @@ class RaidplanController extends AbstractActionController
         'allActivities' => $allActivities);
     }
 
+
+    /**
+     * liefert eventtable model zurück
+     * @return array|object
+     */
     public function getEventsTable()
     {
         if (!$this->eventsTable) {
@@ -346,6 +367,10 @@ class RaidplanController extends AbstractActionController
         return $this->eventsTable;
     }
 
+    /**
+     * liefert playerstable model zurück
+     * @return array|object
+     */
     public function getPlayersTable()
     {
         if (!$this->playersTable) {
@@ -355,6 +380,10 @@ class RaidplanController extends AbstractActionController
         return $this->playersTable;
     }
 
+    /**
+     * liefert jobtable model zurück
+     * @return array|object
+     */
     public function getJobsTable()
     {
         if (!$this->jobsTable) {
@@ -364,6 +393,10 @@ class RaidplanController extends AbstractActionController
         return $this->jobsTable;
     }
 
+    /**
+     * liefert rolestable model zurück
+     * @return array|object
+     */
     public function getRolesTable()
     {
         if (!$this->rolesTable) {
@@ -373,6 +406,10 @@ class RaidplanController extends AbstractActionController
         return $this->rolesTable;
     }
 
+    /**
+     * liefert userstable model zurück
+     * @return array|object
+     */
     public function getUsersTable()
     {
         if (!$this->usersTable) {
@@ -382,6 +419,11 @@ class RaidplanController extends AbstractActionController
         return $this->usersTable;
     }
 
+    /**
+     * leifert eventmodel zurück
+     * es wird mit den benötigten tables und models initialisiert
+     * @return Events
+     */
     public function getEventModel() {
         $model = new Events();
         $model->initTables($this->getEventsTable(),$this->getPlayersTable(),$this->getJobsTable(),$this->getRolesTable(),$this->getUsersTable());
@@ -389,6 +431,11 @@ class RaidplanController extends AbstractActionController
         return $model;
     }
 
+    /**
+     * leifert playermodel zurück
+     * es wird mit den benötigten tables und models initialisiert
+     * @return Events
+     */
     public function getPlayerModel() {
         $model = new Players();
         $model->initTables($this->getPlayersTable(),$this->getJobsTable(),$this->getUsersTable());
@@ -396,6 +443,11 @@ class RaidplanController extends AbstractActionController
         return $model;
     }
 
+    /**
+     * leifert jobmodel zurück
+     * es wird mit den benötigten tables und models initialisiert
+     * @return Events
+     */
     public function getJobModel() {
         $model = new Jobs();
         $model->initTables($this->getJobsTable(),$this->getRolesTable());
@@ -403,98 +455,24 @@ class RaidplanController extends AbstractActionController
         return $model;
     }
 
+    /**
+     * leifert rolemodel zurück
+     * es wird mit den benötigten tables initialisiert
+     * @return Events
+     */
     public function getRoleModel() {
         $model = new Roles();
         $model->setTable($this->getRolesTable());
         return $model;
     }
 
+    /**
+     * liefert usermodel zurück
+     * @return Users
+     */
     public function getUserModel() {
         $model = new Users();
         return $model;
     }
-
-    public function listEventsJsonAction(){
-        echo  '{
-	            "success": 1,
-	            "result": [
-                        {
-                            "id": "293",
-                            "title": "This is warning class event with very long title to check how it fits to evet in day view",
-                            "url": "http://www.example.com/",
-                            "class": "event-warning",
-                            "start": "1362938400000",
-                            "end":   "1363197686300"
-                        },
-                        {
-                        "id": "256",
-                        "title": "Event that ends on timeline",
-                        "url": "http://www.example.com/",
-                        "class": "event-warning",
-                        "start": "1363155300000",
-                        "end":   "1363227600000"
-                        },
-                        {
-                            "id": "276",
-                                "title": "Short day event",
-                                "url": "http://www.example.com/",
-                                "class": "event-success",
-                                "start": "1363245600000",
-                                "end":   "1363252200000"
-                            },
-                                {
-                        "id": "294",
-                            "title": "This is information class ",
-                            "url": "http://www.example.com/",
-                            "class": "event-info",
-                            "start": "1363111200000",
-                            "end":   "1363284086400"
-                        },
-                    {
-                        "id": "297",
-                            "title": "This is success event",
-                            "url": "http://www.example.com/",
-                            "class": "event-success",
-                            "start": "1363234500000",
-                            "end":   "1363284062400"
-                        },
-                    {
-                        "id": "54",
-                            "title": "This is simple event",
-                            "url": "http://www.example.com/",
-                            "class": "",
-                            "start": "1363712400000",
-                            "end":   "1363716086400"
-                        },
-                    {
-                        "id": "532",
-                            "title": "This is inverse event",
-                            "url": "http://www.example.com/",
-                            "class": "event-inverse",
-                            "start": "1364407200000",
-                            "end":   "1364493686400"
-                        },
-                    {
-                        "id": "548",
-                            "title": "This is special event",
-                            "url": "http://www.example.com/",
-                            "class": "event-special",
-                            "start": "1363197600000",
-                            "end":   "1363629686400"
-                        },
-                    {
-                        "id": "295",
-                            "title": "Event 3",
-                            "url": "http://www.example.com/",
-                            "class": "event-important",
-                            "start": "1364320800000",
-                            "end":   "1364407286400"
-                        }
-                ]
-                }';
-        //return new ViewModel(array('jsonstring' => $eventsjson));
-    }
-
-
 }
 

@@ -1,5 +1,14 @@
+/**
+ * Raidplan.js Version Beta 0.1
+ * create by Christian Meissner
+ *
+ */
+
 $( document ).ready(function() {
 
+    /**
+     * Ajax login funktionalität
+     */
     $.ajax({
         url: "/ajaxlogin"
     }).done(function( msg ) {
@@ -32,48 +41,59 @@ $( document ).ready(function() {
     });
 
 
+    /**
+     * -------------------------------------------------------------
+     * Onchanges und onclicks
+     * -----------------------------------------------------------
+     */
 
-
-
-
-
-    //AddEvent Form Functions
+    /**
+     * onclicks für die roleselektoren auf add und editpage
+     */
     $("#partyassembler .roleselection a").each(function(){
         $( this ).click(function() {
-            //alert( "click" );
             var choosedroleelement = "#choosedrole_"+$(this).data("for");
-            //var pfeilspan = "&nbsp;<span class=\"caret\"></span>";
             setRoleElement($(choosedroleelement),$(this));
-            //$(choosedroleelement).data("roleid", $(this).data("roleid"));
-            //$(choosedroleelement).html($(this).html()+pfeilspan);
             putDataToForm();
         });
     });
 
 
+    /**
+     * Onchanges für verschiedene input felder. wichtig damit das datenarray zum verschicken immer aktuell ist
+     */
     $(".eventaddform input").each(function(){
         $( this ).change(function() {
-            //alert( "change" );
             putDataToForm();
         });
     });
 
+    /**
+     * separater onchange fürs dropdown weil es kein input ist
+     */
     $("#eventdaten #pre_activityid").change(function(){
         putDataToForm();
     });
 
+    /**
+     * spezieller onchange für den datepicker
+     */
     $(".eventaddform #pre_date").datepicker()
         .on("changeDate", function(ev){
             putDataToForm();
             $(this).datepicker("hide");
         });
-    //WLTODO Position Timepicker anpassen
-    //WLTODO Formularüberträge implementieren
 
+    /**
+     * onchange für das beschreibungsfeld weil textarea
+     */
     $("#preevent #pre_beschreibung").change(function(){
         putDataToForm();
     });
 
+    /**
+     * onclick für den speichernbutton bei add und edit page
+     */
     $("#eventspeichern").click(function(){
         console.log("clicked");
         $.ajax({
@@ -95,8 +115,10 @@ $( document ).ready(function() {
             });
     });
 
+    /**
+     *onlick für den editieren button auf der view page
+     */
     $('#loadedit').click(function(){
-        console.log("clicked");
         $.ajax({
             type: "POST",
             url: "/ajaxedit",
@@ -105,10 +127,24 @@ $( document ).ready(function() {
         .done(function( msg ) {
                 $('#eventcontainer').html("");
                 $('#eventcontainer').html(msg);
-                //alert(msg);
         });
     });
+    /**
+     * -----------------------------------------------------------------------------------
+     *
+     */
 
+
+    /**
+     * ----------------------------------------------------------------------
+     * Diverse Data Helper und datensammelfunktionen für die formulare etc
+     *
+     */
+
+    /**
+     * bereitet den post für das laden der editpage via ajax vor
+     * @returns {Object}
+     */
     function loadeventforedit(){
         var eventid = $(".eventviewform").data('eventid');
         var returnarray = new Object();
@@ -116,8 +152,9 @@ $( document ).ready(function() {
         return returnarray;
     }
 
-
-
+    /**
+     * verteilt beim laden der editpage die Spieler auf die richtigen plätze wie sie im eventdatensatz stehen
+     */
     $( "#partyassembler .invited .empty").each(function(){
         if (isFilled($(this))) {
             var playerid = $(this).data('filled');
@@ -137,6 +174,11 @@ $( document ).ready(function() {
         }
     });
 
+    /**
+     * definiert dropables für die drag and dropfunktionen wenn man spieler auf plätze zieht
+     * das dropcallback übernimmt auch gleich das aktualisieren des datenarrays und der einzelnen sich verschiebenen elemente
+     *
+     */
     $( "#partyassembler .invited .empty" ).droppable({
         accept: ".player.ui-draggable",
         hoverClass: "empty-hover",
@@ -159,8 +201,6 @@ $( document ).ready(function() {
                 }
 
             }
-            //$( this ).find( ".placeholder" ).remove();
-            //ui.draggable.html().appendTo( this );
             $(this).removeClass("ui-droppable");
             $(this).removeClass("empty");
             $(this).addClass("playerspot");
@@ -176,32 +216,32 @@ $( document ).ready(function() {
         }
     });
 
+    /**
+     * ändert ein role "dropdown" wenn man eine auswahl getätigt hat.
+     * @param element
+     * @param roleelement
+     */
     function setRoleElement(element, roleelement){
         var pfeilspan = "&nbsp;<span class=\"caret\"></span>";
         element.data("roleid", getRole(roleelement));
         element.html(roleelement.html()+pfeilspan);
     }
 
+    /**
+     * holt das html5 data attribut roleid des angegebenen elements
+     * das element muss das ergebnis aus $(elementid) sein
+     * @param element
+     * @returns {*}
+     */
     function getRole(element) {
         return element.data("roleid");
     }
 
-    function fillSpot(){
-
-    }
-
-    function emptySpot(){
-
-    }
-
-    function switchPlayerSpots() {
-
-    }
-
-    function switchPlayer() {
-
-    }
-
+    /**
+     * prüft ob das angegebene element das dataattribut "player" besitzt
+     * @param spotelement
+     * @returns {boolean}
+     */
     function hasPlayer(spotelement){
         if (spotelement.data("player")) {
             return true;
@@ -209,6 +249,10 @@ $( document ).ready(function() {
         return false;
     }
 
+    /**
+     * prüft ob das angegebene element das dataattribut "filled" besitzt
+     *
+     */
     function isFilled(spotelement){
         if (spotelement.data("filled")) {
             return true;
@@ -239,29 +283,36 @@ $( document ).ready(function() {
         return playerelement.data("player");
     }
 
+
+    /**
+     * fügt der angegebenen Zeile des partassemblers einen "löschen" button hinzu
+     * @param spotid
+     */
     function addPlayerSpotDeleteButton(spotid) {
         var buttonid = "#buttons_"+spotid;
         $(buttonid).removeClass("empty");
         $(buttonid).addClass("button");
         $(buttonid).html('<button class="delete" id="delbutton_'+spotid+'"><span class="glyphicon glyphicon-remove"><i class="red"></i></span></button>');
-        //var deletebuttonelement =
         $(buttonid+" #delbutton_"+spotid).click(function(){
-            //$(this).remove();
             deletePlayerFromSpot(spotid);
             deletePlayerSpotButtons(spotid);
         });
     }
 
+    /**
+     * Löscht den Löschenbutton einer zeile im partyassembler
+     * @param spotid
+     */
     function deletePlayerSpotButtons(spotid) {
         var buttonid = "#buttons_"+spotid;
         $(buttonid).addClass("empty");
         $(buttonid).html('');
     }
 
-    function addPlayerToSpot(playerelement, spotid){
-
-    }
-
+    /**
+     * löscht einen Spieler einer zeile im partyassembler
+     * @param spotid
+     */
     function deletePlayerFromSpot(spotid) {
         var slotelementid = ".invited #invited_"+spotid;
         var playerelementid = ".invited #invited_"+spotid+" .player";
@@ -272,44 +323,52 @@ $( document ).ready(function() {
         $(slotelementid).html('');
     }
 
+    /**
+     * fügt den Spieler wieder in die partyliste ein
+     * @param playerelement
+     */
     function resetPlayer(playerelement) {
         $("#playerlist").append(playerelement);
     }
-    $( "#partyassembler .empty" ).on("drop", function(event,ui){
-        //ui.draggable.addClass("disabled");
-        //ui.draggable.draggable("disable");
-    });
 
+    /**
+     * sammelt alle formulare und fürg sie in ein array  ein und gibt es zurück.
+     * Dieses array geht dann via ajax z.B. an die speichern funktion
+     * @returns {Object}
+     */
     function putDataToForm(){
         var hiddenformelements = new Object();
         var formData = assembleData();
         $("#eventdaten form#event input").each(function(){
-            console.log($(this).attr("id"));
-            console.log(formData[$(this).attr("id")]);
             hiddenformelements[$(this).attr("id")] = processDataForForm(formData[$(this).attr("id")]);
         });
-
-        console.log(hiddenformelements);
         return hiddenformelements;
     }
 
+    /**
+     * baut daten von den formularen de edit und add page zusammen
+     * @returns {Object}
+     */
     function assembleData(){
         var partyData = new Object();
         partyData['invited'] = new Object();
         partyData['invited']['roles'] = grabRolelistData();
         partyData['invited']['players'] = grabPlayerlistData();
         var preFormData = grabEventFormData();
-//        preFormData.forEach(function(entry) {
-//            console.log(entry);
-//        });
         for (var i in preFormData) {
             partyData[i] = preFormData[i];
         }
         partyData = processDateTime(partyData);
-        console.log('assembledata->partydata'+partyData);
         return partyData;
     }
 
+    /**
+     * erstellt einen immer gültigen zeitstempel
+     * wird kein datum gesetzt fügt die funktion das heutige ein.
+     * wird keine uhrzeit gesetzt fügt die funktion jetzt ein.
+     * @param partyData
+     * @returns {*}
+     */
     function processDateTime(partyData){
 
         if (typeof(partyData['date']) !== 'undefined' && partyData['date'] != '') {
@@ -318,19 +377,16 @@ $( document ).ready(function() {
             }
             else {
                 var now = new Date();
-                //now.format("HH:MM");
                 partyData['datetime'] = partyData['date']+' '+formatTime(now);
             }
         }
         else {
             if (typeof(partyData['time']) !== 'undefined' && partyData['time'] != '') {
                 var now = new Date();
-                //now.format("yyyy-mm-dd");
                 partyData['datetime'] = formatDate(now)+' '+partyData['time'];
             }
             else {
                 var now = new Date();
-                //now.format("yyyy-mm-dd HH:MM");
                 partyData['datetime'] = formatDate(now)+' '+formatTime(now);
             }
         }
@@ -338,16 +394,25 @@ $( document ).ready(function() {
 
     }
 
+    /**
+     * formatiert das datum
+     * @param d
+     * @returns {string}
+     */
     function formatDate(d) {
         var dd = d.getDate()
         if ( dd < 10 ) dd = '0' + dd
         var mm = d.getMonth()+1
         if ( mm < 10 ) mm = '0' + mm
         var yyyy = d.getFullYear()
-        //if ( yy < 10 ) yy = '0' + yy
         return yyyy+'-'+mm+'-'+dd
     }
 
+    /**
+     * formatiert die Zeit
+     * @param t
+     * @returns {string}
+     */
     function formatTime(t){
         var hh = t.getHours();
         if ( hh < 10 ) hh = '0' + hh;
@@ -357,6 +422,11 @@ $( document ).ready(function() {
     }
 
 
+    /**
+     * bringt json und normale stringdaten in die gleiche form
+     * @param data
+     * @returns {*}
+     */
     function processDataForForm(data) {
         if (typeof data == 'object') {
             return objectToJson(data);
@@ -369,12 +439,20 @@ $( document ).ready(function() {
         }
     }
 
+    /**
+     * wandelt ein objekt in einen jsonstring um
+     * @param object
+     * @returns {*}
+     */
     function objectToJson(object) {
         return JSON.stringify(object);
     }
 
 
-
+    /**
+     * holt die daten des eventforms ansich
+     * @returns {Object}
+     */
     function grabEventFormData(){
         var preFormData = new Object();
         $(".eventaddform #preevent input").each(function(){
@@ -390,6 +468,10 @@ $( document ).ready(function() {
         return preFormData;
     }
 
+    /**
+     * holt die daten der role auswahl
+     * @returns {Object}
+     */
     function grabRolelistData(){
         var roleData = new Object();
         $(".roleselection .roleselect .btn-group button").each(function(){
@@ -400,21 +482,19 @@ $( document ).ready(function() {
         return roleData;
     }
 
+    /**
+     * holt die daten für die verteilten spieler
+     * @returns {Object}
+     */
     function grabPlayerlistData(){
         var playerData = new Object();
         $(".invited div.empty").each(function(){
-            //console.log($(this));
-//            var idsplit = $(this).attr("id").split("_");
-//            var numericid = idsplit[1];
             var numericid = splitid($(this).attr("id"));
             playerData[numericid] = new Object();
             playerData[numericid]["player"] = 999;
             playerData[numericid]["role"] = 999;
         });
         $(".invited div.playerspot").each(function(){
-            //console.log($(this));
-//            var idsplit = $(this).attr("id").split("_");
-//            var numericid = idsplit[1];
             var numericid = splitid($(this).attr("id"));
             playerData[numericid] = new Object();
             playerData[numericid]["player"] = splitid($(this).find(".player").attr("id"));
@@ -423,11 +503,15 @@ $( document ).ready(function() {
         return playerData;
     }
 
+    /**
+     * teilt einen string per "_" seperator und liefert teil 2 zurück
+     * wird z.B. zur ermittlung des numerischen teils von "player_1" benutzt
+     * @param idstring
+     * @returns {*}
+     */
     function splitid(idstring){
         var idsplit = idstring.split("_");
         return idsplit[1];
     }
-
-//WLTODO Formularübertrag implementieren
 });
 

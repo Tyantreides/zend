@@ -11,7 +11,7 @@ $(document).ready(function() {
             var obj = jQuery.parseJSON(msg);
             //alert( obj.name === "John" );
             $('#calendar').fullCalendar(obj);
-            $('#debug').html(msg);
+            //$('#debug').html(msg);
 
 
         });
