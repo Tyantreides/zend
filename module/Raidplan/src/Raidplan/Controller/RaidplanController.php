@@ -234,6 +234,21 @@ class RaidplanController extends AbstractActionController
         return $viewModel;
     }
 
+    public function ajaxdeleteAction(){
+        if (!$this->getUsersTable()->isLoggedIn()) {
+            return $this->redirect()->toRoute('login');
+        }
+        if(!$this->getUsersTable()->isAdmin()){
+            return $this->redirect()->toRoute('home');
+        }
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('events');
+        }
+        $this->getEventsTable()->deleteEvents($id);
+
+        return $this->redirect()->toRoute('events');
+    }
 
     /**
      * depricated

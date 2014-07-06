@@ -144,6 +144,17 @@ return array(
                     ),
                 ),
             ),
+            'ajaxdeleteevent' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/ajaxdeleteevent[/:id]',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'Raidplan',
+                        'action'        => 'ajaxdelete',
+                    ),
+                ),
+            ),
             'logout' => array(
                 'type'    => 'Literal',
                 'options' => array(

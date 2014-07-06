@@ -129,6 +129,20 @@ $( document ).ready(function() {
                 $('#eventcontainer').html(msg);
         });
     });
+
+    $('#deleteevent').click(function(){
+        var eventid = $(".eventviewform").data('eventid');
+        $.ajax({
+            type: "POST",
+            url: "/ajaxdeleteevent/"+eventid,
+        })
+            .done(function( msg ) {
+                function redirect () {
+                    window.location.href = "/events";
+                }
+                window.setTimeout(redirect, 500);
+            });
+    });
     /**
      * -----------------------------------------------------------------------------------
      *

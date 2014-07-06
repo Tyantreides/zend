@@ -916,7 +916,6 @@ function Calendar(element, instanceOptions) {
 	/* Date
 	-----------------------------------------------------------------------------*/
 	
-	
 	function prev() {
 		renderView(-1);
 	}

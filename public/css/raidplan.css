@@ -287,3 +287,10 @@ Partyassembler
     margin-left: 20px;
     margin-top: 20px;
 }
+
+#deleteevent{
+    margin-right: 45px;
+    margin-top: 20px;
+    float: right;
+    color: #af1212;
+}

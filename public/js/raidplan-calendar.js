@@ -1,29 +1,60 @@
 $(document).ready(function() {
 
+    var now = new Date();
+    getCalendar(now);
 
 
-    $.ajax({
-        type: "POST",
-        url: "/ajaxgetevents",
-        data: { datefrom: getBeginOfMonth(), dateto: getEndOfMonth() }
-    })
-        .done(function( msg ) {
-            var obj = jQuery.parseJSON(msg);
-            //alert( obj.name === "John" );
-            $('#calendar').fullCalendar(obj);
-            //$('#debug').html(msg);
+
+    function getCalendar(now){
+        if (typeof now == 'undefined'){
+            var now = new Date();
+        }
+        $.ajax({
+            type: "POST",
+            url: "/ajaxgetevents",
+            data: { datefrom: getBeginOfMonth(now), dateto: getEndOfMonth(now) }
+        })
+            .done(function( msg ) {
+                var obj = jQuery.parseJSON(msg);
+                //alert( obj.name === "John" );
+                $('#calendar').fullCalendar('destroy');
+                $('#calendar').fullCalendar(obj);
+                //$('#debug').html(msg);
 
 
         });
+    }
 
-    function getBeginOfMonth(){
+    $('.ui-icon-circle-triangle-e').click(function(){
         var now = new Date();
+        getCalendar(addMonth(now));
+    });
+
+    $('.ui-icon-circle-triangle-w').click(function(){
+        var now = new Date();
+        getCalendar(subMonth(now));
+    });
+
+    $('#my-next-button').click(function() {
+        getCalendar(addMonth(now));
+    });
+
+    function addMonth(now){
+        var rawdate = new Date(now.getFullYear(),now.getMonth()+1,now.getDay()+1);
+        return rawdate;
+    }
+
+    function subMonth(now){
+        var rawdate = new Date(now.getFullYear(),now.getMonth()-1,now.getDay()+1);
+        return rawdate;
+    }
+
+    function getBeginOfMonth(now){
         var rawdate = new Date(now.getFullYear(),now.getMonth(),1);
         return formatDate(rawdate);
     }
 
-    function getEndOfMonth(){
-        var now = new Date();
+    function getEndOfMonth(now){
         var rawdate = new Date(now.getFullYear(),now.getMonth()+1,0);
         return formatDate(rawdate);
     }
