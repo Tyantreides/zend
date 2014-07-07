@@ -300,7 +300,7 @@ Partyassembler
 }
 
 #indexwelcome{
-    background: url("../img/FFXIV/res/background/welcomebg.jpg") no-repeat center center fixed;
+    background: url("../img/FFXIV/res/background/welcomebg.jpg") no-repeat center center;
     height: 500px;
     width: 100%;
 }
