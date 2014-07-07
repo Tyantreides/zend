@@ -259,7 +259,7 @@ class RaidplanController extends AbstractActionController
         if($request->isPost()){
             $send = $request->getPost();
             $eventsResult = $this->getEventsTable()->fetchEventsOfDateRange($send['datefrom'], $send['dateto']);
-            $events = $this->getEventsTable()->getJsonEvents($eventsResult);
+            $events = $this->getEventsTable()->getJsonEvents($eventsResult, $send['datefrom']);
         }
         else{
             $send = false;

@@ -170,9 +170,10 @@ class EventForm extends Form
     }
 
     public function getActivityDropdown($allActivities) {
+        //WLTODO activitydropdown sinnvoll machen
         $output = '';
         $output .= '<label>Event Vorauswahl:</label>';
-        $output .= '<select class="form-control" id="pre_activityid">';
+        $output .= '<select class="form-control" id="pre_activityid" disabled>';
         $output .= '<option value="999">Leeres Template (8 Teilnehmer)</option>';
         foreach ($allActivities as $key => $activity) {
             $output .= '<option value="'.$activity["id"].'">'.$activity["titel"].' ('.$activity["membercount"].' Teilnehmer)</option>';
@@ -200,9 +201,13 @@ class EventForm extends Form
                                 $output .= '</td>';
                             $output .= '</tr>';
                             $output .= '<tr>';
+//                                $output .= '<td>';
+//                                    $output .= '<label for="view_beschreibung">Beschreibung</label>';
+//                                    $output .= '<textarea name="view_beschreibung" id="view_beschreibung" class="form-control" disabled>'.$eventsModel->beschreibung.'</textarea>';
+//                                $output .= '</td>';
                                 $output .= '<td>';
                                     $output .= '<label for="view_beschreibung">Beschreibung</label>';
-                                    $output .= '<textarea name="view_beschreibung" id="view_beschreibung" class="form-control" disabled>'.$eventsModel->beschreibung.'</textarea>';
+                                    $output .= '<div class="panel panel-default" name="view_beschreibung" id="panel_beschreibung">'.$eventsModel->beschreibung.'</div>';
                                 $output .= '</td>';
                             $output .= '</tr>';
                             $output .= '<tr>';
@@ -241,13 +246,16 @@ class EventForm extends Form
     }
 
     public function renderTeilnehmerList($playerlist) {
+        //WLTODO Status für teilnehmer einbauen
         $output = '';
         foreach($playerlist as $player) {
             if ($player instanceof Players) {
-                $output .= '<tr><td class="active">'.$player->charname.'</td><td class="success">status</td></tr>';
+                //$output .= '<tr><td class="active">'.$player->charname.'</td><td class="success">status</td></tr>';
+                $output .= '<tr><td class="active">'.$player->charname.'</td></tr>';
             }
             else{
-                $output .= '<tr><td class="active">'.$player[0]['player_charname'].'</td><td class="success">status</td></tr>';
+                //$output .= '<tr><td class="active">'.$player[0]['player_charname'].'</td><td class="success">status</td></tr>';
+                $output .= '<tr><td class="active">'.$player[0]['player_charname'].'</td></tr>';
             }
         }
         return $output;

@@ -29,16 +29,21 @@ class EventsTable
         return $result;
     }
 
-    public function getJsonEvents ($eventsResult) {
+    public function getJsonEvents ($eventsResult, $defaultdate = null) {
+        if ($defaultdate == null) {
+            $defaultdate = date("Y-m-d");
+        }
         $eventArray = Array(
             'lang' => 'de',
             'theme' => true,
             'header' => Array(
-                'left' => 'prev,next today',
+                //'left' => 'prev,next today',
+                'left' => '',
                 'center' => 'title',
-                'right' => 'month,agendaWeek,agendaDay',
+                //'right' => 'month,agendaWeek,agendaDay',
+                'right' => '',
             ),
-            'defaultDate' => date("Y-m-d"),
+            'defaultDate' => $defaultdate,
             'editable' => false,
             'events' => Array(),
         );

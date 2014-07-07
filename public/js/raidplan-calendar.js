@@ -25,18 +25,16 @@ $(document).ready(function() {
         });
     }
 
-    $('.ui-icon-circle-triangle-e').click(function(){
-        var now = new Date();
+    $('#nextmonthbutton').click(function() {
         getCalendar(addMonth(now));
     });
 
-    $('.ui-icon-circle-triangle-w').click(function(){
-        var now = new Date();
+    $('#thismonthbutton').click(function() {
+        getCalendar(now);
+    });
+
+    $('#prevmonthbutton').click(function() {
         getCalendar(subMonth(now));
-    });
-
-    $('#my-next-button').click(function() {
-        getCalendar(addMonth(now));
     });
 
     function addMonth(now){

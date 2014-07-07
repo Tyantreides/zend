@@ -294,3 +294,13 @@ Partyassembler
     float: right;
     color: #af1212;
 }
+
+#panel_beschreibung{
+    padding: 20px;
+}
+
+#indexwelcome{
+    background: url("../img/FFXIV/res/background/welcomebg.jpg") no-repeat center center fixed;
+    height: 500px;
+    width: 100%;
+}
