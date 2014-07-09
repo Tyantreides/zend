@@ -62,7 +62,7 @@ return array(
                     'route'    => '/login',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
-                        'controller'    => 'Raidplan',
+                        'controller'    => 'User',
                         'action'        => 'login',
                     ),
                 ),
@@ -128,7 +128,7 @@ return array(
                     'route'    => '/ajaxlogin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
-                        'controller'    => 'Raidplan',
+                        'controller'    => 'User',
                         'action'        => 'ajaxLogin',
                     ),
                 ),
@@ -207,7 +207,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Raidplan\Controller\Raidplan' => 'Raidplan\Controller\RaidplanController'
+            'Raidplan\Controller\Raidplan' => 'Raidplan\Controller\RaidplanController',
+            'Raidplan\Controller\User' => 'Raidplan\Controller\UserController'
         )
     ),
     'view_manager' => array(

@@ -28,6 +28,66 @@ class UserController extends AbstractActionController
 
     }
 
+    public function matchUserAction() {
+
+    }
+
+    /**
+     * Nur kurze Mitteilung das man sich einloggen soll
+     * @return array
+     */
+    //WLTODO Schönere Meldung einbauen
+    public function loginAction(){
+        $userForm = new UserForm();
+        $output = $userForm->getLoginReminder();
+        return array(
+            'output' => $output,
+        );
+    }
+
+
+    /**
+     * Eigentlicher Loginvorgang via Ajax Abfrage
+     * Gibt Loginformular oder logged in meldung zurück
+     * @return ViewModel
+     */
+    public function ajaxLoginAction(){
+        $isAuth = false;
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            if($this->getUsersTable()->getAuthUser($post['user'], $post['passwd'])) {
+                $isAuth = true;
+            }
+        }
+        else{
+            if($this->getUsersTable()->isLoggedIn()){
+                $isAuth = true;
+            }
+        }
+        $userForm = new UserForm();
+        if ($isAuth) {
+            $output = $userForm->getLoggedInBlock();
+        }
+        else {
+            $output = $userForm->getLoginForm();
+        }
+        $viewModel = new ViewModel(array('output' => $output,
+            'output' => $output,
+        ));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
+    /**
+     * Loggt User aus und redirected auf Startseite
+     * @return \Zend\Http\Response
+     */
+    public function logoutAction() {
+        $this->getUsersTable()->logoutUser();
+        return $this->redirect()->toRoute('home');
+    }
+
 
 
 
