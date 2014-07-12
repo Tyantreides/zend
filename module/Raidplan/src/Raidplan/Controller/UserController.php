@@ -26,9 +26,12 @@ class UserController extends AbstractActionController
     public function indexAction()
     {
 
+
     }
 
     public function matchUserAction() {
+
+        $playersData = $this->getPlayersTable()->fetchPlayerData();
 
     }
 
