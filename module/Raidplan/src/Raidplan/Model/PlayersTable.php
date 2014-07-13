@@ -108,5 +108,8 @@ class PlayersTable
     }
 
 
+    public function isMatched() {
+
+    }
     
 }

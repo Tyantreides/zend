@@ -156,27 +156,27 @@ class UsersTable
         return false;
     }
 
-    public function getUserData() {
+    public function getUserData($uid = null) {
         if($cookiedata = $this->getUserCookie()) {
             $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$cookiedata['uid'].'";');
-            $result = $statement->execute();
-            if ($result instanceof ResultInterface && $result->isQueryResult()) {
-                $resultSet = new ResultSet;
-                $resultSet->initialize($result);
-                if ($resultSet->count() > 0) {
-                    foreach($resultSet as $row) {
-                        $userdata['id_member'] = $row->id_member;
-                        $userdata['member_name'] = $row->member_name;
-                        $userdata['passwd'] = $row->passwd;
-                        $userdata['password_salt'] = $row->password_salt;
-                        $userdata['id_group'] = $row->id_group;
-                    }
-                    if ($userdata['id_group'] == 1 || $userdata['id_group'] == 11) {
-                        return true;
-                    }
+        }
+        elseif (isset($uid)) {
+            $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$uid.'";');
+        }
+        $result = $statement->execute();
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            $resultSet = new ResultSet;
+            $resultSet->initialize($result);
+            if ($resultSet->count() > 0) {
+                foreach($resultSet as $row) {
+                    $userdata['id_member'] = $row->id_member;
+                    $userdata['member_name'] = $row->member_name;
+                    $userdata['id_group'] = $row->id_group;
+                    $userdata['email_address'] = $row->email_address;
                 }
-                return false;
+                return $userdata;
             }
+            return false;
         }
         return false;
     }

@@ -8,6 +8,7 @@ class Users
     public $username;
     public $email;
     public $status;
+    public $groupid;
 
     private $table;
 
@@ -27,6 +28,12 @@ class Users
     public function getArrayCopy()
     {
         return get_object_vars($this);
+    }
+
+    public function initUser($uid = null) {
+        if (isset($uid)) {
+            $this->table->getUserData($uid);
+        }
     }
 
     public function setTable($table){
