@@ -166,6 +166,17 @@ return array(
                     ),
                 ),
             ),
+            'user' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/user',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'index',
+                    ),
+                ),
+            ),
             'deleteevent' => array(
                 'type'    => 'Segment',
                 'options' => array(

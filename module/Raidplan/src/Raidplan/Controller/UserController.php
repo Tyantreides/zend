@@ -23,15 +23,26 @@ class UserController extends AbstractActionController
     protected $rolesTable;
     protected $usersTable;
 
+    protected $userModel;
+
     public function indexAction()
     {
-
+        $this->userModel = $this->getUserModel();
+        $this->userModel->initUser();
+        if (!$this->getPlayersTable()->isMatched($this->userModel->id)) {
+            //redirect zum Playermatch
+            echo '';
+        }
+        else {
+            //übersicht der gematchten player des Users
+            echo '';
+        }
 
     }
 
     public function matchUserAction() {
-
-        $playersData = $this->getPlayersTable()->fetchPlayerData();
+        $this->userModel = $this->getUserModel();
+        $this->userModel->initUser();
 
     }
 
@@ -150,7 +161,7 @@ class UserController extends AbstractActionController
     public function getPlayerModel() {
         $model = new Players();
         $model->initTables($this->getPlayersTable(),$this->getJobsTable(),$this->getUsersTable());
-        $model->initModels($this->getJobModel(),$this->getUserModel());
+        $model->initModels($this->getJobModel());
         return $model;
     }
 
@@ -169,6 +180,8 @@ class UserController extends AbstractActionController
 
     public function getUserModel() {
         $model = new Users();
+        $model->initTables($this->getPlayersTable(), $this->getUsersTable());
+        $model->initModels($this->getPlayerModel());
         return $model;
     }
 

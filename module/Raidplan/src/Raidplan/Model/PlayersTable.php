@@ -107,9 +107,22 @@ class PlayersTable
         $this->tableGateway->delete(array('id' => (int) $id));
     }
 
+    public function getPlayerIdsByUserId($uid) {
+        $players = Array();
+        $statement = $this->dbAdapter->query('SELECT * FROM ep_users_players where userid = '.$uid.';');
+        $result = $statement->execute();
+        foreach ($result as $player) {
 
-    public function isMatched() {
+            $players[$player['userid']][] = $player['playerid'];
+        }
+        return $players;
+    }
 
+    public function isMatched($uid) {
+        if (count($this->getPlayerIdsByUserId($uid)) > 0) {
+            return true;
+        }
+        return false;
     }
     
 }

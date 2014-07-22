@@ -32,11 +32,8 @@ class Players
         $this->usersTable = $usersTable;
     }
 
-    public function initModels($jobModel, $userModel){
+    public function initModels($jobModel){
         $this->jobModel = $jobModel;
-
-        $this->userModel = $userModel;
-        $this->userModel->setTable($this->usersTable);
     }
 
     public function exchangeArray($data)

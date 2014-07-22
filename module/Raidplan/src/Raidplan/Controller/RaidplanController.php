@@ -489,6 +489,8 @@ class RaidplanController extends AbstractActionController
      */
     public function getUserModel() {
         $model = new Users();
+        $model->initTables($this->getPlayersTable(), $this->getUsersTable());
+        $model->initModels($this->getPlayerModel());
         return $model;
     }
 }
