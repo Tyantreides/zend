@@ -52,4 +52,36 @@ class UserForm extends Form
         $output = '<p>Bitte melde Dich zuerst oben rechts an.</p>';
         return $output;
     }
+
+    public function getUserMatchForm ($userModel,$playerlist) {
+        $output = '';
+        $output .= '<div class="usermatchform">';
+            $output .= '<table class="usermatchtable">';
+                $output .= '<tr>';
+                    $output .= '<td class="userdata">';
+                        $output .= '<table class="table">';
+                        $output .= '<tr>';
+                        $output .= '<td>';
+                        $output .= '<label for="view_titel">Titel</label>';
+                            //$output .= '<input type="text" name="pre_titel" id="view_titel" class="form-control" value="'.$eventsModel->titel.'" disabled>';
+                        $output .= '</td>';
+                        $output .= '</tr>';
+                        $output .= '<tr>';
+                        $output .= '<td>';
+                        $output .= '<label for="view_beschreibung">Beschreibung</label>';
+                        //$output .= '<div class="panel panel-default" name="view_beschreibung" id="panel_beschreibung">'.$eventsModel->beschreibung.'</div>';
+                        $output .= '</td>';
+                        $output .= '</tr>';
+                        $output .= '</table>';
+                    $output .= '</td>';
+                    $output .= '<td class="playerdata">';
+                        $output .= '<table class="table">';
+                            //$output .= $this->renderRoleList($eventsModel->roles);
+                        $output .= '</table>';
+                    $output .= '</td>';
+                $output .= '</tr>';
+            $output .= '</table>';
+        $output .= '</div>';
+        return $output;
+    }
 }
