@@ -304,3 +304,19 @@ Partyassembler
     height: 500px;
     width: 100%;
 }
+
+.usermatchform {
+
+}
+
+.usermatchform .usermatchtable{
+    width: 100%;
+}
+
+.usermatchform .usermatchtable .userdata{
+    width: 300px;
+}
+
+.usermatchform .usermatchtable .playerdata{
+    width: 400px;
+}

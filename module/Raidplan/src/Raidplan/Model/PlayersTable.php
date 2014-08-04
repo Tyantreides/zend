@@ -124,5 +124,15 @@ class PlayersTable
         }
         return false;
     }
+
+    public function rawPlayerDataToObject($processedPlayerList, $playerObject) {
+
+        foreach ($processedPlayerList as $playerentry) {
+            $playerId = $playerentry[0];
+            $playerId = $playerId['playerid'];
+            $objectlist[] = clone $playerObject->load($playerId);
+        }
+        return $objectlist;
+    }
     
 }

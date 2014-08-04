@@ -67,6 +67,7 @@ class Players
     }
 
     public function load($id) {
+        unset($this->jobs);
         $playerdata = $this->playersTable->fetchPlayerDataById($id);
         foreach ($playerdata as $playerrow) {
 

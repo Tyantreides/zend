@@ -59,29 +59,61 @@ class UserForm extends Form
             $output .= '<table class="usermatchtable">';
                 $output .= '<tr>';
                     $output .= '<td class="userdata">';
-                        $output .= '<table class="table">';
-                        $output .= '<tr>';
-                        $output .= '<td>';
-                        $output .= '<label for="view_titel">Titel</label>';
-                            //$output .= '<input type="text" name="pre_titel" id="view_titel" class="form-control" value="'.$eventsModel->titel.'" disabled>';
-                        $output .= '</td>';
-                        $output .= '</tr>';
-                        $output .= '<tr>';
-                        $output .= '<td>';
-                        $output .= '<label for="view_beschreibung">Beschreibung</label>';
-                        //$output .= '<div class="panel panel-default" name="view_beschreibung" id="panel_beschreibung">'.$eventsModel->beschreibung.'</div>';
-                        $output .= '</td>';
-                        $output .= '</tr>';
-                        $output .= '</table>';
+                        $output .= '<div class="panel">';
+                            $output .= '<label for="view_titel">Username</label>';
+                                $output .= '<div class="ui-widget-content">'.$userModel->username.'</div>';
+                            $output .= '<label for="view_titel">Verknüpfte Player:</label>';
+                                $output .= $this->renderPlayerlist($userModel->matchedPlayers);
+                        $output .= '</div>';
                     $output .= '</td>';
                     $output .= '<td class="playerdata">';
                         $output .= '<table class="table">';
-                            //$output .= $this->renderRoleList($eventsModel->roles);
+                            $output .= $this->renderPlayerlist($playerlist);
                         $output .= '</table>';
                     $output .= '</td>';
                 $output .= '</tr>';
             $output .= '</table>';
         $output .= '</div>';
+        return $output;
+    }
+
+
+    private function renderPlayerlist($playerArray) {
+        $output = '';
+        if (is_array($playerArray)) {
+            $output .= '<div class="playerlist" id="playerlist">';
+                foreach ($playerArray as $player) {
+                    $output .= '<div class="ui-widget-content player" id="player_'.$player->id.'">';
+                    $output .= '<p class="playername">'.$player->charname.'</p>';
+                        $output .= '<div class="ui-widget-content joblist">';
+                            foreach ($player->jobs as $job) {
+                                $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
+                                    $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
+                                    $output .= $job->jobshortname.' ('.$job->ilvl.')';
+                                $output .= '</div>';
+                            }
+                        $output .= '</div>';
+                    $output .= '</div>';
+                }
+            $output .= '</div>';
+            $output .= '<script>';
+            $output .= '$( "#playerlist .player" ).draggable({
+                      appendTo: "body",
+                      helper: "clone"
+                    });
+                    ';
+            $output .= '</script>';
+            return $output;
+        }
+        return '<p>keine</p>';
+
+
+
+
+
+
+
+
         return $output;
     }
 }

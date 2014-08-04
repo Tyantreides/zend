@@ -31,7 +31,7 @@ class UserController extends AbstractActionController
         $this->userModel->initUser();
         if (!$this->getPlayersTable()->isMatched($this->userModel->id)) {
             //redirect zum Playermatch
-            echo '';
+            return $this->redirect()->toRoute('matchuser');
         }
         else {
             //übersicht der gematchten player des Users
@@ -43,7 +43,16 @@ class UserController extends AbstractActionController
     public function matchUserAction() {
         $this->userModel = $this->getUserModel();
         $this->userModel->initUser();
+        $playerlist = $this->getPlayersTable()->fetchProcessedPlayerData();
+        $playerObject = $this->getPlayerModel();
+        $playerObjectList = $this->getPlayersTable()->rawPlayerDataToObject($playerlist, $playerObject);
 
+
+        $userForm = new UserForm();
+        $matchform = $userForm->getUserMatchForm($this->userModel, $playerObjectList);
+        return array(
+            'usermatchform' => $matchform,
+        );
     }
 
     /**

@@ -177,6 +177,17 @@ return array(
                     ),
                 ),
             ),
+            'matchuser' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/matchuser',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'matchUser',
+                    ),
+                ),
+            ),
             'deleteevent' => array(
                 'type'    => 'Segment',
                 'options' => array(
