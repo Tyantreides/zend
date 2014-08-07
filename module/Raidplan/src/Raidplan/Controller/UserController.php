@@ -27,9 +27,12 @@ class UserController extends AbstractActionController
 
     public function indexAction()
     {
+        if (!$this->getUsersTable()->isLoggedIn()) {
+            return $this->redirect()->toRoute('login');
+        }
         $this->userModel = $this->getUserModel();
         $this->userModel->initUser();
-        if (!$this->getPlayersTable()->isMatched($this->userModel->id)) {
+        if (!$this->getPlayersTable()->isUserMatched($this->userModel->id)) {
             //redirect zum Playermatch
             return $this->redirect()->toRoute('matchuser');
         }
@@ -41,9 +44,12 @@ class UserController extends AbstractActionController
     }
 
     public function matchUserAction() {
+        if (!$this->getUsersTable()->isLoggedIn()) {
+            return $this->redirect()->toRoute('login');
+        }
         $this->userModel = $this->getUserModel();
         $this->userModel->initUser();
-        $playerlist = $this->getPlayersTable()->fetchProcessedPlayerData();
+        $playerlist = $this->getPlayersTable()->fetchNotMatchedPlayers();
         $playerObject = $this->getPlayerModel();
         $playerObjectList = $this->getPlayersTable()->rawPlayerDataToObject($playerlist, $playerObject);
 

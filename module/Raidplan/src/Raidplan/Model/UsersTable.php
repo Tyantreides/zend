@@ -82,7 +82,7 @@ class UsersTable
             'hash' => $passwdhash,
         );
         $cookiename = 'wlevents';
-        setcookie($cookiename, serialize($userdata), time()+3600);
+        setcookie($cookiename, serialize($userdata), time()+360000);
     }
 
     public function getUserCookie(){
@@ -162,6 +162,9 @@ class UsersTable
         }
         elseif (isset($uid)) {
             $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$uid.'";');
+        }
+        else {
+            return false;
         }
         $result = $statement->execute();
         if ($result instanceof ResultInterface && $result->isQueryResult()) {

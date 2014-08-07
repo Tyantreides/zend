@@ -55,18 +55,18 @@ class UserForm extends Form
 
     public function getUserMatchForm ($userModel,$playerlist) {
         $output = '';
-        $output .= '<div class="usermatchform">';
+        $output .= '<div class="usermatchform" >';
             $output .= '<table class="usermatchtable">';
                 $output .= '<tr>';
                     $output .= '<td class="userdata">';
-                        $output .= '<div class="panel">';
+                        $output .= '<div class="panel" style="padding: 20px;">';
                             $output .= '<label for="view_titel">Username</label>';
-                                $output .= '<div class="ui-widget-content">'.$userModel->username.'</div>';
+                                $output .= '<div style="padding-left:20px;"><h1>'.$userModel->username.'</h1></div><br>';
                             $output .= '<label for="view_titel">Verknüpfte Player:</label>';
                                 $output .= $this->renderPlayerlist($userModel->matchedPlayers);
                         $output .= '</div>';
                     $output .= '</td>';
-                    $output .= '<td class="playerdata">';
+                    $output .= '<td class="playerdata" style="width: 200px">';
                         $output .= '<table class="table">';
                             $output .= $this->renderPlayerlist($playerlist);
                         $output .= '</table>';
@@ -106,14 +106,6 @@ class UserForm extends Form
             return $output;
         }
         return '<p>keine</p>';
-
-
-
-
-
-
-
-
         return $output;
     }
 }

@@ -54,6 +54,9 @@ class Users
         else {
             $userData = $this->usersTable->getUserData();
         }
+        if (!$userData) {
+            return false;
+        }
         $this->id = $userData['id_member'];
         $this->username = $userData['member_name'];
         $this->groupid = $userData['id_group'];

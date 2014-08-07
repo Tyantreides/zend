@@ -53,6 +53,16 @@ class PlayersTable
         return $allplayers;
     }
 
+    public function fetchNotMatchedPlayers () {
+        $playerdata = $this->fetchPlayerData();
+        foreach($playerdata as $player) {
+            if (!$this->isPlayerMatched($player['playerid'])) {
+                $allplayers[$player['playerid']][] = $player;
+            }
+        }
+        return $allplayers;
+    }
+
     public function fetchPlayerDataById($playerid) {
         $statement = $this->dbAdapter->query('SELECT
                                                 p.id as playerid,
@@ -118,8 +128,25 @@ class PlayersTable
         return $players;
     }
 
-    public function isMatched($uid) {
+    public function getUserIdByPlayerId($pid) {
+        $users = Array();
+        $statement = $this->dbAdapter->query('SELECT * FROM ep_users_players where playerid = '.$pid.';');
+        $result = $statement->execute();
+        foreach ($result as $user) {
+            $users[$user['userid']][] = $user['playerid'];
+        }
+        return $users;
+    }
+
+    public function isUserMatched($uid) {
         if (count($this->getPlayerIdsByUserId($uid)) > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isPlayerMatched($pid) {
+        if (count($this->getUserIdByPlayerId($pid)) > 0) {
             return true;
         }
         return false;
