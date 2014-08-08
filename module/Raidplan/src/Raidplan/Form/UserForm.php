@@ -52,4 +52,60 @@ class UserForm extends Form
         $output = '<p>Bitte melde Dich zuerst oben rechts an.</p>';
         return $output;
     }
+
+    public function getUserMatchForm ($userModel,$playerlist) {
+        $output = '';
+        $output .= '<div class="usermatchform" >';
+            $output .= '<table class="usermatchtable">';
+                $output .= '<tr>';
+                    $output .= '<td class="userdata">';
+                        $output .= '<div class="panel" style="padding: 20px;">';
+                            $output .= '<label for="view_titel">Username</label>';
+                                $output .= '<div style="padding-left:20px;"><h1>'.$userModel->username.'</h1></div><br>';
+                            $output .= '<label for="view_titel">Verknüpfte Player:</label>';
+                                $output .= $this->renderPlayerlist($userModel->matchedPlayers);
+                        $output .= '</div>';
+                    $output .= '</td>';
+                    $output .= '<td class="playerdata" style="width: 200px">';
+                        $output .= '<table class="table">';
+                            $output .= $this->renderPlayerlist($playerlist);
+                        $output .= '</table>';
+                    $output .= '</td>';
+                $output .= '</tr>';
+            $output .= '</table>';
+        $output .= '</div>';
+        return $output;
+    }
+
+
+    private function renderPlayerlist($playerArray) {
+        $output = '';
+        if (is_array($playerArray)) {
+            $output .= '<div class="playerlist" id="playerlist">';
+                foreach ($playerArray as $player) {
+                    $output .= '<div class="ui-widget-content player" id="player_'.$player->id.'">';
+                    $output .= '<p class="playername">'.$player->charname.'</p>';
+                        $output .= '<div class="ui-widget-content joblist">';
+                            foreach ($player->jobs as $job) {
+                                $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
+                                    $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
+                                    $output .= $job->jobshortname.' ('.$job->ilvl.')';
+                                $output .= '</div>';
+                            }
+                        $output .= '</div>';
+                    $output .= '</div>';
+                }
+            $output .= '</div>';
+            $output .= '<script>';
+            $output .= '$( "#playerlist .player" ).draggable({
+                      appendTo: "body",
+                      helper: "clone"
+                    });
+                    ';
+            $output .= '</script>';
+            return $output;
+        }
+        return '<p>keine</p>';
+        return $output;
+    }
 }

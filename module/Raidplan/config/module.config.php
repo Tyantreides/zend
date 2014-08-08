@@ -62,7 +62,7 @@ return array(
                     'route'    => '/login',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
-                        'controller'    => 'Raidplan',
+                        'controller'    => 'User',
                         'action'        => 'login',
                     ),
                 ),
@@ -128,7 +128,7 @@ return array(
                     'route'    => '/ajaxlogin',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
-                        'controller'    => 'Raidplan',
+                        'controller'    => 'User',
                         'action'        => 'ajaxLogin',
                     ),
                 ),
@@ -163,6 +163,28 @@ return array(
                         '__NAMESPACE__' => 'Raidplan\Controller',
                         'controller'    => 'Raidplan',
                         'action'        => 'logout',
+                    ),
+                ),
+            ),
+            'user' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/user',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'index',
+                    ),
+                ),
+            ),
+            'matchuser' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/matchuser',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'matchUser',
                     ),
                 ),
             ),
@@ -207,7 +229,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Raidplan\Controller\Raidplan' => 'Raidplan\Controller\RaidplanController'
+            'Raidplan\Controller\Raidplan' => 'Raidplan\Controller\RaidplanController',
+            'Raidplan\Controller\User' => 'Raidplan\Controller\UserController'
         )
     ),
     'view_manager' => array(

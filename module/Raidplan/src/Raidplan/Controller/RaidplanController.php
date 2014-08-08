@@ -29,10 +29,10 @@ class RaidplanController extends AbstractActionController
     }
 
     /**
+     * depricated moved to usercontroller
      * Nur kurze Mitteilung das man sich einloggen soll
      * @return array
      */
-    //WLTODO Schönere Meldung einbauen
     public function loginAction(){
         $userForm = new UserForm();
         $output = $userForm->getLoginReminder();
@@ -42,6 +42,7 @@ class RaidplanController extends AbstractActionController
     }
 
     /**
+     * depricated moved to usercontroller
      * Eigentlicher Loginvorgang via Ajax Abfrage
      * Gibt Loginformular oder logged in meldung zurück
      * @return ViewModel
@@ -75,6 +76,7 @@ class RaidplanController extends AbstractActionController
     }
 
     /**
+     * depricated moved to usercontroller
      * Loggt User aus und redirected auf Startseite
      * @return \Zend\Http\Response
      */
@@ -487,6 +489,8 @@ class RaidplanController extends AbstractActionController
      */
     public function getUserModel() {
         $model = new Users();
+        $model->initTables($this->getPlayersTable(), $this->getUsersTable());
+        $model->initModels($this->getPlayerModel());
         return $model;
     }
 }

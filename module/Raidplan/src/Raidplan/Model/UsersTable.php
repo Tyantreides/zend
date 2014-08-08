@@ -82,7 +82,7 @@ class UsersTable
             'hash' => $passwdhash,
         );
         $cookiename = 'wlevents';
-        setcookie($cookiename, serialize($userdata), time()+3600);
+        setcookie($cookiename, serialize($userdata), time()+360000);
     }
 
     public function getUserCookie(){
@@ -152,6 +152,34 @@ class UsersTable
                 }
                 return false;
             }
+        }
+        return false;
+    }
+
+    public function getUserData($uid = null) {
+        if($cookiedata = $this->getUserCookie()) {
+            $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$cookiedata['uid'].'";');
+        }
+        elseif (isset($uid)) {
+            $statement = $this->dbAdapter->query('SELECT * FROM smf_members WHERE id_member = "'.$uid.'";');
+        }
+        else {
+            return false;
+        }
+        $result = $statement->execute();
+        if ($result instanceof ResultInterface && $result->isQueryResult()) {
+            $resultSet = new ResultSet;
+            $resultSet->initialize($result);
+            if ($resultSet->count() > 0) {
+                foreach($resultSet as $row) {
+                    $userdata['id_member'] = $row->id_member;
+                    $userdata['member_name'] = $row->member_name;
+                    $userdata['id_group'] = $row->id_group;
+                    $userdata['email_address'] = $row->email_address;
+                }
+                return $userdata;
+            }
+            return false;
         }
         return false;
     }
