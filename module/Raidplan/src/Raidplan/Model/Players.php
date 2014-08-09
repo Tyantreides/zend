@@ -67,6 +67,15 @@ class Players
     }
 
     public function load($id) {
+        if ($id == 999) {
+            unset($this->jobs);
+            $this->jobs = Array();
+            $this->setId(999);
+            $this->setCharname("nicht vorhanden");
+            unset($this->name);
+            unset($this->lodestoneid);
+            return $this;
+        }
         unset($this->jobs);
         $playerdata = $this->playersTable->fetchPlayerDataById($id);
         foreach ($playerdata as $playerrow) {

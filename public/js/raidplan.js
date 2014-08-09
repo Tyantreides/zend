@@ -231,6 +231,43 @@ $( document ).ready(function() {
     });
 
     /**
+     * definiert dropables für die drag and dropfunktionen wenn man spieler auf plätze zieht
+     * das dropcallback übernimmt auch gleich das aktualisieren des datenarrays und der einzelnen sich verschiebenen elemente
+     *
+     */
+    $( ".usermatchform .playerlist .empty" ).droppable({
+        accept: ".player.ui-draggable",
+        hoverClass: "empty-hover",
+        drop: function( event, ui ) {
+            if (ui.draggable.data("spot")) {
+                if ($(this).data("player")) {
+                    var newspotid = "#"+ui.draggable.data("spot");
+                    $(this).find(".player").data("spot",ui.draggable.data("spot"));
+                    $(newspotid).append($(this).find(".player"));
+                    //$(this).find(".player").remove();
+                }
+                else{
+                    var fromelementid = "#"+ui.draggable.data("spot");
+                    var fromid = fromelementid.split("_");
+                    deletePlayerSpotButtons(fromid[1]);
+                    $(fromelementid).removeClass("playerspot");
+                    $(fromelementid).addClass("empty");
+                    $(fromelementid).addClass("ui-droppable");
+                    $(fromelementid).data("player",false);
+                }
+
+            }
+            $(this).removeClass("ui-droppable");
+            $(this).removeClass("empty");
+            $(this).addClass("playerspot");
+            $(this).html("");
+            ui.draggable.data("spot",$(this).attr("id"));
+            $(this).data("player",ui.draggable.attr("id"));
+            $(this).append(ui.draggable);
+        }
+    });
+
+    /**
      * ändert ein role "dropdown" wenn man eine auswahl getätigt hat.
      * @param element
      * @param roleelement
