@@ -73,6 +73,10 @@ class Users
         echo '';
     }
 
+    public function getPlayerModel() {
+        return clone $this->playersModel;
+    }
+
 
 }
 

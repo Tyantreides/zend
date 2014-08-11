@@ -306,7 +306,7 @@ Partyassembler
 }
 
 .usermatchform {
-
+    width: 100%;
 }
 
 .usermatchform .usermatchtable{
@@ -314,9 +314,32 @@ Partyassembler
 }
 
 .usermatchform .usermatchtable .userdata{
-    width: 300px;
+
+}
+
+.usermatchform .usermatchtable .userdata .panel{
+    float: left;
+    width: 100%;
+
 }
 
 .usermatchform .usermatchtable .playerdata{
+     width: 200px;
+}
+
+.usermatchform .panel #playerlist{
+    height: 300px;
+}
+
+.usermatchform .playerlist .empty{
+    float:left;
+    border: 1px solid;
+    margin-right: 10px;
     width: 200px;
+    height: 300px;
+}
+
+.usermatchform .panel .playerlist .player{
+    height: 300px;
+    width: 400px !important;
 }
