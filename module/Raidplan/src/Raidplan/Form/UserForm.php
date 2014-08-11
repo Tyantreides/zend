@@ -144,8 +144,9 @@ class UserForm extends Form
                     $output .= '<div class="ui-widget-content joblist">';
                     foreach ($player->jobs as $job) {
                         $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
-                        $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
-                        $output .= $job->jobshortname.' ('.$job->ilvl.')';
+                            $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
+                            $output .= $job->jobshortname.' ('.$job->ilvl.')';
+                            $output .= '<div>Bearbeiten</div>';
                         $output .= '</div>';
                     }
                     $output .= '</div>';
