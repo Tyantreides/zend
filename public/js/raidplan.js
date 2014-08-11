@@ -47,6 +47,14 @@ $( document ).ready(function() {
      * -----------------------------------------------------------
      */
 
+
+    $('#addeventbutton').click(function() {
+        function redirect () {
+            window.location.href = "/addevent";
+        }
+        window.setTimeout(redirect, 1);
+    });
+
     /**
      * onclicks für die roleselektoren auf add und editpage
      */
