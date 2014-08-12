@@ -118,6 +118,23 @@ class UserController extends AbstractActionController
     }
 
 
+    public function ajaxMatchPlayerAction () {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $post = $request->getPost();
+            $playerid = $post['playerid'];
+            $output = $playerid;
+        }
+        else{
+            $output = false;
+        }
+        $viewModel = new ViewModel(array('output' => $output,
+        ));
+        $viewModel->setTerminal(true);
+        return $viewModel;
+    }
+
 
 
 

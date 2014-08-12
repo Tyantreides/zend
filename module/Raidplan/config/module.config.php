@@ -155,6 +155,17 @@ return array(
                     ),
                 ),
             ),
+            'ajaxmatchplayer' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/ajaxmatchplayer',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Raidplan\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'ajaxMatchPlayer',
+                    ),
+                ),
+            ),
             'logout' => array(
                 'type'    => 'Literal',
                 'options' => array(

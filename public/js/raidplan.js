@@ -41,6 +41,8 @@ $( document ).ready(function() {
     });
 
 
+
+
     /**
      * -------------------------------------------------------------
      * Onchanges und onclicks
@@ -115,6 +117,8 @@ $( document ).ready(function() {
             });
     });
 
+
+
     /**
      *onlick für den editieren button auf der view page
      */
@@ -164,6 +168,19 @@ $( document ).ready(function() {
         var returnarray = new Object();
         returnarray['eventid'] = eventid;
         return returnarray;
+    }
+
+
+
+    function matchplayer(playerid) {
+        $.ajax({
+            type: "POST",
+            url: "/matchplayer",
+            data: playerid
+        })
+            .done(function( msg ) {
+                console.log("playermatched");
+            });
     }
 
     /**

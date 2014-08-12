@@ -103,25 +103,28 @@ class UserForm extends Form
                         $output .= $this->getEmptySpot();
                     }
                     else {
-                        $output .= '<div class="ui-widget-content player" id="player_'.$player->id.'">';
+                        $output .= '<div class="availplayer" data-player="'.$player->id.'"">';
                         $output .= '<p class="playername">'.$player->charname.'</p>';
-                        $output .= '<div class="ui-widget-content joblist">';
-                        foreach ($player->jobs as $job) {
-                            $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
-                            $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
-                            $output .= $job->jobshortname.' ('.$job->ilvl.')';
-                            $output .= '</div>';
-                        }
-                        $output .= '</div>';
                         $output .= '</div>';
                     }
                 }
             $output .= '</div>';
             $output .= '<script>';
-            $output .= '$( "#playerlist .player" ).draggable({
-                      appendTo: "body",
-                      helper: "clone"
-                    });
+            $output .= '$( "#playerlist .availplayer" ).click(function() {
+                var playerid = $(this).data("player");
+                matchplayer(playerid);
+            });
+            function matchplayer(playerid) {
+                $.ajax({
+                    type: "POST",
+                    url: "/ajaxmatchplayer",
+                    data: playerid
+                })
+            .done(function( msg ) {
+                console.log("playermatched");
+                $("#matchplayerspot").html(msg);
+            });
+    }
                     ';
             $output .= '</script>';
             return $output;
@@ -141,15 +144,7 @@ class UserForm extends Form
                 else {
                     $output .= '<div class="ui-widget-content player" id="player_'.$player->id.'">';
                     $output .= '<p class="playername">'.$player->charname.'</p>';
-                    $output .= '<div class="ui-widget-content joblist">';
-                    foreach ($player->jobs as $job) {
-                        $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
-                            $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
-                            $output .= $job->jobshortname.' ('.$job->ilvl.')';
-                            $output .= '<div>Bearbeiten</div>';
-                        $output .= '</div>';
-                    }
-                    $output .= '</div>';
+                    $output .= $this->renderJoblist($player);
                     $output .= '</div>';
                 }
             }
@@ -167,9 +162,23 @@ class UserForm extends Form
         return $output;
     }
 
+    private function renderJoblist ($player) {
+        $output = '';
+        $output .= '<div class="ui-widget-content joblist">';
+        foreach ($player->jobs as $job) {
+            $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
+            $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
+            $output .= $job->jobshortname.' ('.$job->ilvl.')';
+            $output .= '<div>Bearbeiten</div>';
+            $output .= '</div>';
+        }
+        $output .= '</div>';
+        return $output;
+    }
+
     private function getEmptySpot() {
         $output = '';
-        $output .= '<div class="empty" ">nicht vorahnden</div>';
+        $output .= '<div class="empty" id="matchplayerspot" ">nicht vorahnden</div>';
         return $output;
     }
 }
