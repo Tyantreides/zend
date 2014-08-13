@@ -24,7 +24,6 @@ class Events
     private $playerModel;
     private $jobModel;
     private $roleModel;
-    private $userModel;
 
     public function initTables($eventsTable, $playersTable, $jobsTable, $roleTable, $usersTable) {
         $this->eventsTable = $eventsTable;
@@ -34,12 +33,10 @@ class Events
         $this->usersTable = $usersTable;
     }
 
-    public function initModels($playerModel, $jobModel, $roleModel, $userModel){
+    public function initModels($playerModel, $jobModel, $roleModel){
         $this->playerModel = $playerModel;
         $this->jobModel = $jobModel;
         $this->roleModel = $roleModel;
-        $this->userModel = $userModel;
-        $this->userModel->setTable($this->usersTable);
     }
 
     public function exchangeArray($data)
