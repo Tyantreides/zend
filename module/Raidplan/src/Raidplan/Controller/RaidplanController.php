@@ -444,7 +444,7 @@ class RaidplanController extends AbstractActionController
     public function getEventModel() {
         $model = new Events();
         $model->initTables($this->getEventsTable(),$this->getPlayersTable(),$this->getJobsTable(),$this->getRolesTable(),$this->getUsersTable());
-        $model->initModels($this->getPlayerModel(),$this->getJobModel(),$this->getRoleModel(),$this->getUserModel());
+        $model->initModels($this->getPlayerModel(),$this->getJobModel(),$this->getRoleModel());
         return $model;
     }
 
@@ -456,7 +456,7 @@ class RaidplanController extends AbstractActionController
     public function getPlayerModel() {
         $model = new Players();
         $model->initTables($this->getPlayersTable(),$this->getJobsTable(),$this->getUsersTable());
-        $model->initModels($this->getJobModel(),$this->getUserModel());
+        $model->initModels($this->getJobModel());
         return $model;
     }
 
