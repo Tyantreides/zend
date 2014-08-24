@@ -69,11 +69,17 @@ class Events
             $this->setRoles();
         }
     }
-    
+
+
+    /**
+     * depricated
+     * @return array
+     */
     public function getArrayCopy()
     {
         return get_object_vars($this);
     }
+
 
     public function setPlayer(){
         $playerdata = $this->playersTable->fetchProcessedPlayerData();
@@ -82,10 +88,10 @@ class Events
         foreach($addedplayers as $addedplayer) {
             $playermodel = clone $this->playerModel->load($addedplayer->player);
             if (array_key_exists($addedplayer->player,$playerdata)) {
-                //$playerlist[] = $playerdata[$addedplayer->player];
                 $playerlist[] = $playermodel;
             }
             elseif ($addedplayer->player == 999) {
+                //WLTODO Lösung für leeren Player verbessern
                 $playerlist[] = array(
                     '0' => array(
                         'playerid' => 999,
@@ -98,7 +104,6 @@ class Events
     }
 
     public function setRoles() {
-
         $roledataarray = $this->roleTable->fetchProcessedRoleData();
         $allEventData = json_decode($this->invited);
         foreach($allEventData->roles as $role) {
@@ -123,10 +128,6 @@ class Events
         }
         $this->roles = $eventroles;
     }
-
-
-
-
 }
 
 

@@ -1,18 +1,11 @@
 <?php
-
-// module/Raidplan/view/Raidplan/Raidplan/add.phtml:
-
 $title = 'Event hinzufügen:';
 $this->headTitle($title);
 ?>
 <?php
 $form->setAttribute('action', $this->url('addevent'));
 $form->prepare();
-
-
 ?>
-
-
 <div id="tabs"  height="500px">
     <ul>
         <li><a href="#eventdaten">Eventdaten</a></li>
@@ -21,43 +14,28 @@ $form->prepare();
     <div id="eventdaten">
         <p>
             <?php
-
             echo $this->form()->openTag($form);
-            echo $this->formHidden($form->get('id'));
-            echo $this->formRow($form->get('titel'));
-            echo $this->formRow($form->get('beschreibung'));
-            echo $this->formRow($form->get('datetime'));
-            //echo '<label>Datum:</label><input name="datetime" type="text" id="datepicker" class="form-control">';
-
-//           echo '<label>Uhrzeit:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-//                    <input name="time" type="text" class="form-control">
-//                    <span class="input-group-addon">
-//                        <span class="glyphicon glyphicon-time"></span>
-//                    </span>
-//                </div>';
-            echo $this->formRow($form->get('status'));
-            echo $this->formRow($form->get('activityid'));
-            echo $this->formRow($form->get('invited'));
-            echo $this->formRow($form->get('accepted'));
-            echo $this->formRow($form->get('declined'));
-            //echo $this->formSubmit($form->get('submit'));
+                echo $this->formHidden($form->get('id'));
+                echo $this->formRow($form->get('titel'));
+                echo $this->formRow($form->get('beschreibung'));
+                echo $this->formRow($form->get('datetime'));
+                echo $this->formRow($form->get('status'));
+                echo $this->formRow($form->get('activityid'));
+                echo $this->formRow($form->get('invited'));
+                echo $this->formRow($form->get('accepted'));
+                echo $this->formRow($form->get('declined'));
             echo $this->form()->closeTag();
-
             echo $this->form->getActivityDropdown($this->allActivities);
             //WLTODO LADEN von Playersetup Templates 4 oder 8 Player Setup mit roles automatisch erzeugen
             echo $this->form->getEventAddForm();
-
-            //echo '<button id="eventspeichern">Speichern</button>';
             echo '<button id="eventspeichern" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span class="ui-button-text">Speichern</span></button>';
             ?>
-
-
         </p>
     </div>
-    <div id="teilnehmer"  >
+
+    <div id="teilnehmer" >
         <div height="500px" width="100%"><?php
             if ($this->allRoles) {
-                //echo $this->playerForm->getBlankPartyAssembler(8, $this->allRoles);
                 echo $this->playerForm->getPartyAssemblerAdd($this->allRoles);
             }
             ?></div>
@@ -66,7 +44,7 @@ $form->prepare();
                 echo $this->playerForm->printData('PlayerList', $this->playersData);
             }
             else {
-                echo "Datenbankproblem";
+                echo "Da lief was schief.";
             }
             ?></p>
     </div>
@@ -78,10 +56,7 @@ $form->prepare();
     $(function() {
         $( "#datepicker" ).datepicker();
         $('.clockpicker').clockpicker();
-
-
     });
-
 </script>
 
 

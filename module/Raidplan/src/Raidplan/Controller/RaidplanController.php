@@ -120,14 +120,9 @@ class RaidplanController extends AbstractActionController
         $eventsModel->loadEventResult($eventdata);
         return array(
             'isadmin' => $isAdmin,
-            //'eventdata' => $eventdata,
             'eventform' => $eventForm,
             'playerform' => $playerForm,
-            //'playerdata' => $playersData,
-            //'roledata' => $allRoles,
-            //'activitydata' => $allActivities,
             'eventsmodel' => $eventsModel,
-
         );
     }
 
@@ -145,7 +140,6 @@ class RaidplanController extends AbstractActionController
         }
         try {
             $events = $this->getEventsTable()->getEvents($id);
-            $playersTable = $this->getPlayersTable();
         }
         catch (\Exception $ex) {
             return $this->redirect()->toRoute('events', array(
@@ -153,7 +147,6 @@ class RaidplanController extends AbstractActionController
             ));
         }
         $eventdata = $this->getEventsTable()->getEvents($id);
-        $playersData = $this->getPlayersTable()->fetchPlayerData();
         $eventmodel = $this->getEventModel();
         $eventmodel->loadEventResult($eventdata);
         $form  = new EventForm();
@@ -163,13 +156,9 @@ class RaidplanController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-//            $form->setInputFilter($events->getInputFilter());
             $form->setData($request->getPost());
-
             if ($form->isValid()) {
                 $this->getEventsTable()->saveEvents($events);
-
-                // Redirect to list of raidplans
                 return $this->redirect()->toRoute('events');
             }
         }
@@ -190,7 +179,7 @@ class RaidplanController extends AbstractActionController
      * funktioniert nur wenn man admin ist
      * @return ViewModel
      */
-    //WLTODO falsche Eventid abfangen
+
     public function ajaxeditAction() {
         if (!$this->getUsersTable()->isLoggedIn()) {
             return $this->redirect()->toRoute('login');
@@ -204,6 +193,7 @@ class RaidplanController extends AbstractActionController
             $id = $send['eventid'];
         }
         else{
+            //WLTODO falsche oder fehlende Eventid sauber abfangen
             $id = 24;
         }
 
@@ -217,7 +207,7 @@ class RaidplanController extends AbstractActionController
             $form = new EventForm();
         }
         catch (\Exception $ex) {
-
+            //WLTODO exeption schreiben
         }
         $eventmodel = $this->getEventModel();
         $eventmodel->loadEventResult($eventdata);
@@ -361,6 +351,7 @@ class RaidplanController extends AbstractActionController
                 $playersData = false;
                 $playerForm = false;
                 $allRoles = false;
+                $allActivities = false;
             }
         }
         return array('form' => $form,
@@ -437,7 +428,7 @@ class RaidplanController extends AbstractActionController
     }
 
     /**
-     * leifert eventmodel zurück
+     * liefert eventmodel zurück
      * es wird mit den benötigten tables und models initialisiert
      * @return Events
      */
