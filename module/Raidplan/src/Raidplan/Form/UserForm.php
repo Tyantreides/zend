@@ -154,6 +154,14 @@ class UserForm extends Form
                       appendTo: "body",
                       helper: "clone"
                     });
+                    $(".editjob").on("click",function(){
+                        var jobdiv = $(this).parent();
+                        var jobpic = $(jobdiv).find("img");
+                        var jobshortname = $(this).data("jobshortname");
+                        var jobilvl = $(this).data("jobilvl");
+                        var playerid = $(this).data("playerid");
+                        var jobid = $(this).data("jobid");
+                    });
                     ';
             $output .= '</script>';
             return $output;
@@ -169,7 +177,7 @@ class UserForm extends Form
             $output .= '<div class="job" data-jobid="'.$job->id.'" data-roleid="'.$job->role->id.'">';
             $output .= '<img src="/img/FFXIV/res/tumbnails/job_'.strtolower($job->jobshortname).'_24x24.png">';
             $output .= $job->jobshortname.' ('.$job->ilvl.')';
-            $output .= '<div>Bearbeiten</div>';
+            $output .= '<div class="editjob" data-jobid="'.$job->id.'" data-playerid="'.$player->id.'" data-jobshortname="'.$job->jobshortname.'" data-jobilvl="'.$job->ilvl.'">Bearbeiten</div>';
             $output .= '</div>';
         }
         $output .= '</div>';
